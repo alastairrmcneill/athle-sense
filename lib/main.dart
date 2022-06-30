@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reading_wucc/authentication/screens/screens.dart';
 import 'package:reading_wucc/models/models.dart';
+import 'package:reading_wucc/services/services.dart';
 import 'package:reading_wucc/support/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
-    );
+    return MultiProvider(
+        providers: [
+          StreamProvider<AppUser?>.value(
+            value: AuthService().appUserStream,
+            initialData: null,
+          ),
+        ],
+        child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Wrapper(),
+        ));
   }
 }

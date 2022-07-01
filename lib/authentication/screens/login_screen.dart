@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/authentication/screens/screens.dart';
-import 'package:reading_wucc/features/authentication/widgets/error_text_widget.dart';
+import 'package:reading_wucc/authentication/screens/screens.dart';
+import 'package:reading_wucc/authentication/widgets/error_text_widget.dart';
 import 'package:reading_wucc/models/custom_error.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
@@ -19,7 +19,6 @@ class _ForgotPasswordState extends State<LoginScreen> {
   String _email = '';
   String _password = '';
   String _errorText = '';
-  bool _obscureText = true;
 
   Future _login(UserNotifier userNotifier) async {
     dynamic result = await AuthService.signInWithEmailPassword(
@@ -35,14 +34,12 @@ class _ForgotPasswordState extends State<LoginScreen> {
       });
       return;
     }
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Wrapper()), (_) => false);
   }
 
   Widget _buildEmailInput() {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        prefixIcon: Icon(Icons.email_outlined),
-      ),
+      decoration: const InputDecoration(labelText: 'Email'),
       maxLines: 1,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
@@ -63,21 +60,10 @@ class _ForgotPasswordState extends State<LoginScreen> {
 
   Widget _buildPasswordInput() {
     return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'Password',
-        prefixIcon: const Icon(Icons.lock_outline),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-          icon: _obscureText ? const Icon(Icons.visibility_off_rounded) : const Icon(Icons.visibility_rounded),
-        ),
-      ),
+      decoration: const InputDecoration(labelText: 'Password'),
       maxLines: 1,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: _obscureText,
+      obscureText: true,
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';

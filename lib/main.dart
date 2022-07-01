@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/features/authentication/screens/screens.dart';
 import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/services/notifiers.dart';
+import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
+import 'package:reading_wucc/support/theme.dart';
 import 'package:reading_wucc/support/wrapper.dart';
 import 'package:provider/provider.dart';
 
@@ -28,9 +28,10 @@ class MyApp extends StatelessWidget {
             create: (_) => UserNotifier(),
           ),
         ],
-        child: const MaterialApp(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: Wrapper(),
+          theme: MyThemes.getLightTheme(),
+          home: const Wrapper(),
         ));
   }
 }

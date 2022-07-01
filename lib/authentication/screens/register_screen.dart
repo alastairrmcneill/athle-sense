@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/authentication/widgets/error_text_widget.dart';
+import 'package:reading_wucc/authentication/widgets/error_text_widget.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
@@ -20,8 +20,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _password1 = '';
   String _password2 = '';
   String _errorText = '';
-  bool _obscureText1 = true;
-  bool _obscureText2 = true;
 
   Future _register(UserNotifier userNotifier) async {
     // Check passwords match, if not exit
@@ -56,10 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildNameInput() {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Name',
-        prefixIcon: Icon(Icons.person_outline),
-      ),
+      decoration: const InputDecoration(labelText: 'Name'),
       maxLines: 1,
       keyboardType: TextInputType.name,
       validator: (value) {
@@ -75,10 +70,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildEmailInput() {
     return TextFormField(
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        prefixIcon: Icon(Icons.email_outlined),
-      ),
+      decoration: const InputDecoration(labelText: 'Email'),
       maxLines: 1,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
@@ -99,21 +91,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildPassword1Input() {
     return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'Password',
-        prefixIcon: const Icon(Icons.lock_outline),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              _obscureText1 = !_obscureText1;
-            });
-          },
-          icon: _obscureText1 ? const Icon(Icons.visibility_off_rounded) : const Icon(Icons.visibility_rounded),
-        ),
-      ),
+      decoration: const InputDecoration(labelText: 'Password'),
       maxLines: 1,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: _obscureText1,
+      obscureText: true,
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';
@@ -130,21 +111,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildPassword2Input() {
     return TextFormField(
-      decoration: InputDecoration(
-        labelText: 'Password',
-        prefixIcon: const Icon(Icons.lock_outline),
-        suffixIcon: IconButton(
-          onPressed: () {
-            setState(() {
-              _obscureText2 = !_obscureText2;
-            });
-          },
-          icon: _obscureText2 ? const Icon(Icons.visibility_off_rounded) : const Icon(Icons.visibility_rounded),
-        ),
-      ),
+      decoration: const InputDecoration(labelText: 'Password'),
       maxLines: 1,
       keyboardType: TextInputType.visiblePassword,
-      obscureText: _obscureText2,
+      obscureText: true,
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return 'Required';

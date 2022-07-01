@@ -3,6 +3,8 @@ import 'package:reading_wucc/features/home/screens/screens.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/authentication/screens/screens.dart';
+import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/services/auth_service.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);

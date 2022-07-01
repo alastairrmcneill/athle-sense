@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/services/notifiers.dart';
+import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
 
 class AuthService {
@@ -9,6 +9,14 @@ class AuthService {
   // Auth user stream
   Stream<AppUser?> get appUserStream {
     return _auth.authStateChanges().map((User? user) => _appUserFromFirebaseUser(user));
+  }
+
+  // Get the current logged in user for provider
+
+  static Future getCurrentUser(UserNotifier userNotifier) async {
+    AppUser? appUser = _appUserFromFirebaseUser(_auth.currentUser);
+
+    userNotifier.setCurrentUser = appUser;
   }
 
   // Register with email

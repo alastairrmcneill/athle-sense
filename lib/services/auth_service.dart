@@ -19,6 +19,10 @@ class AuthService {
     userNotifier.setCurrentUser = appUser;
   }
 
+  static String getCurrentUserUID() {
+    return _auth.currentUser!.uid;
+  }
+
   // Register with email
 
   static Future registerWithEmailAndPassword(UserNotifier userNotifier, AppUser appUser, String email, String password) async {

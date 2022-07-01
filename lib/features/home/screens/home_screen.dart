@@ -2,18 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/auth_service.dart';
 import 'package:reading_wucc/services/event_database.dart';
+import 'package:reading_wucc/services/services.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+    UserDatabase.getCurrentUser(userNotifier);
+  }
 
   @override
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Screen'),
+        title: Text(userNotifier.currentUser!.name),
         actions: [
           IconButton(
             onPressed: () async {
@@ -28,7 +41,7 @@ class HomeScreen extends StatelessWidget {
           await EventDatabase.createEvent(
             Event(
               name: 'Reading @ WUCC',
-              admins: [userNotifier.currentUser!.uid],
+              admins: [userNotifier.currentUser!.name],
               members: [],
             ),
           );

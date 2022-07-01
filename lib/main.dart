@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reading_wucc/models/models.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
             initialData: null,
           ),
           ChangeNotifierProvider<UserNotifier>(
-            create: (_) => UserNotifier(),
+            create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
           ),
         ],
         child: MaterialApp(

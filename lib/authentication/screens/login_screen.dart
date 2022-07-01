@@ -15,16 +15,45 @@ class _ForgotPasswordState extends State<LoginScreen> {
 
   Future login() async {}
 
-  Widget _buildNameInput() {
-    return TextFormField();
-  }
-
   Widget _buildEmailInput() {
-    return TextFormField();
+    return TextFormField(
+      decoration: const InputDecoration(labelText: 'Email'),
+      maxLines: 1,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Required';
+        }
+        int atIndex = value.indexOf('@');
+        int periodIndex = value.lastIndexOf('.');
+        if (!value.contains('@') || atIndex < 1 || periodIndex <= atIndex + 1 || value.length == periodIndex + 1) {
+          return 'Not a valid email';
+        }
+      },
+      onSaved: (value) {
+        _email = value!;
+      },
+    );
   }
 
   Widget _buildPasswordInput() {
-    return TextFormField();
+    return TextFormField(
+      decoration: const InputDecoration(labelText: 'Password'),
+      maxLines: 1,
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: true,
+      validator: (value) {
+        if (value == null || value.trim().isEmpty) {
+          return 'Required';
+        }
+        if (value.length < 5) {
+          return 'Password needs to be greater than 6 characters';
+        }
+      },
+      onSaved: (value) {
+        _password = value!;
+      },
+    );
   }
 
   @override
@@ -45,7 +74,15 @@ class _ForgotPasswordState extends State<LoginScreen> {
             ],
           ),
         ),
-        ElevatedButton(onPressed: () {}, child: Text('Login'))
+        ElevatedButton(
+            onPressed: () {
+              if (!_formKey.currentState!.validate()) {
+                return;
+              }
+              _formKey.currentState!.save();
+              print('Login');
+            },
+            child: Text('Login'))
       ]),
     );
   }

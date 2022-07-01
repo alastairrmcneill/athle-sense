@@ -1,48 +1,38 @@
 class AppUser {
   final String uid;
-  final String firstName;
-  final String lastName;
+  final String name;
   final String email;
 
   AppUser({
     this.uid = '',
-    this.firstName = '',
-    this.lastName = '',
+    this.name = '',
     this.email = '',
   });
 
   Map<String, Object?> toJSON() {
     return {
       'uid': uid,
-      'firstName': firstName,
-      'lastName': lastName,
+      'name': name,
       'email': email,
     };
   }
 
   static AppUser fromJSON(json) {
-    List<dynamic> households = json['households'];
-    List<String> newHouseholds = List<String>.from(households);
-
     return AppUser(
       uid: json['uid'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      name: json['name'] as String,
       email: json['email'] as String,
     );
   }
 
   AppUser copy({
     String? uid,
-    String? firstName,
-    String? lastName,
+    String? name,
     String? email,
-    List<String>? households,
   }) =>
       AppUser(
         uid: uid ?? this.uid,
-        firstName: firstName ?? this.firstName,
-        lastName: lastName ?? this.lastName,
+        name: name ?? this.name,
         email: email ?? this.email,
       );
 }

@@ -85,7 +85,7 @@ class AuthService {
 
   // AppUser from Firebase user
   static AppUser? _appUserFromFirebaseUser(User? user) {
-    return (user != null) ? AppUser(uid: user.uid) : null;
+    return (user != null) ? AppUser(uid: user.uid, events: []) : null;
   }
 
   // Decoupling firebase service and main app by setting custom errors for auth service

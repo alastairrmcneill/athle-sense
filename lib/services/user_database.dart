@@ -42,6 +42,12 @@ class UserDatabase {
   }
 
   // Update
+  static updateUser(UserNotifier userNotifier, AppUser user) async {
+    DocumentReference ref = _db.collection('Users').doc(user.uid);
+
+    await ref.update(user.toJSON());
+    userNotifier.setCurrentUser = user;
+  }
 
   // Delete
 

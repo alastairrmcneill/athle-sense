@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reading_wucc/features/home/widgets/new_event_form.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
@@ -36,18 +37,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           )
         ],
       ),
-      body: ElevatedButton(
-        onPressed: () async {
-          await EventDatabase.createEvent(
-            Event(
-              name: 'Reading @ WUCC',
-              admins: [userNotifier.currentUser!.name],
-              members: [],
-            ),
-          );
-        },
-        child: Text('Create Event'),
-      ),
+      body: NewEventForm(),
     );
   }
 }

@@ -34,6 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     AppUser newAppUser = AppUser(
       name: _name.trim(),
       email: _email.trim(),
+      events: [],
     );
     dynamic result = await AuthService.registerWithEmailAndPassword(
       userNotifier,

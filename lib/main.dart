@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<UserNotifier>(
             create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
           ),
+          ChangeNotifierProvider<EventNotifier>(
+            create: (_) => EventNotifier(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

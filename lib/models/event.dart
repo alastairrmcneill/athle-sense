@@ -18,7 +18,7 @@ class Event {
   });
 
   // From JSON
-  Event fromJSON(json) {
+  static Event fromJSON(json) {
     return Event(
       uid: json['uid'] as String?,
       name: json['name'] as String,

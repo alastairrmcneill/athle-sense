@@ -21,6 +21,37 @@ class EventDatabase {
   }
 
   // Read
+  static readMyEvents(EventNotifier eventNotifier) async {
+    List<Event> _eventList = [];
+    String uid = AuthService.getCurrentUserUID();
+
+    // Check admin
+    final CollectionReference ref = _db.collection('Events');
+    final Query adminEvents = ref.where(
+      'admins',
+      arrayContains: uid,
+    );
+    await adminEvents.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _eventList.add(Event.fromJSON(doc));
+      });
+    });
+    // Check member
+    final Query memberEvents = ref.where(
+      'members',
+      arrayContains: uid,
+    );
+    await memberEvents.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _eventList.add(Event.fromJSON(doc));
+      });
+    });
+
+    // Sort
+
+    // Set to notifier
+    eventNotifier.setUserEvents = _eventList;
+  }
 
   // Update
 

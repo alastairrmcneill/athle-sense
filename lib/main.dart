@@ -20,22 +20,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          StreamProvider<AppUser?>.value(
-            value: AuthService().appUserStream,
-            initialData: null,
-          ),
-          ChangeNotifierProvider<UserNotifier>(
-            create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
-          ),
-          ChangeNotifierProvider<EventNotifier>(
-            create: (_) => EventNotifier(),
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: MyThemes.getLightTheme(),
-          home: const Wrapper(),
-        ));
+      providers: [
+        StreamProvider<AppUser?>.value(
+          value: AuthService().appUserStream,
+          initialData: null,
+        ),
+        ChangeNotifierProvider<UserNotifier>(
+          create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
+        ),
+        ChangeNotifierProvider<EventNotifier>(
+          create: (_) => EventNotifier(),
+        ),
+        ChangeNotifierProvider<ResponseNotifier>(
+          create: (_) => ResponseNotifier(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: MyThemes.getLightTheme(),
+        home: const Wrapper(),
+      ),
+    );
   }
 }

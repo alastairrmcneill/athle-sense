@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/admin/widgets/widgets.dart';
+import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
+import 'package:reading_wucc/services/services.dart';
 
 class MemberListView extends StatefulWidget {
   const MemberListView({Key? key}) : super(key: key);
@@ -17,24 +19,40 @@ class _MemberListViewState extends State<MemberListView> {
     super.initState();
 
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
-    _refresh(eventNotifier);
+    ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
+    _refresh(eventNotifier, responseNotifier);
   }
 
-  Future _refresh(EventNotifier eventNotifier) async {
+  Future _refresh(EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
     EventDatabase.readEventMembers(eventNotifier);
+    ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
   }
 
   @override
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
+    ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
     return eventNotifier.currentEventMembers == null
         ? Center(child: CircularProgressIndicator())
         : RefreshIndicator(
             onRefresh: () async {
-              _refresh(eventNotifier);
+              _refresh(eventNotifier, responseNotifier);
             },
             child: ListView(
-              children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
+              children: eventNotifier.currentEventMembers!.map((member) {
+                Response? _response;
+
+                if (responseNotifier.allResponses != null) {
+                  for (var response in responseNotifier.allResponses!) {
+                    if (member.uid == response.userUid) {
+                      _response = response;
+                      break;
+                    }
+                  }
+                }
+
+                return MemberTile(member: member, response: _response);
+              }).toList(),
             ),
           );
   }

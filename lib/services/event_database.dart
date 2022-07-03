@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
@@ -33,9 +35,13 @@ class EventDatabase {
     );
     await adminEvents.get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        _eventList.add(Event.fromJSON(doc));
+        Event event = Event.fromJSON(doc);
+        Event newEvent = event.copy(amAdmin: true);
+
+        _eventList.add(newEvent);
       });
     });
+
     // Check member
     final Query memberEvents = ref.where(
       'members',
@@ -51,6 +57,21 @@ class EventDatabase {
 
     // Set to notifier
     eventNotifier.setUserEvents = _eventList;
+  }
+
+  static Future readEventMembers(EventNotifier eventNotifier) async {
+    List<Member> _membersList = [];
+    List<String> allMembers = eventNotifier.currentEvent!.admins + eventNotifier.currentEvent!.members;
+
+    final Query membersQuery = _db.collection('Users').where('uid', whereIn: allMembers);
+
+    await membersQuery.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _membersList.add(Member.fromJSON(doc));
+      });
+    });
+
+    eventNotifier.setCurrentEventMembers = _membersList;
   }
 
   // Update

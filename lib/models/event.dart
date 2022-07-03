@@ -7,6 +7,7 @@ class Event {
   final DateTime endDate;
   final List<String> admins;
   final List<String> members;
+  final bool amAdmin;
 
   Event({
     this.uid,
@@ -15,6 +16,7 @@ class Event {
     required this.endDate,
     required this.admins,
     required this.members,
+    this.amAdmin = false,
   });
 
   // From JSON
@@ -49,6 +51,7 @@ class Event {
     DateTime? endDate,
     List<String>? admins,
     List<String>? members,
+    bool? amAdmin,
   }) =>
       Event(
         uid: uid ?? this.uid,
@@ -57,5 +60,6 @@ class Event {
         endDate: endDate ?? this.endDate,
         admins: admins ?? this.admins,
         members: members ?? this.members,
+        amAdmin: amAdmin ?? this.amAdmin,
       );
 }

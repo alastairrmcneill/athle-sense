@@ -4,9 +4,11 @@ import 'package:reading_wucc/models/models.dart';
 class EventNotifier extends ChangeNotifier {
   List<Event>? _userEvents;
   Event? _currentEvent;
+  List<Member>? _currentEventMembers;
 
   List<Event>? get userEvents => _userEvents;
   Event? get currentEvent => _currentEvent;
+  List<Member>? get currentEventMembers => _currentEventMembers;
 
   set setUserEvents(List<Event> userEvents) {
     _userEvents = userEvents;
@@ -15,6 +17,11 @@ class EventNotifier extends ChangeNotifier {
 
   set setCurrentEvent(Event currentEvent) {
     _currentEvent = currentEvent;
+    notifyListeners();
+  }
+
+  set setCurrentEventMembers(List<Member> currentEventMembers) {
+    _currentEventMembers = currentEventMembers;
     notifyListeners();
   }
 }

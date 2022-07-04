@@ -7,7 +7,8 @@ import 'package:reading_wucc/services/event_database.dart';
 import 'package:reading_wucc/services/services.dart';
 
 class MemberListView extends StatefulWidget {
-  const MemberListView({Key? key}) : super(key: key);
+  final int dayIndex;
+  const MemberListView({Key? key, required this.dayIndex}) : super(key: key);
 
   @override
   State<MemberListView> createState() => _MemberListViewState();
@@ -20,14 +21,6 @@ class _MemberListViewState extends State<MemberListView> {
 
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
-    _refresh(eventNotifier, responseNotifier);
-  }
-
-  Future _refresh(EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
-    await EventDatabase.readEventMembers(eventNotifier);
-    await ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
-
-    print(responseNotifier.responseEachDay);
   }
 
   @override
@@ -35,27 +28,22 @@ class _MemberListViewState extends State<MemberListView> {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
     return eventNotifier.currentEventMembers == null
-        ? Center(child: CircularProgressIndicator())
-        : RefreshIndicator(
-            onRefresh: () async {
-              _refresh(eventNotifier, responseNotifier);
-            },
-            child: ListView(
-              children: eventNotifier.currentEventMembers!.map((member) {
-                Response? _response;
+        ? const Center(child: CircularProgressIndicator())
+        : ListView(
+            children: eventNotifier.currentEventMembers!.map((member) {
+              Response? _response;
 
-                if (responseNotifier.allResponses != null) {
-                  for (var response in responseNotifier.allResponses!) {
-                    if (member.uid == response.userUid) {
-                      _response = response;
-                      break;
-                    }
+              if (responseNotifier.responseEachDay != null) {
+                for (var response in responseNotifier.responseEachDay![widget.dayIndex]) {
+                  if (member.uid == response.userUid) {
+                    _response = response;
+                    break;
                   }
                 }
+              }
 
-                return MemberTile(member: member, response: _response);
-              }).toList(),
-            ),
+              return MemberTile(member: member, response: _response);
+            }).toList(),
           );
   }
 }

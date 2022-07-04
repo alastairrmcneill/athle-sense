@@ -6,12 +6,16 @@ class Response {
   final String userUid;
   final String eventUid;
   final DateTime date;
+  final List<int> ratings;
+  final int wellnessRating;
 
   Response({
     required this.uid,
     required this.userUid,
     required this.eventUid,
     required this.date,
+    required this.ratings,
+    required this.wellnessRating,
   });
 
   // From JSON
@@ -21,6 +25,8 @@ class Response {
       userUid: json['userUid'] as String,
       eventUid: json['eventUid'] as String,
       date: DateUtils.dateOnly((json['date'] as Timestamp).toDate()),
+      ratings: List<int>.from(json['ratings']),
+      wellnessRating: json['wellnessRating'] as int,
     );
   }
 
@@ -31,6 +37,8 @@ class Response {
       'userUid': userUid,
       'eventUid': eventUid,
       'date': date,
+      'ratings': ratings,
+      'wellnessRating': wellnessRating,
     };
   }
 
@@ -40,11 +48,15 @@ class Response {
     String? userUid,
     String? eventUid,
     DateTime? date,
+    List<int>? ratings,
+    int? wellnessRating,
   }) =>
       Response(
         uid: uid ?? this.uid,
         userUid: userUid ?? this.userUid,
         eventUid: eventUid ?? this.eventUid,
         date: date ?? this.date,
+        ratings: ratings ?? this.ratings,
+        wellnessRating: wellnessRating ?? this.wellnessRating,
       );
 }

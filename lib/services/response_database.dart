@@ -18,18 +18,29 @@ class ResponseDatabase {
       querySnapshot.docs.forEach((doc) {
         Response newResponse = Response.fromJSON(doc);
         _responseList.add(newResponse);
-        print(newResponse.date);
       });
     });
 
     // Sort list
     _responseList.sort((a, b) => a.date.compareTo(b.date));
 
-    _responseList.forEach((element) {
-      print(element.date);
-    });
+    // Split into days
 
+    for (var response in _responseList) {
+      if (_responsePerDayList[0].isEmpty) {
+        _responsePerDayList[0].add(response);
+      } else {
+        if (response.date.isAfter(_responsePerDayList.last[0].date)) {
+          _responsePerDayList.add([response]);
+        } else {
+          _responsePerDayList.last.add(response);
+        }
+      }
+    }
+
+    // Write to notifiers
     responseNotifier.setAllResponses = _responseList;
+    responseNotifier.setResponseEachDay = _responsePerDayList;
   }
 
   // Update

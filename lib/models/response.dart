@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Response {
   final String? uid;
@@ -19,7 +20,7 @@ class Response {
       uid: json['uid'] as String?,
       userUid: json['userUid'] as String,
       eventUid: json['eventUid'] as String,
-      date: (json['date'] as Timestamp).toDate(),
+      date: DateUtils.dateOnly((json['date'] as Timestamp).toDate()),
     );
   }
 

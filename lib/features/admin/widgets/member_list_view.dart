@@ -24,8 +24,10 @@ class _MemberListViewState extends State<MemberListView> {
   }
 
   Future _refresh(EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
-    EventDatabase.readEventMembers(eventNotifier);
-    ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
+    await EventDatabase.readEventMembers(eventNotifier);
+    await ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
+
+    print(responseNotifier.responseEachDay);
   }
 
   @override
@@ -57,18 +59,3 @@ class _MemberListViewState extends State<MemberListView> {
           );
   }
 }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
-  //   return eventNotifier.userEvents == null
-  //       ? Center(child: CircularProgressIndicator())
-  //       : RefreshIndicator(
-  //           onRefresh: () async {
-  //             _refresh(eventNotifier);
-  //           },
-  //           child: ListView(
-  //             children: eventNotifier.userEvents!.map((event) => EventTile(event: event)).toList(),
-  //           ),
-  //         );
-  // }

@@ -25,7 +25,6 @@ class _ResponseTabState extends State<ResponseTab> {
   }
 
   Widget _buildButtons(ResponseNotifier responseNotifier) {
-    print(responseNotifier.responseEachDay);
     DateTime dateTime = responseNotifier.responseEachDay![activeIndex][0].date;
     String displayDate = DateFormat('dd/MM/yyyy').format(dateTime);
 

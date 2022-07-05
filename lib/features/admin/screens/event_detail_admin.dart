@@ -16,6 +16,7 @@ class EventDetailAdmin extends StatefulWidget {
 
 class _EventDetailAdminState extends State<EventDetailAdmin> {
   int _tabIndex = 0;
+  PageController _pageController = PageController();
   List<Widget> screens = const [ResponseTab(), QuestionsTab(), MembersTab()];
 
   @override
@@ -43,12 +44,21 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
       appBar: AppBar(
         title: Text('Admin Page'),
       ),
-      body: screens[_tabIndex],
+      body: PageView(
+        controller: _pageController,
+        children: screens,
+        onPageChanged: (index) {
+          setState(() {
+            _tabIndex = index;
+          });
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _tabIndex,
         onTap: (index) {
           setState(() {
+            _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
             _tabIndex = index;
           });
         },

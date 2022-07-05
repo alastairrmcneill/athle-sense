@@ -6,3 +6,5 @@ export 'member_wellness_grid_view.dart';
 export 'member_wellness_grid_tile.dart';
 export 'response_tab.dart';
 export 'member_tile.dart';
+export 'member_wellness_line_graph.dart';
+export 'member_wellness_graphs.dart';

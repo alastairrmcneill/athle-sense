@@ -12,12 +12,14 @@ class MemberWellnessRadar extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 300,
-      color: Colors.pink,
       child: Center(
         child: RadarChart(
           features: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
           ticks: [1, 2, 3, 4, 5],
-          data: [responseNotifier.currentResponse!.ratings],
+          data: [
+            responseNotifier.currentResponse!.ratings,
+            responseNotifier.allResponsesForMember![0].ratings,
+          ],
         ),
       ),
     );

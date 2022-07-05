@@ -27,7 +27,16 @@ class _MemberTileState extends State<ResponseTile> {
       onTap: () {
         // Set notifier
         if (widget.response != null) {
+          List<Response> _allResponsesForMember = [];
+
+          responseNotifier.allResponses!.forEach((response) {
+            if (widget.member.uid == response.userUid) {
+              _allResponsesForMember.add(response);
+            }
+          });
+
           responseNotifier.setCurrentResponse = widget.response!;
+          responseNotifier.setAllResponsesForMember = _allResponsesForMember;
           Navigator.push(context, MaterialPageRoute(builder: (_) => const MemberDetailScreen()));
         }
       },

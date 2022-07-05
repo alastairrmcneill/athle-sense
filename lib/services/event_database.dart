@@ -75,6 +75,43 @@ class EventDatabase {
   }
 
   // Update
+  static Future addAdmin(EventNotifier eventNotifier, String userUid) async {
+    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+
+    DocumentSnapshot result = await ref.get();
+
+    if (result.exists) {
+      Event oldEvent = Event.fromJSON(result.data());
+      List<String> admins = oldEvent.admins;
+      List<String> members = oldEvent.members;
+
+      admins.add(userUid);
+      members.remove(userUid);
+
+      Event newEvent = oldEvent.copy(admins: admins, members: members);
+
+      await ref.update(newEvent.toJSON());
+    }
+  }
+
+  static Future removeAdmin(EventNotifier eventNotifier, String userUid) async {
+    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+
+    DocumentSnapshot result = await ref.get();
+
+    if (result.exists) {
+      Event oldEvent = Event.fromJSON(result.data());
+      List<String> admins = oldEvent.admins;
+      List<String> members = oldEvent.members;
+
+      admins.remove(userUid);
+      members.add(userUid);
+
+      Event newEvent = oldEvent.copy(admins: admins, members: members);
+
+      await ref.update(newEvent.toJSON());
+    }
+  }
 
   // Delete
 

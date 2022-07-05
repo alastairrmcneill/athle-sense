@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reading_wucc/features/admin/widgets/member_tile.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 
 class MembersTab extends StatefulWidget {
@@ -18,7 +19,7 @@ class _MembersTabState extends State<MembersTab> {
             child: CircularProgressIndicator(),
           )
         : ListView(
-            children: eventNotifier.currentEventMembers!.map((e) => Text(e.name)).toList(),
+            children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
           );
   }
 }

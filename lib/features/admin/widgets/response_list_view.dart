@@ -6,15 +6,15 @@ import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
 import 'package:reading_wucc/services/services.dart';
 
-class MemberListView extends StatefulWidget {
+class ResponseListView extends StatefulWidget {
   final int dayIndex;
-  const MemberListView({Key? key, required this.dayIndex}) : super(key: key);
+  const ResponseListView({Key? key, required this.dayIndex}) : super(key: key);
 
   @override
-  State<MemberListView> createState() => _MemberListViewState();
+  State<ResponseListView> createState() => _MemberListViewState();
 }
 
-class _MemberListViewState extends State<MemberListView> {
+class _MemberListViewState extends State<ResponseListView> {
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _MemberListViewState extends State<MemberListView> {
                 }
               }
 
-              return MemberTile(member: member, response: _response);
+              return ResponseTile(member: member, response: _response);
             }).toList(),
           );
   }

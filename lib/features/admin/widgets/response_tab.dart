@@ -18,7 +18,7 @@ class _ResponseTabState extends State<ResponseTab> {
   List<Widget> _buildPages(ResponseNotifier responseNotifier) {
     List<Widget> _pageList = [];
     for (var i = 0; i < responseNotifier.responseEachDay!.length; i++) {
-      _pageList.add(MemberListView(dayIndex: i));
+      _pageList.add(ResponseListView(dayIndex: i));
     }
 
     return _pageList;

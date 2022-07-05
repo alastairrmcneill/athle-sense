@@ -46,7 +46,7 @@ class WellnessChart extends StatelessWidget {
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
     return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 20, left: 20),
+      padding: EdgeInsets.only(top: 20, bottom: 20, right: 20, left: 10),
       height: 200,
       color: Colors.purple,
       child: responseNotifier.allResponses != null
@@ -74,14 +74,23 @@ class WellnessChart extends StatelessWidget {
                   maxX: 7,
                   minY: 0,
                   maxY: 25,
+                  gridData: FlGridData(show: false),
                   borderData: FlBorderData(
                     show: true,
-                    border: Border(
+                    border: const Border(
                       left: BorderSide(color: Colors.black),
                       bottom: BorderSide(color: Colors.black),
                     ),
                   ),
-                  lineBarsData: [LineChartBarData(dotData: FlDotData(show: false), barWidth: 4, isCurved: false, color: Colors.black, spots: _buildData(responseNotifier))],
+                  lineBarsData: [
+                    LineChartBarData(
+                      dotData: FlDotData(show: false),
+                      barWidth: 4,
+                      isCurved: false,
+                      color: Colors.black,
+                      spots: _buildData(responseNotifier),
+                    ),
+                  ],
                 ),
               ),
             )

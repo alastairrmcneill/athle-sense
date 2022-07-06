@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/admin/widgets/widgets.dart';
+import 'package:reading_wucc/models/question.dart';
 import 'package:reading_wucc/models/response.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 
@@ -10,19 +11,26 @@ class MemberWellnessGridView extends StatelessWidget {
   List<Widget> _buildTiles(ResponseNotifier responseNotifier) {
     Response currentResponse = responseNotifier.currentResponse!;
     Response firstResponse = responseNotifier.allResponsesForMember![0];
+    int index = responseNotifier.allResponsesForMember!.indexOf(currentResponse);
+    Response? previousResponse = responseNotifier.allResponsesForMember![0];
+    if (index != 0) {
+      previousResponse = responseNotifier.allResponsesForMember![index - 1];
+    }
 
     List<Widget> _tiles = [];
     _tiles.add(MemberWellnessGridTile(
       title: 'Wellness',
       value: currentResponse.wellnessRating.toString(),
       baselineCompare: currentResponse.wellnessRating - firstResponse.wellnessRating,
+      previousCompare: currentResponse.wellnessRating - previousResponse.wellnessRating,
     ));
 
-    for (var i = 1; i <= currentResponse.ratings.length; i++) {
+    for (var i = 0; i < currentResponse.ratings.length; i++) {
       _tiles.add(MemberWellnessGridTile(
-        title: 'Q${i}',
-        value: currentResponse.ratings[i - 1].toString(),
-        baselineCompare: currentResponse.ratings[i - 1] - firstResponse.ratings[i - 1],
+        title: Questions.short[i],
+        value: currentResponse.ratings[i].toString(),
+        baselineCompare: currentResponse.ratings[i] - firstResponse.ratings[i],
+        previousCompare: currentResponse.ratings[i] - previousResponse.ratings[0],
       ));
     }
 

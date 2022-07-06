@@ -4,14 +4,23 @@ class MemberWellnessGridTile extends StatelessWidget {
   final String title;
   final String value;
   final int baselineCompare;
+  final int previousCompare;
 
-  const MemberWellnessGridTile({Key? key, required this.title, required this.value, required this.baselineCompare}) : super(key: key);
+  const MemberWellnessGridTile({
+    Key? key,
+    required this.title,
+    required this.value,
+    required this.baselineCompare,
+    required this.previousCompare,
+  }) : super(key: key);
 
-  String _buildCompare() {
-    if (baselineCompare > 0) {
-      return '+${baselineCompare}';
+  String _buildCompare(compare) {
+    if (compare > 0) {
+      return '+${compare}';
+    } else if (compare == 0) {
+      return '-';
     }
-    return '$baselineCompare';
+    return '$compare';
   }
 
   @override
@@ -21,7 +30,8 @@ class MemberWellnessGridTile extends StatelessWidget {
       child: Column(children: [
         Text(title),
         Text(value),
-        Text(_buildCompare()),
+        Text('To baseline: ${_buildCompare(baselineCompare)}'),
+        Text('To yesterday: ${_buildCompare(previousCompare)}'),
       ]),
     );
   }

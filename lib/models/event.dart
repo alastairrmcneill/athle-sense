@@ -8,6 +8,7 @@ class Event {
   final List<String> admins;
   final List<String> members;
   final bool amAdmin;
+  final String shareId;
 
   Event({
     this.uid,
@@ -17,6 +18,7 @@ class Event {
     required this.admins,
     required this.members,
     this.amAdmin = false,
+    required this.shareId,
   });
 
   // From JSON
@@ -28,6 +30,7 @@ class Event {
       endDate: (json['endDate'] as Timestamp).toDate(),
       admins: List<String>.from(json['admins']),
       members: List<String>.from(json['members']),
+      shareId: json['shareId'] as String,
     );
   }
 
@@ -40,6 +43,7 @@ class Event {
       'endDate': Timestamp.fromDate(endDate),
       'admins': admins,
       'members': members,
+      'shareId': shareId,
     };
   }
 
@@ -52,6 +56,7 @@ class Event {
     List<String>? admins,
     List<String>? members,
     bool? amAdmin,
+    String? shareId,
   }) =>
       Event(
         uid: uid ?? this.uid,
@@ -61,5 +66,6 @@ class Event {
         admins: admins ?? this.admins,
         members: members ?? this.members,
         amAdmin: amAdmin ?? this.amAdmin,
+        shareId: shareId ?? this.shareId,
       );
 }

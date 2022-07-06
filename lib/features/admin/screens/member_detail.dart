@@ -18,7 +18,7 @@ class _MemberDetailScreenState extends State<MemberDetailScreen> {
       body: Column(
         children: const [
           MemberWellnessGraphs(),
-          SizedBox(height: 50, child: Text('Today\'s Availability - Banging')),
+          MemberAvailability(),
           Expanded(flex: 1, child: MemberWellnessGridView()),
         ],
       ),

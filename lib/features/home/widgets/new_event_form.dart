@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,12 @@ class _NewEventFormState extends State<NewEventForm> {
   late DateTime _endDate;
   DateTime? _pickedEndDate;
 
+  String randomString(int length) {
+    const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
+    Random r = Random();
+    return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
+  }
+
   Future _createEvent(UserNotifier userNotifier) async {
     Event neweEvent = Event(
       name: _name.trim(),
@@ -29,6 +37,7 @@ class _NewEventFormState extends State<NewEventForm> {
       endDate: _endDate,
       admins: [userNotifier.currentUser!.uid],
       members: [],
+      shareId: randomString(6),
     );
     await EventDatabase.createEvent(userNotifier, neweEvent);
   }

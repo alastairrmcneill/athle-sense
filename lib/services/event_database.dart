@@ -74,7 +74,26 @@ class EventDatabase {
     eventNotifier.setCurrentEventMembers = _membersList;
   }
 
+  static Future<Event?> readEventFromCode(EventNotifier eventNotifier, String code) async {
+    Event? event;
+    Query eventQuery = _db.collection('Events').where('shareId', isEqualTo: code);
+    await eventQuery.get().then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        event = Event.fromJSON(querySnapshot.docs[0].data());
+      }
+    });
+    return event;
+  }
+
   // Update
+  static updateEvent(EventNotifier eventNotifier, Event event) async {
+    DocumentReference ref = _db.collection('Events').doc(event.uid!);
+
+    ref.update(event.toJSON()).whenComplete(() {
+      readMyEvents(eventNotifier);
+    });
+  }
+
   static Future addAdmin(EventNotifier eventNotifier, String userUid) async {
     DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
 

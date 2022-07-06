@@ -8,6 +8,7 @@ class Response {
   final DateTime date;
   final List<int> ratings;
   final int wellnessRating;
+  final int availability;
 
   Response({
     required this.uid,
@@ -16,6 +17,7 @@ class Response {
     required this.date,
     required this.ratings,
     required this.wellnessRating,
+    required this.availability,
   });
 
   // From JSON
@@ -27,6 +29,7 @@ class Response {
       date: DateUtils.dateOnly((json['date'] as Timestamp).toDate()),
       ratings: List<int>.from(json['ratings']),
       wellnessRating: json['wellnessRating'] as int,
+      availability: json['availability'] as int,
     );
   }
 
@@ -39,6 +42,7 @@ class Response {
       'date': date,
       'ratings': ratings,
       'wellnessRating': wellnessRating,
+      'availability': availability,
     };
   }
 
@@ -50,6 +54,7 @@ class Response {
     DateTime? date,
     List<int>? ratings,
     int? wellnessRating,
+    int? availability,
   }) =>
       Response(
         uid: uid ?? this.uid,
@@ -58,5 +63,6 @@ class Response {
         date: date ?? this.date,
         ratings: ratings ?? this.ratings,
         wellnessRating: wellnessRating ?? this.wellnessRating,
+        availability: availability ?? this.availability,
       );
 }

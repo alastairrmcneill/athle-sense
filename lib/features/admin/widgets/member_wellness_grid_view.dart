@@ -8,14 +8,22 @@ class MemberWellnessGridView extends StatelessWidget {
   const MemberWellnessGridView({Key? key}) : super(key: key);
 
   List<Widget> _buildTiles(ResponseNotifier responseNotifier) {
+    Response currentResponse = responseNotifier.currentResponse!;
+    Response firstResponse = responseNotifier.allResponsesForMember![0];
+
     List<Widget> _tiles = [];
     _tiles.add(MemberWellnessGridTile(
       title: 'Wellness',
-      value: responseNotifier.currentResponse!.wellnessRating.toString(),
+      value: currentResponse.wellnessRating.toString(),
+      baselineCompare: currentResponse.wellnessRating - firstResponse.wellnessRating,
     ));
 
-    for (var i = 1; i <= responseNotifier.currentResponse!.ratings.length; i++) {
-      _tiles.add(MemberWellnessGridTile(title: 'Q${i}', value: responseNotifier.currentResponse!.ratings[i - 1].toString()));
+    for (var i = 1; i <= currentResponse.ratings.length; i++) {
+      _tiles.add(MemberWellnessGridTile(
+        title: 'Q${i}',
+        value: currentResponse.ratings[i - 1].toString(),
+        baselineCompare: currentResponse.ratings[i - 1] - firstResponse.ratings[i - 1],
+      ));
     }
 
     return _tiles;

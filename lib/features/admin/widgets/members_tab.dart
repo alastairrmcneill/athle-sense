@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reading_wucc/features/admin/widgets/custom_dialog_box.dart';
 import 'package:reading_wucc/features/admin/widgets/member_tile.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 
@@ -18,8 +19,20 @@ class _MembersTabState extends State<MembersTab> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : ListView(
-            children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
+        : Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: ListView(
+                  children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
+                ),
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    showShareCodDialog(context: context, event: eventNotifier.currentEvent!);
+                  },
+                  child: Text('Share')),
+            ],
           );
   }
 }

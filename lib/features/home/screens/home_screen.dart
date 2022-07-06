@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/home/screens/screens.dart';
+import 'package:reading_wucc/features/home/widgets/custom_dialog_box.dart';
 import 'package:reading_wucc/features/home/widgets/event_list_view.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           SpeedDialChild(
             child: const Icon(Icons.group_add),
             label: 'Join event',
-            onTap: () {},
+            onTap: () {
+              showAddEventDialogBox(context, userNotifier, eventNotifier);
+            },
           ),
           SpeedDialChild(
             child: const Icon(Icons.add_rounded),

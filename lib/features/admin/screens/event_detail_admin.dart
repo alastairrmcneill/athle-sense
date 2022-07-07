@@ -17,7 +17,7 @@ class EventDetailAdmin extends StatefulWidget {
 class _EventDetailAdminState extends State<EventDetailAdmin> {
   int _tabIndex = 0;
   PageController _pageController = PageController();
-  List<Widget> screens = const [ResponseTab(), QuestionsTab(), MembersTab()];
+  List<Widget> screens = const [ResponseTab(), QuestionsTab(), MembersTab(), DailyResponseTab()];
 
   @override
   void initState() {
@@ -66,6 +66,7 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
           BottomNavigationBarItem(icon: Icon(Icons.question_answer_outlined), label: 'Responses'),
           BottomNavigationBarItem(icon: Icon(Icons.question_mark_outlined), label: 'Questions'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Members'),
+          BottomNavigationBarItem(icon: Icon(Icons.quiz_outlined), label: 'Your Question'),
         ],
       ),
     );

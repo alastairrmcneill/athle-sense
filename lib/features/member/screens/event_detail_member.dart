@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reading_wucc/features/member/widgets/widgets.dart';
 
 class EventDetailMember extends StatefulWidget {
   const EventDetailMember({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class _EventDetailMemberState extends State<EventDetailMember> {
       appBar: AppBar(
         title: Text('Member Page'),
       ),
+      body: DailyResponseForm(),
     );
   }
 }

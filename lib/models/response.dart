@@ -11,7 +11,7 @@ class Response {
   final int availability;
 
   Response({
-    required this.uid,
+    this.uid,
     required this.userUid,
     required this.eventUid,
     required this.date,

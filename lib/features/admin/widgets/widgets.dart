@@ -9,3 +9,4 @@ export 'member_tile.dart';
 export 'member_wellness_line_graph.dart';
 export 'member_wellness_graphs.dart';
 export 'member_availability.dart';
+export 'daily_response_tab.dart';

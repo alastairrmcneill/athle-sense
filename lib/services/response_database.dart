@@ -6,9 +6,21 @@ class ResponseDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Create
+  static Future<bool> createResponse(ResponseNotifier responseNotifier, Response response) async {
+    bool _success = false;
+    DocumentReference _ref = _db.collection('Responses').doc();
+
+    Response newResponse = response.copy(uid: _ref.id);
+    try {
+      await _ref.set(newResponse.toJSON()).whenComplete(() => _success = true);
+    } on FirebaseException catch (error) {
+      _success = false;
+    }
+    return _success;
+  }
 
   // Read
-  static readEventResponses(ResponseNotifier responseNotifier, String eventUid) async {
+  static Future readEventResponses(ResponseNotifier responseNotifier, String eventUid) async {
     List<Response> _responseList = [];
     List<List<Response>> _responsePerDayList = [[]];
 

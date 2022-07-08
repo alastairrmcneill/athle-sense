@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/home/screens/screens.dart';
 import 'package:reading_wucc/features/home/widgets/custom_dialog_box.dart';
 import 'package:reading_wucc/features/home/widgets/event_list_view.dart';
+import 'package:reading_wucc/features/home/widgets/widgets.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
@@ -34,14 +35,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: AppBar(
         title: const Text('Wellness Tracker'),
         actions: [
-          IconButton(
-            onPressed: () async {
-              await AuthService.signOut();
-            },
-            icon: Icon(Icons.logout_outlined),
-          )
+          Builder(
+            builder: (context) => IconButton(
+              onPressed: Scaffold.of(context).openEndDrawer,
+              icon: Icon(Icons.settings_outlined),
+            ),
+          ),
         ],
       ),
+      endDrawer: CustomRightDrawer(),
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         children: [

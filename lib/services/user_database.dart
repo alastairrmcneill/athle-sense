@@ -50,5 +50,8 @@ class UserDatabase {
   }
 
   // Delete
-
+  static Future deleteUser(String uid) async {
+    DocumentReference ref = _db.collection('Users').doc(uid);
+    await ref.delete();
+  }
 }

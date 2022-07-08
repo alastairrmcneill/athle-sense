@@ -132,6 +132,25 @@ class EventDatabase {
     }
   }
 
+  static Future removeUserFromEvents(String uid) async {
+    _db.collection('Events').where('admins', arrayContains: uid).get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        Event event = Event.fromJSON(ds.data());
+        event.admins.remove(uid);
+
+        ds.reference.update(event.toJSON());
+      }
+    });
+    _db.collection('Events').where('members', arrayContains: uid).get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        Event event = Event.fromJSON(ds.data());
+        event.members.remove(uid);
+
+        ds.reference.update(event.toJSON());
+      }
+    });
+  }
+
   // Delete
 
 }

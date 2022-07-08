@@ -83,6 +83,20 @@ class AuthService {
     await _auth.signOut();
   }
 
+  // Delete account
+  static Future delete() async {
+    // User user = _auth.currentUser!;
+    // String uid = user.uid;
+
+    // // await signOut();
+    // // await user.delete();
+
+    String uid = '1c4CGBHC0nWqI7Nk7ySaJSgv1XJ3';
+    await UserDatabase.deleteUser(uid);
+    await EventDatabase.removeUserFromEvents(uid);
+    await ResponseDatabase.deleteUserResponses(uid);
+  }
+
   // AppUser from Firebase user
   static AppUser? _appUserFromFirebaseUser(User? user) {
     return (user != null) ? AppUser(uid: user.uid, events: []) : null;

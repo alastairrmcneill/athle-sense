@@ -85,13 +85,11 @@ class AuthService {
 
   // Delete account
   static Future delete() async {
-    // User user = _auth.currentUser!;
-    // String uid = user.uid;
+    User user = _auth.currentUser!;
+    String uid = user.uid;
 
-    // // await signOut();
-    // // await user.delete();
-
-    String uid = '1c4CGBHC0nWqI7Nk7ySaJSgv1XJ3';
+    await signOut();
+    await user.delete();
     await UserDatabase.deleteUser(uid);
     await EventDatabase.removeUserFromEvents(uid);
     await ResponseDatabase.deleteUserResponses(uid);

@@ -127,8 +127,19 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
     );
 
     bool result = await ResponseDatabase.createResponse(responseNotifier, response);
-
+    ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
     return result;
+  }
+
+  bool _buildForm(ResponseNotifier responseNotifier) {
+    bool _alreadyResponded = false;
+
+    if (responseNotifier.myResponses != null && responseNotifier.myResponses!.isNotEmpty) {
+      if (responseNotifier.myResponses!.last.date.isAtSameMomentAs(DateUtils.dateOnly(DateTime.now()))) {
+        _alreadyResponded = true;
+      }
+    }
+    return _alreadyResponded;
   }
 
   @override
@@ -137,37 +148,38 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
 
-    return Column(
-      children: [
-        Text('Please rate the following between 1 (bad) and 5 (good).'),
-        ..._buildQuestionList(),
-        Text('How available are you for play today?'),
-        _buildAvailabilityQuestion(),
-        ElevatedButton(
-          onPressed: !_enableButton()
-              ? null
-              : () async {
-                  String _snackbarText = '';
-                  bool result = await _saveResponse(userNotifier, eventNotifier, responseNotifier);
+    return _buildForm(responseNotifier)
+        ? const Text('Already Responded')
+        : Column(
+            children: [
+              Text('Please rate the following between 1 (bad) and 5 (good).'),
+              ..._buildQuestionList(),
+              Text('How available are you for play today?'),
+              _buildAvailabilityQuestion(),
+              ElevatedButton(
+                onPressed: !_enableButton()
+                    ? null
+                    : () async {
+                        String _snackbarText = '';
+                        bool result = await _saveResponse(userNotifier, eventNotifier, responseNotifier);
 
-                  if (result) {
-                    _snackbarText = 'Saved response';
-                  } else {
-                    _snackbarText = 'Unsuccessful';
-                  }
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        _snackbarText,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  );
-                  Navigator.of(context).pop();
-                },
-          child: Text('Save'),
-        ),
-      ],
-    );
+                        if (result) {
+                          _snackbarText = 'Saved response';
+                        } else {
+                          _snackbarText = 'Unsuccessful';
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              _snackbarText,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
+                child: Text('Save'),
+              ),
+            ],
+          );
   }
 }

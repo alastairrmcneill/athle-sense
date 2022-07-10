@@ -23,9 +23,11 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
   void initState() {
     super.initState();
 
+    UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
-    _refresh(eventNotifier, responseNotifier);
+
+    _refresh(userNotifier, eventNotifier, responseNotifier);
   }
 
   @override
@@ -33,9 +35,10 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
     super.dispose();
   }
 
-  Future _refresh(EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
+  Future _refresh(UserNotifier userNotifier, EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
     await EventDatabase.readEventMembers(eventNotifier);
     await ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
+    await ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
   }
 
   @override

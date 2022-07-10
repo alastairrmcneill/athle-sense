@@ -12,7 +12,11 @@ class ResponseDatabase {
 
     Response newResponse = response.copy(uid: _ref.id);
     try {
-      await _ref.set(newResponse.toJSON()).whenComplete(() => _success = true);
+      await _ref.set(newResponse.toJSON()).whenComplete(() async {
+        _success = true;
+
+        await readEventResponses(responseNotifier, newResponse.eventUid);
+      });
     } on FirebaseException catch (error) {
       _success = false;
     }
@@ -53,6 +57,28 @@ class ResponseDatabase {
     // Write to notifiers
     responseNotifier.setAllResponses = _responseList;
     responseNotifier.setResponseEachDay = _responsePerDayList;
+  }
+
+  static Future readMemberResponses(ResponseNotifier responseNotifier, String eventUid, String userUid) async {
+    List<Response> _responseList = [];
+
+    Query eventResponseQuery = _db.collection('Responses').where('eventUid', isEqualTo: eventUid).where('userUid', isEqualTo: userUid);
+
+    await eventResponseQuery.get().then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        Response newResponse = Response.fromJSON(doc);
+        _responseList.add(newResponse);
+      });
+    });
+
+    // Sort list
+    _responseList.sort((a, b) => a.date.compareTo(b.date));
+
+    // Write to notifiers
+    responseNotifier.setAllResponsesForMember = _responseList;
+    responseNotifier.setAllResponses = _responseList;
+
+    responseNotifier.setMyResponses = _responseList;
   }
 
   // Update

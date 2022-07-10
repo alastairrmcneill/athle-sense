@@ -27,14 +27,16 @@ class _EventListViewState extends State<EventListView> {
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     return eventNotifier.userEvents == null
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
         : RefreshIndicator(
             onRefresh: () async {
               _refresh(eventNotifier);
             },
-            child: ListView(
-              children: eventNotifier.userEvents!.map((event) => EventTile(event: event)).toList(),
-            ),
+            child: eventNotifier.userEvents!.isEmpty
+                ? const Center(child: Text('Press the + to create or join a team'))
+                : ListView(
+                    children: eventNotifier.userEvents!.map((event) => EventTile(event: event)).toList(),
+                  ),
           );
   }
 }

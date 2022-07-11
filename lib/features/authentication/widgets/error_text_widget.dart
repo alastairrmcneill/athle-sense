@@ -6,6 +6,13 @@ class ErrorText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(errorText);
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Text(
+        errorText,
+        style: Theme.of(context).textTheme.caption,
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }

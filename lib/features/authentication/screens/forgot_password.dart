@@ -60,31 +60,49 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Forgot Password'),
+        title: const Text('Password Recovery'),
       ),
-      body: Column(children: [
-        Form(
-          key: _formKey,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildEmailInput(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 35),
+                child: Text(
+                  'To reset your password, please enter your email address below.',
+                  style: Theme.of(context).textTheme.headline5,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildEmailInput(),
+                  ],
+                ),
+              ),
+              ErrorText(errorText: _errorText),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+                    _formKey.currentState!.save();
+                    await _forgotPassword();
+                  },
+                  child: Text('Send email'),
+                ),
+              ),
             ],
           ),
         ),
-        ErrorText(errorText: _errorText),
-        ElevatedButton(
-          onPressed: () async {
-            if (!_formKey.currentState!.validate()) {
-              return;
-            }
-            _formKey.currentState!.save();
-            await _forgotPassword();
-          },
-          child: Text('Send email'),
-        ),
-      ]),
+      ),
     );
   }
 }

@@ -154,5 +154,11 @@ class EventDatabase {
   }
 
   // Delete
+  static Future deleteEvent(EventNotifier eventNotifier) async {
+    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
 
+    await ref.delete();
+
+    await readMyEvents(eventNotifier);
+  }
 }

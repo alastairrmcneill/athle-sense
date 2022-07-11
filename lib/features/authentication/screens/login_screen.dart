@@ -39,6 +39,7 @@ class _ForgotPasswordState extends State<LoginScreen> {
 
   Widget _buildEmailInput() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: const InputDecoration(
         labelText: 'Email',
         prefixIcon: Icon(Icons.email_outlined),
@@ -63,6 +64,7 @@ class _ForgotPasswordState extends State<LoginScreen> {
 
   Widget _buildPasswordInput() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: InputDecoration(
         labelText: 'Password',
         prefixIcon: const Icon(Icons.lock_outline),
@@ -96,52 +98,74 @@ class _ForgotPasswordState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Column(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildEmailInput(),
-                _buildPasswordInput(),
-              ],
-            ),
-          ),
-          ErrorText(errorText: _errorText),
-          ElevatedButton(
-            onPressed: () async {
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState!.save();
-              await _login(userNotifier);
-            },
-            child: Text('Login'),
-          ),
-          IntrinsicHeight(
-            child: Row(
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ForgotPassword())),
-                  child: const Text('Forgot Password'),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Wellness\nTracker',
+                    style: Theme.of(context).textTheme.headline1,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                const VerticalDivider(
-                  indent: 10,
-                  endIndent: 10,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildEmailInput(),
+                    _buildPasswordInput(),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())),
-                  child: Text('Sign Up'),
-                )
-              ],
-            ),
-          )
-        ],
+              ),
+              ErrorText(errorText: _errorText),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+                    _formKey.currentState!.save();
+                    await _login(userNotifier);
+                  },
+                  child: Text('Login'),
+                ),
+              ),
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: TextButton(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ForgotPassword())),
+                        child: const Text('Forgot Password'),
+                      ),
+                    ),
+                    const VerticalDivider(
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: TextButton(
+                        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const RegisterScreen())),
+                        child: Text('Sign Up'),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

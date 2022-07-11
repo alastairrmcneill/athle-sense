@@ -6,6 +6,7 @@ import 'package:reading_wucc/features/admin/widgets/questions_tab.dart';
 import 'package:reading_wucc/features/admin/widgets/widgets.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
+import 'package:reading_wucc/widgets/confirm_dialog.dart';
 
 class EventDetailAdmin extends StatefulWidget {
   const EventDetailAdmin({Key? key}) : super(key: key);
@@ -43,9 +44,18 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
 
   @override
   Widget build(BuildContext context) {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Page'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await showConfirmDeleteDialog(context: context, eventNotifier: eventNotifier);
+            },
+            icon: Icon(Icons.delete_outline),
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,

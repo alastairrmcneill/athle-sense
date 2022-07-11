@@ -167,31 +167,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: Text('Register'),
       ),
-      body: Column(children: [
-        Form(
-          key: _formKey,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildNameInput(),
-              _buildEmailInput(),
-              _buildPassword1Input(),
-              _buildPassword2Input(),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildNameInput(),
+                    _buildEmailInput(),
+                    _buildPassword1Input(),
+                    _buildPassword2Input(),
+                  ],
+                ),
+              ),
+              ErrorText(errorText: _errorText),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () async {
+                      if (!_formKey.currentState!.validate()) {
+                        return;
+                      }
+                      _formKey.currentState!.save();
+                      await _register(userNotifier);
+                    },
+                    child: Text('Register')),
+              )
             ],
           ),
         ),
-        ErrorText(errorText: _errorText),
-        ElevatedButton(
-            onPressed: () async {
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState!.save();
-              await _register(userNotifier);
-            },
-            child: Text('Register'))
-      ]),
+      ),
     );
   }
 }

@@ -57,6 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildNameInput() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: const InputDecoration(
         labelText: 'Name',
         prefixIcon: Icon(Icons.person_outline),
@@ -76,6 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildEmailInput() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: const InputDecoration(
         labelText: 'Email',
         prefixIcon: Icon(Icons.email_outlined),
@@ -100,6 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildPassword1Input() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: InputDecoration(
         labelText: 'Password',
         prefixIcon: const Icon(Icons.lock_outline),
@@ -131,6 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildPassword2Input() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: InputDecoration(
         labelText: 'Password',
         prefixIcon: const Icon(Icons.lock_outline),

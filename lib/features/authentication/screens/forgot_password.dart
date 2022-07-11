@@ -34,6 +34,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   Widget _buildEmailInput() {
     return TextFormField(
+      style: Theme.of(context).textTheme.headline5,
       decoration: const InputDecoration(
         labelText: 'Email',
         prefixIcon: Icon(Icons.email_outlined),

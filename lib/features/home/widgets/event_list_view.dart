@@ -34,10 +34,14 @@ class _EventListViewState extends State<EventListView> {
             },
             child: eventNotifier.userEvents!.isEmpty
                 ? const Center(child: Text('Press the + to create or join a team'))
-                : ListView(children: [
-                    Text('Here are your events:'),
-                    ...eventNotifier.userEvents!.map((event) => EventTile(event: event)).toList(),
-                  ]),
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ListView(children: [
+                      Text('Here are your events:'),
+                      SizedBox(height: 10),
+                      ...eventNotifier.userEvents!.map((event) => EventTile(event: event)).toList(),
+                    ]),
+                  ),
           );
   }
 }

@@ -140,31 +140,37 @@ class _NewEventFormState extends State<NewEventForm> {
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
-    return Column(
-      children: [
-        Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildNameInput(),
-              _buildStartDatePicker(),
-              _buildEndDatePicker(),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildNameInput(),
+                _buildStartDatePicker(),
+                _buildEndDatePicker(),
+              ],
+            ),
           ),
-        ),
-        ElevatedButton(
-            onPressed: () {
-              if (!_formKey.currentState!.validate()) {
-                return;
-              }
-              _formKey.currentState!.save();
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+                onPressed: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  _formKey.currentState!.save();
 
-              _createEvent(userNotifier, eventNotifier);
-            },
-            child: Text('Save'))
-      ],
+                  _createEvent(userNotifier, eventNotifier);
+                },
+                child: Text('Save')),
+          )
+        ],
+      ),
     );
   }
 }

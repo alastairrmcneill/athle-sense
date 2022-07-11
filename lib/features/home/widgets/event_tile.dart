@@ -5,10 +5,27 @@ import 'package:reading_wucc/features/admin/screens/screens.dart';
 import 'package:reading_wucc/features/member/screens/screens.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/support/theme.dart';
+import 'package:intl/intl.dart';
 
 class EventTile extends StatelessWidget {
   final Event event;
   const EventTile({Key? key, required this.event}) : super(key: key);
+
+  String _buildDateString() {
+    String startDate = DateFormat('dd/MM/yyyy').format(event.startDate);
+    String endDate = DateFormat('dd/MM/yyyy').format(event.endDate);
+
+    return '$startDate - $endDate';
+  }
+
+  String _buildMembersString() {
+    int members = event.members.length + event.admins.length;
+    if (members == 1) {
+      return '$members member';
+    }
+    return '$members members';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +36,49 @@ class EventTile extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(builder: (_) => event.amAdmin ? const EventDetailAdmin() : const EventDetailMember()));
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           child: Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: event.amAdmin ? Colors.red : Colors.blue,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFFEFFDDD), Color(0xFFBCE9F1)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )),
-            height: 300,
-            child: AutoSizeText(
-              event.name,
-              maxLines: 2,
-              wrapWords: true,
-              minFontSize: 16,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 60),
+            color: MyColors.lightRedColor,
+            height: 250,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  event.name,
+                  maxLines: 2,
+                  wrapWords: true,
+                  minFontSize: 16,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  _buildDateString(),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  _buildMembersString(),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(flex: 1, child: Container()),
+                      Text(
+                        event.amAdmin ? 'Admin' : '',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

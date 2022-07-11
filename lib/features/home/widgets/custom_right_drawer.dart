@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/services/auth_service.dart';
-import 'package:reading_wucc/services/user_database.dart';
+import 'package:reading_wucc/features/home/widgets/widgets.dart';
+
+import 'package:reading_wucc/services/services.dart';
 
 class CustomRightDrawer extends StatelessWidget {
   const CustomRightDrawer({Key? key}) : super(key: key);
@@ -8,30 +9,35 @@ class CustomRightDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          DrawerHeader(
-            child: Container(
-              height: 100,
-              color: Colors.red,
-            ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await AuthService.signOut();
+                  },
+                  child: const Text('Sign Out'),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                    onPressed: () async {
+                      await showDeleteAccountDialog(context: context);
+                    },
+                    child: const Text('Delete Account')),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 1,
-            child: Container(),
-          ),
-          TextButton(
-            onPressed: () async {
-              await AuthService.signOut();
-            },
-            child: Text('Sign Out'),
-          ),
-          TextButton(
-              onPressed: () async {
-                await AuthService.delete();
-              },
-              child: Text('Delete')),
-        ],
+        ),
       ),
     );
   }

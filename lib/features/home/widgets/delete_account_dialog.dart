@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:reading_wucc/services/auth_service.dart';
 import 'package:reading_wucc/support/theme.dart';
 
-// 1 button Dialog
-showConfirmDeleteDialog({required BuildContext context, required Future<dynamic> function}) {
+showDeleteAccountDialog({required BuildContext context}) {
   Dialog alert = Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     child: Container(
@@ -16,7 +15,7 @@ showConfirmDeleteDialog({required BuildContext context, required Future<dynamic>
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Are you sure you want to delete?',
+            'Are you sure you want to delete your account?',
             style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
             textAlign: TextAlign.center,
           ),
@@ -26,9 +25,8 @@ showConfirmDeleteDialog({required BuildContext context, required Future<dynamic>
             child: ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(Colors.red)),
               onPressed: () async {
-                await function;
                 Navigator.pop(context);
-                Navigator.pop(context);
+                await AuthService.delete();
               },
               child: Text(
                 'Delete',

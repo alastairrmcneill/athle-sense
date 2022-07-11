@@ -88,8 +88,8 @@ class AuthService {
     User user = _auth.currentUser!;
     String uid = user.uid;
 
-    await signOut();
     await user.delete();
+
     await UserDatabase.deleteUser(uid);
     await EventDatabase.removeUserFromEvents(uid);
     await ResponseDatabase.deleteUserResponses(uid);

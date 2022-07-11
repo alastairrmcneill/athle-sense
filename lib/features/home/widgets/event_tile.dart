@@ -41,7 +41,7 @@ class EventTile extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(20)),
           child: Container(
             padding: const EdgeInsets.all(10),
-            color: MyColors.lightRedColor,
+            color: MyColors.lightBlueColor,
             height: 250,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

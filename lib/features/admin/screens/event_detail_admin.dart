@@ -51,7 +51,7 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
         actions: [
           IconButton(
             onPressed: () async {
-              await showConfirmDeleteDialog(context: context, eventNotifier: eventNotifier);
+              await showConfirmDeleteDialog(context: context, function: await EventDatabase.deleteEvent(eventNotifier));
             },
             icon: Icon(Icons.delete_outline),
           ),

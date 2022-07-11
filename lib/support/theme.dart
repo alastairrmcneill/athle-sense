@@ -4,7 +4,7 @@ class MyThemes {
   static ThemeData get lightTheme {
     return ThemeData(
       scaffoldBackgroundColor: MyColors.backgroundColor,
-      primarySwatch: Colors.orange,
+      primarySwatch: Colors.teal,
       appBarTheme: AppBarTheme(
         backgroundColor: MyColors.backgroundColor,
         foregroundColor: MyColors.darkTextColor,
@@ -26,6 +26,7 @@ class MyThemes {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor),
+          elevation: MaterialStateProperty.all<double?>(0),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),

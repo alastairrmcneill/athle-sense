@@ -9,7 +9,7 @@ class EventDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Create
-  static Future createEvent(UserNotifier userNotiifer, Event event) async {
+  static Future createEvent(UserNotifier userNotiifer, EventNotifier eventNotifier, Event event) async {
     DocumentReference ref = _db.collection('Events').doc();
 
     Event newEvent = event.copy(uid: ref.id);
@@ -20,6 +20,8 @@ class EventDatabase {
 
       await UserDatabase.updateUser(userNotiifer, user);
     });
+
+    await readMyEvents(eventNotifier);
   }
 
   // Read

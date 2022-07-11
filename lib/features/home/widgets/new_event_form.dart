@@ -30,7 +30,7 @@ class _NewEventFormState extends State<NewEventForm> {
     return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
   }
 
-  Future _createEvent(UserNotifier userNotifier) async {
+  Future _createEvent(UserNotifier userNotifier, EventNotifier eventNotifier) async {
     Event neweEvent = Event(
       name: _name.trim(),
       startDate: _startDate,
@@ -39,7 +39,9 @@ class _NewEventFormState extends State<NewEventForm> {
       members: [],
       shareId: randomString(6),
     );
-    await EventDatabase.createEvent(userNotifier, neweEvent);
+    await EventDatabase.createEvent(userNotifier, eventNotifier, neweEvent);
+
+    Navigator.pop(context);
   }
 
   Widget _buildNameInput() {
@@ -137,6 +139,7 @@ class _NewEventFormState extends State<NewEventForm> {
   @override
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     return Column(
       children: [
         Form(
@@ -158,7 +161,7 @@ class _NewEventFormState extends State<NewEventForm> {
               }
               _formKey.currentState!.save();
 
-              _createEvent(userNotifier);
+              _createEvent(userNotifier, eventNotifier);
             },
             child: Text('Save'))
       ],

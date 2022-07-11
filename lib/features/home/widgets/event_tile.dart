@@ -38,7 +38,7 @@ class EventTile extends StatelessWidget {
               wrapWords: true,
               minFontSize: 16,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 72),
+              style: TextStyle(fontSize: 60),
             ),
           ),
         ),

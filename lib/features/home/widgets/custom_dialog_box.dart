@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:reading_wucc/features/home/services/event_service.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 // 1 button Dialog
 showAddEventDialogBox(BuildContext context, UserNotifier userNotifier, EventNotifier eventNotifier) {
@@ -32,54 +33,70 @@ showAddEventDialogBox(BuildContext context, UserNotifier userNotifier, EventNoti
   Dialog alert = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Container(
-          height: 200.0,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           width: 200.0,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.0)),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Share this code with your team.'),
+              Text(
+                'Join event through the event code.',
+                style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 10.0),
               _buildForm(),
               const SizedBox(height: 10.0),
-              Row(
+              Column(
                 children: [
-                  TextButton(
-                    child: Text(
-                      'Cancel',
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Join',
-                    ),
-                    onPressed: () async {
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      }
-                      _formKey.currentState!.save();
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      child: Text(
+                        'Join',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+                      ),
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState!.save();
 
-                      String snackBarText = '';
-                      String result = await addEventToUser(userNotifier, eventNotifier, _code);
+                        String snackBarText = '';
+                        String result = await addEventToUser(userNotifier, eventNotifier, _code);
 
-                      if (result == '') {
-                        snackBarText = 'Unsuccesful';
-                      } else {
-                        snackBarText = result;
-                      }
+                        if (result == '') {
+                          snackBarText = 'Unsuccesful';
+                        } else {
+                          snackBarText = result;
+                        }
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            snackBarText,
-                            textAlign: TextAlign.center,
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              snackBarText,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                    },
+                        );
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[300])),
+                      child: Text(
+                        'Cancel',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ),
                 ],
               )

@@ -28,10 +28,11 @@ class _EventDetailMemberState extends State<EventDetailMember> {
   @override
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Member Page'),
+        title: Text(eventNotifier.currentEvent!.name),
       ),
       body: PageView(
         controller: _pageController,

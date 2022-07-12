@@ -71,7 +71,12 @@ class _PreviousResponsesTabState extends State<PreviousResponsesTab> {
     return responseNotifier.allResponsesForMember == null
         ? const Center(child: CircularProgressIndicator())
         : responseNotifier.allResponsesForMember!.isEmpty
-            ? const Center(child: Text('No responses yet'))
+            ? Center(
+                child: Text(
+                  'No responses yet',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              )
             : Column(
                 children: [
                   const MemberWellnessLineGraph(),

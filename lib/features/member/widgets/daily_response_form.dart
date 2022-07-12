@@ -4,6 +4,7 @@ import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/models/question.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/services.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class DailyResponseForm extends StatefulWidget {
   const DailyResponseForm({Key? key}) : super(key: key);
@@ -27,47 +28,55 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
   }
 
   Widget _buildQuestion(int index) {
-    return Column(
-      children: [
-        Text(Questions.long[index]),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [Text('Bad'), Text('Good')],
-        ),
-        ToggleButtons(
-          isSelected: _selections[index],
-          onPressed: (indexPressed) {
-            setState(() {
-              for (int buttonIndex = 0; buttonIndex < _selections.length; buttonIndex++) {
-                if (buttonIndex == indexPressed) {
-                  _selections[index][buttonIndex] = !_selections[index][buttonIndex];
-                } else {
-                  _selections[index][buttonIndex] = false;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            myQuestions[index].long,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          ToggleButtons(
+            constraints: BoxConstraints(minWidth: (MediaQuery.of(context).size.width - 40) / 5, maxWidth: (MediaQuery.of(context).size.width - 40) / 5, minHeight: 40),
+            isSelected: _selections[index],
+            onPressed: (indexPressed) {
+              setState(() {
+                for (int buttonIndex = 0; buttonIndex < _selections.length; buttonIndex++) {
+                  if (buttonIndex == indexPressed) {
+                    _selections[index][buttonIndex] = !_selections[index][buttonIndex];
+                  } else {
+                    _selections[index][buttonIndex] = false;
+                  }
                 }
-              }
-            });
-          },
-          children: _buildButtons(index),
-          // selectedBorderColor: Colors.transparent,
-          // borderColor: Colors.transparent,
-          // fillColor: Colors.transparent,
-        ),
-      ],
+              });
+            },
+            children: _buildButtons(index),
+          ),
+        ],
+      ),
     );
   }
 
   List<Widget> _buildButtons(int index) {
-    return [
-      _selections[index][0] ? Text('1') : Text('One'),
-      _selections[index][1] ? Text('2') : Text('Two'),
-      _selections[index][2] ? Text('3') : Text('Three'),
-      _selections[index][3] ? Text('4') : Text('Four'),
-      _selections[index][4] ? Text('5') : Text('Five'),
-    ];
+    List<Widget> _list = [];
+
+    myQuestions[index].responses.forEach((response) {
+      _list.add(
+        Text(
+          response,
+          style: Theme.of(context).textTheme.headline6,
+          textAlign: TextAlign.center,
+        ),
+      );
+    });
+
+    return _list;
   }
 
   Widget _buildAvailabilityQuestion() {
     return ToggleButtons(
+      constraints: BoxConstraints(minWidth: (MediaQuery.of(context).size.width - 40) / 3, maxWidth: (MediaQuery.of(context).size.width - 40) / 3, minHeight: 40),
       isSelected: _availabilitySelections,
       onPressed: (indexPressed) {
         setState(() {
@@ -81,17 +90,44 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
         });
       },
       children: _buildAvailabilityButtons(),
-      // selectedBorderColor: Colors.transparent,
-      // borderColor: Colors.transparent,
-      // fillColor: Colors.transparent,
     );
   }
 
   List<Widget> _buildAvailabilityButtons() {
     return [
-      !_availabilitySelections[0] ? Text('No pitch time') : Text('Sad'),
-      !_availabilitySelections[1] ? Text('Shortened') : Text('OK'),
-      !_availabilitySelections[2] ? Text('Good to go') : Text('Awesome'),
+      !_availabilitySelections[0]
+          ? Text(
+              'No pitch time',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            )
+          : Text(
+              'Sad',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+      !_availabilitySelections[1]
+          ? Text(
+              'Shortened',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            )
+          : Text(
+              'OK',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
+      !_availabilitySelections[2]
+          ? Text(
+              'Good to go',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            )
+          : Text(
+              'Awesome',
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.center,
+            ),
     ];
   }
 
@@ -149,37 +185,59 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
 
     return _buildForm(responseNotifier)
-        ? const Text('Already Responded')
-        : Column(
-            children: [
-              Text('Please rate the following between 1 (bad) and 5 (good).'),
-              ..._buildQuestionList(),
-              Text('How available are you for play today?'),
-              _buildAvailabilityQuestion(),
-              ElevatedButton(
-                onPressed: !_enableButton()
-                    ? null
-                    : () async {
-                        String _snackbarText = '';
-                        bool result = await _saveResponse(userNotifier, eventNotifier, responseNotifier);
+        ? Center(
+            child: Text(
+              'Already Responded',
+              style: Theme.of(context).textTheme.headline5,
+            ),
+          )
+        : SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Please rate the following between 1 (bad) and 5 (good).',
+                    style: Theme.of(context).textTheme.headline5,
+                    textAlign: TextAlign.center,
+                  ),
+                  ..._buildQuestionList(),
+                  Text('How available are you for play today?', style: Theme.of(context).textTheme.headline5),
+                  _buildAvailabilityQuestion(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: !_enableButton()
+                          ? null
+                          : () async {
+                              String _snackbarText = '';
+                              bool result = await _saveResponse(userNotifier, eventNotifier, responseNotifier);
 
-                        if (result) {
-                          _snackbarText = 'Saved response';
-                        } else {
-                          _snackbarText = 'Unsuccessful';
-                        }
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              _snackbarText,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        );
-                      },
-                child: Text('Save'),
+                              if (result) {
+                                _snackbarText = 'Saved response';
+                              } else {
+                                _snackbarText = 'Unsuccessful';
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    _snackbarText,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            },
+                      child: Text(
+                        'Save',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           );
   }
 }

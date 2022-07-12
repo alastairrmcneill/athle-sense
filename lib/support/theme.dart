@@ -39,6 +39,7 @@ class MyThemes {
         headline2: TextStyle(color: MyColors.darkTextColor, fontSize: 60, fontWeight: FontWeight.w300),
         headline4: TextStyle(color: MyColors.darkTextColor),
         headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 16, fontWeight: FontWeight.w300),
+        headline6: TextStyle(color: MyColors.darkTextColor, fontSize: 14, fontWeight: FontWeight.w300),
         caption: TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
       ),
     );

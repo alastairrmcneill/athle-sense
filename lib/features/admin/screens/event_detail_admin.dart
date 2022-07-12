@@ -47,7 +47,7 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Page'),
+        title: Text('${eventNotifier.currentEvent!.name} - Admin'),
         actions: [
           IconButton(
             onPressed: () async {

@@ -52,7 +52,10 @@ class _PreviousResponsesTabState extends State<PreviousResponsesTab> {
                 },
           icon: Icon(Icons.chevron_left_rounded),
         ),
-        Text(displayDate),
+        Text(
+          displayDate,
+          style: Theme.of(context).textTheme.headline5,
+        ),
         IconButton(
           onPressed: activeIndex == responseNotifier.myResponses!.length - 1
               ? null
@@ -81,6 +84,7 @@ class _PreviousResponsesTabState extends State<PreviousResponsesTab> {
                 children: [
                   const MemberWellnessLineGraph(),
                   _buildButtons(responseNotifier),
+                  const SizedBox(height: 5),
                   Expanded(
                     child: PageView(
                       controller: _pageController,

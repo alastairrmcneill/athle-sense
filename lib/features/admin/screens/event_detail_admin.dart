@@ -75,7 +75,7 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
             _tabIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.question_answer_outlined), label: 'Responses'),
           BottomNavigationBarItem(icon: Icon(Icons.question_mark_outlined), label: 'Questions'),
           BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Members'),

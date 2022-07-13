@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/admin/widgets/custom_dialog_box.dart';
 import 'package:reading_wucc/features/admin/widgets/member_tile.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class MembersTab extends StatefulWidget {
   const MembersTab({Key? key}) : super(key: key);
@@ -19,20 +20,33 @@ class _MembersTabState extends State<MembersTab> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: ListView(
-                  children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: ListView(
+                    children: eventNotifier.currentEventMembers!.map((member) => MemberTile(member: member)).toList(),
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    showShareCodDialog(context: context, event: eventNotifier.currentEvent!);
-                  },
-                  child: Text('Share')),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        showShareCodDialog(context: context, event: eventNotifier.currentEvent!);
+                      },
+                      child: Text(
+                        'Share',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
   }
 }

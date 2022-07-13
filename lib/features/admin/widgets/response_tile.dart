@@ -63,11 +63,9 @@ class _MemberTileState extends State<ResponseTile> {
           responseNotifier.allResponses!.forEach((response) {
             if (widget.member.uid == response.userUid) {
               _allResponsesForMember.add(response);
-              print(response.uid);
             }
           });
-          print('');
-          print(widget.response!.uid);
+
           responseNotifier.setCurrentResponse = widget.response!;
           responseNotifier.setAllResponsesForMember = _allResponsesForMember;
           Navigator.push(context, MaterialPageRoute(builder: (_) => MemberDetailScreen(member: widget.member)));

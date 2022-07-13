@@ -6,7 +6,10 @@ class QuestionsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Feature is in the works. Will come later.'),
+      child: Text(
+        'Feature is in the works. Will come later.',
+        style: Theme.of(context).textTheme.headline5,
+      ),
     );
   }
 }

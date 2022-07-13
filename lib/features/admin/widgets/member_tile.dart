@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reading_wucc/models/member.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class MemberTile extends StatefulWidget {
   final Member member;
@@ -38,37 +39,49 @@ class _MemberListViewState extends State<MemberTile> {
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      height: 60,
-      color: Colors.amber,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(widget.member.name),
-          _disabled
-              ? SizedBox()
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Admin?'),
-                    SizedBox(
-                      height: 28,
-                      width: 50,
-                      child: Switch(
-                        value: _value,
-                        onChanged: (value) async {
-                          await _udpateUserLevel(eventNotifier, value);
-                          setState(() {
-                            _value = value;
-                          });
-                        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        height: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: MyColors.lightBlueColor,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              widget.member.name,
+              style: Theme.of(context).textTheme.headline5,
+            ),
+            _disabled
+                ? const SizedBox()
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Admin?',
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                    )
-                  ],
-                )
-        ],
+                      SizedBox(
+                        height: 28,
+                        width: 50,
+                        child: Switch(
+                          value: _value,
+                          onChanged: (value) async {
+                            await _udpateUserLevel(eventNotifier, value);
+                            setState(() {
+                              _value = value;
+                            });
+                          },
+                        ),
+                      )
+                    ],
+                  )
+          ],
+        ),
       ),
     );
   }

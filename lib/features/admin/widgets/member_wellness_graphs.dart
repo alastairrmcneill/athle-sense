@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reading_wucc/features/admin/widgets/widgets.dart';
+import 'package:reading_wucc/support/theme.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MemberWellnessGraphs extends StatefulWidget {
@@ -15,9 +16,8 @@ class _MemberWellnessGraphsState extends State<MemberWellnessGraphs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 5),
+      padding: const EdgeInsets.only(bottom: 5),
       height: 250,
-      color: Colors.pink,
       child: Column(
         children: [
           Expanded(
@@ -28,7 +28,7 @@ class _MemberWellnessGraphsState extends State<MemberWellnessGraphs> {
                   _pageIndex = index;
                 });
               },
-              children: [
+              children: const [
                 MemberWellnessRadar(),
                 MemberWellnessLineGraph(),
               ],
@@ -37,9 +37,9 @@ class _MemberWellnessGraphsState extends State<MemberWellnessGraphs> {
           AnimatedSmoothIndicator(
             activeIndex: _pageIndex,
             count: 2,
-            effect: const WormEffect(
-              activeDotColor: Color(0xFFeecac4),
-              dotColor: Color(0xFF4a4b53),
+            effect: WormEffect(
+              activeDotColor: Colors.teal,
+              dotColor: MyColors.darkTextColor!,
               dotHeight: 6,
               dotWidth: 6,
             ),

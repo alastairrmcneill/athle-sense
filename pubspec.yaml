@@ -46,6 +46,7 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   auto_size_text: ^3.0.0
   flutter_launcher_icons: ^0.9.3
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:

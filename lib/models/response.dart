@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class Response {
   final String? uid;
@@ -65,4 +67,19 @@ class Response {
         wellnessRating: wellnessRating ?? this.wellnessRating,
         availability: availability ?? this.availability,
       );
+
+  static List<Icon> availabilityIcons = [
+    Icon(
+      FontAwesomeIcons.solidFaceFrown,
+      color: MyColors.darkRedColor,
+    ),
+    Icon(
+      FontAwesomeIcons.solidFaceMeh,
+      color: MyColors.darkYellowColor,
+    ),
+    Icon(
+      FontAwesomeIcons.solidFaceGrin,
+      color: MyColors.darkGreenColor,
+    ),
+  ];
 }

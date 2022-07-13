@@ -29,21 +29,24 @@ class _MemberListViewState extends State<ResponseListView> {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
     return eventNotifier.currentEventMembers == null
         ? const Center(child: CircularProgressIndicator())
-        : ListView(
-            children: eventNotifier.currentEventMembers!.map((member) {
-              Response? _response;
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: ListView(
+              children: eventNotifier.currentEventMembers!.map((member) {
+                Response? _response;
 
-              if (responseNotifier.responseEachDay != null) {
-                for (var response in responseNotifier.responseEachDay![widget.dayIndex]) {
-                  if (member.uid == response.userUid) {
-                    _response = response;
-                    break;
+                if (responseNotifier.responseEachDay != null) {
+                  for (var response in responseNotifier.responseEachDay![widget.dayIndex]) {
+                    if (member.uid == response.userUid) {
+                      _response = response;
+                      break;
+                    }
                   }
                 }
-              }
 
-              return ResponseTile(member: member, response: _response);
-            }).toList(),
+                return ResponseTile(member: member, response: _response);
+              }).toList(),
+            ),
           );
   }
 }

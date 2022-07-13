@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/features/admin/screens/screens.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class ResponseTile extends StatefulWidget {
   final Member member;
@@ -14,9 +16,38 @@ class ResponseTile extends StatefulWidget {
 }
 
 class _MemberTileState extends State<ResponseTile> {
+  Color _backgroundColor = MyColors.lightBlueColor!;
+  Color _foregroundColor = MyColors.darkBlueColor!;
   @override
   void initState() {
     super.initState();
+    if (widget.response == null) {
+      return;
+    }
+    if (widget.response!.availability == 1) {
+      _backgroundColor = MyColors.lightRedColor!;
+      _foregroundColor = MyColors.darkRedColor!;
+    } else if (widget.response!.availability == 2) {
+      _backgroundColor = MyColors.lightYellowColor!;
+      _foregroundColor = MyColors.darkYellowColor!;
+    } else if (widget.response!.availability == 3) {
+      _backgroundColor = MyColors.lightGreenColor!;
+      _foregroundColor = MyColors.darkGreenColor!;
+    } else {
+      _backgroundColor = MyColors.lightBlueColor!;
+      _foregroundColor = MyColors.darkBlueColor!;
+    }
+  }
+
+  Widget _buildIcon() {
+    if (widget.response == null) {
+      return Icon(
+        Icons.block,
+        color: _foregroundColor,
+      );
+    } else {
+      return Response.availabilityIcons[widget.response!.availability - 1];
+    }
   }
 
   @override
@@ -32,22 +63,39 @@ class _MemberTileState extends State<ResponseTile> {
           responseNotifier.allResponses!.forEach((response) {
             if (widget.member.uid == response.userUid) {
               _allResponsesForMember.add(response);
+              print(response.uid);
             }
           });
-
+          print('');
+          print(widget.response!.uid);
           responseNotifier.setCurrentResponse = widget.response!;
           responseNotifier.setAllResponsesForMember = _allResponsesForMember;
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const MemberDetailScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (_) => MemberDetailScreen(member: widget.member)));
         }
       },
-      child: Container(
-        height: 50,
-        color: widget.response == null ? Colors.red : Colors.green,
-        child: Column(
-          children: [
-            Text(widget.member.name),
-            widget.response == null ? Text('Not responded') : Text('Responded'),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          child: Container(
+            padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 20),
+            height: 70,
+            decoration: BoxDecoration(
+              color: widget.response == null ? MyColors.lightBlueColor : _backgroundColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  widget.member.name,
+                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 30, color: _foregroundColor),
+                ),
+                _buildIcon(),
+              ],
+            ),
+          ),
         ),
       ),
     );

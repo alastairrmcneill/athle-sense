@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:reading_wucc/features/admin/widgets/widgets.dart';
+import 'package:reading_wucc/models/models.dart';
 
 class MemberDetailScreen extends StatefulWidget {
-  const MemberDetailScreen({Key? key}) : super(key: key);
+  final Member member;
+  const MemberDetailScreen({Key? key, required this.member}) : super(key: key);
 
   @override
   State<MemberDetailScreen> createState() => _MemberDetailScreenState();
@@ -13,7 +15,7 @@ class _MemberDetailScreenState extends State<MemberDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Member Detail'),
+        title: Text(widget.member.name),
       ),
       body: Column(
         children: const [

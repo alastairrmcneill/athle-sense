@@ -28,7 +28,7 @@ class WellnessGridView extends StatelessWidget {
 
     for (var i = 0; i < currentResponse.ratings.length; i++) {
       _tiles.add(WellnessGridTile(
-        title: Questions.short[i],
+        title: myQuestions[i].short,
         value: currentResponse.ratings[i].toString(),
         baselineCompare: currentResponse.ratings[i] - firstResponse.ratings[i],
         previousCompare: currentResponse.ratings[i] - previousResponse.ratings[0],

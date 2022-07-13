@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:reading_wucc/support/theme.dart';
 
 class WellnessChart extends StatelessWidget {
   const WellnessChart({Key? key}) : super(key: key);
@@ -29,32 +30,22 @@ class WellnessChart extends StatelessWidget {
     }
 
     return spots;
-    // int count = responsesEachDay.length;
-    // List<int> sums = [for (var i = 0; i < responsesEachDay[0].ratings.length; i++) 0];
-
-    // for (var response in responses) {
-    //   for (var i = 0; i < sums.length; i += 1) {
-    //     sums[i] += response.ratings[i];
-    //   }
-    // }
-
-    // List<double> averages = sums.map((e) => e / count).toList();
-    // return averages.toString();
   }
 
   @override
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
     return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 20, right: 20, left: 10),
-      height: 200,
-      color: Colors.purple,
+      padding: const EdgeInsets.only(top: 20, bottom: 20, right: 20, left: 10),
+      height: 250,
       child: responseNotifier.allResponses != null
           ? Center(
               child: LineChart(
                 LineChartData(
                   titlesData: FlTitlesData(
-                    rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: AxisTitles(
+                      sideTitles: SideTitles(showTitles: false),
+                    ),
                     topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false, interval: 1)),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
@@ -74,20 +65,33 @@ class WellnessChart extends StatelessWidget {
                   maxX: 7,
                   minY: 0,
                   maxY: 25,
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(
+                  gridData: FlGridData(
                     show: true,
+                    drawVerticalLine: false,
+                  ),
+                  borderData: FlBorderData(
+                    show: false,
                     border: const Border(
-                      left: BorderSide(color: Colors.black),
-                      bottom: BorderSide(color: Colors.black),
+                      left: BorderSide(color: Colors.teal, width: 2),
+                      bottom: BorderSide(color: Colors.teal, width: 2),
                     ),
                   ),
                   lineBarsData: [
                     LineChartBarData(
                       dotData: FlDotData(show: false),
-                      barWidth: 4,
-                      isCurved: false,
-                      color: Colors.black,
+                      barWidth: 2,
+                      belowBarData: BarAreaData(
+                        show: true,
+                        gradient: LinearGradient(
+                          colors: [Colors.tealAccent, Colors.teal.withOpacity(0)],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      isCurved: true,
+                      curveSmoothness: 0.3,
+                      color: Colors.teal,
+                      isStrokeCapRound: true,
                       spots: _buildData(responseNotifier),
                     ),
                   ],

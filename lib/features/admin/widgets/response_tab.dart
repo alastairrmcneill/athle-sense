@@ -39,7 +39,10 @@ class _ResponseTabState extends State<ResponseTab> {
                 },
           icon: Icon(Icons.chevron_left_rounded),
         ),
-        Text(displayDate),
+        Text(
+          displayDate,
+          style: Theme.of(context).textTheme.headline5,
+        ),
         IconButton(
           onPressed: activeIndex == responseNotifier.responseEachDay!.length - 1
               ? null

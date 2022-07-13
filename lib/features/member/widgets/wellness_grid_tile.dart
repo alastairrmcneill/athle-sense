@@ -46,7 +46,7 @@ class WellnessGridTile extends StatelessWidget {
           Center(
             child: Text(
               value,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline4!.copyWith(color: MyColors.darkBlueColor),
             ),
           ),
           Column(
@@ -54,7 +54,7 @@ class WellnessGridTile extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.darkBlueColor),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

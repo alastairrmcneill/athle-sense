@@ -54,14 +54,14 @@ class MyColors {
   static Color? backgroundColor = Colors.grey[50];
   static Color? darkTextColor = Colors.grey[800];
 
-  static Color? lightBlueColor = Color(0XFFe3effb);
-  static Color? darkBlueColor = Color(0XFF2b59e3);
-  static Color? lightRedColor = Color(0xFFfbceb9);
-  static Color? darkRedColor = Color(0xFFed6827);
-  static Color? lightGreenColor = Color(0xFFc1f1c7);
-  static Color? darkGreenColor = Color(0xFF68aa52);
-  static Color? lightPurpleColor = Color(0xFFe3e1f7);
-  static Color? darkPurpleColor = Color(0xFF7f73e1);
-  static Color? lightYellowColor = Color(0xFFf8ecc4);
-  static Color? darkYellowColor = Color(0xFFe2c430);
+  static Color? lightBlueColor = const Color(0XFFe3effb);
+  static Color? darkBlueColor = const Color(0XFF2b59e3);
+  static Color? lightRedColor = const Color(0xFFfbceb9);
+  static Color? darkRedColor = const Color(0xFFed6827);
+  static Color? lightGreenColor = const Color(0xFFc1f1c7);
+  static Color? darkGreenColor = const Color(0xFF68aa52);
+  static Color? lightPurpleColor = const Color(0xFFe3e1f7);
+  static Color? darkPurpleColor = const Color(0xFF7f73e1);
+  static Color? lightYellowColor = const Color(0xFFf8ecc4);
+  static Color? darkYellowColor = const Color(0xFFe2c430);
 }

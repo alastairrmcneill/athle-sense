@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/services/notification_service.dart';
 import 'package:reading_wucc/services/services.dart';
 
 class EventDatabase {
@@ -56,6 +57,9 @@ class EventDatabase {
     });
 
     // Sort
+
+    // Check notifications
+    await setScheduledNotifications(_eventList);
 
     // Set to notifier
     eventNotifier.setUserEvents = _eventList;

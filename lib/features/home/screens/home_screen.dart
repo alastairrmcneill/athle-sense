@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:reading_wucc/features/home/widgets/widgets.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
 import 'package:reading_wucc/services/event_database.dart';
+import 'package:reading_wucc/services/notification_service.dart';
 import 'package:reading_wucc/services/services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
 
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+
     UserDatabase.getCurrentUser(userNotifier);
   }
 

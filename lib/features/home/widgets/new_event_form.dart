@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/services/notification_service.dart';
 import 'package:reading_wucc/services/services.dart';
 
 class NewEventForm extends StatefulWidget {
@@ -30,6 +31,12 @@ class _NewEventFormState extends State<NewEventForm> {
     return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
   }
 
+  int randomInt() {
+    const ch = '1234567890';
+    Random r = Random();
+    return int.parse(String.fromCharCodes(Iterable.generate(9, (_) => ch.codeUnitAt(r.nextInt(ch.length)))));
+  }
+
   Future _createEvent(UserNotifier userNotifier, EventNotifier eventNotifier) async {
     Event neweEvent = Event(
       name: _name.trim(),
@@ -38,8 +45,10 @@ class _NewEventFormState extends State<NewEventForm> {
       admins: [userNotifier.currentUser!.uid],
       members: [],
       shareId: randomString(6),
+      notificationId: randomInt(),
     );
     await EventDatabase.createEvent(userNotifier, eventNotifier, neweEvent);
+    await createScheduledNotification(id: neweEvent.notificationId, eventName: neweEvent.name);
 
     Navigator.pop(context);
   }

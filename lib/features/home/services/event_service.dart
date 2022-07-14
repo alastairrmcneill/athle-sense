@@ -1,5 +1,6 @@
 import 'package:reading_wucc/models/models.dart';
 import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:reading_wucc/services/notification_service.dart';
 import 'package:reading_wucc/services/services.dart';
 
 Future<String> addEventToUser(UserNotifier userNotifier, EventNotifier eventNotifier, String code) async {
@@ -22,6 +23,11 @@ Future<String> addEventToUser(UserNotifier userNotifier, EventNotifier eventNoti
     event.members.add(userID);
     await EventDatabase.updateEvent(eventNotifier, event);
 
+    print(event.notificationId);
+    // Create notifications
+    createScheduledNotification(id: event.notificationId, eventName: event.name);
+
+    // Return
     return event.name;
   }
 

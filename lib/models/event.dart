@@ -9,6 +9,7 @@ class Event {
   final List<String> members;
   final bool amAdmin;
   final String shareId;
+  final int notificationId;
 
   Event({
     this.uid,
@@ -19,6 +20,7 @@ class Event {
     required this.members,
     this.amAdmin = false,
     required this.shareId,
+    required this.notificationId,
   });
 
   // From JSON
@@ -31,6 +33,7 @@ class Event {
       admins: List<String>.from(json['admins']),
       members: List<String>.from(json['members']),
       shareId: json['shareId'] as String,
+      notificationId: json['notificationId'] as int,
     );
   }
 
@@ -44,6 +47,7 @@ class Event {
       'admins': admins,
       'members': members,
       'shareId': shareId,
+      'notificationId': notificationId,
     };
   }
 
@@ -57,6 +61,7 @@ class Event {
     List<String>? members,
     bool? amAdmin,
     String? shareId,
+    int? notificationId,
   }) =>
       Event(
         uid: uid ?? this.uid,
@@ -67,5 +72,6 @@ class Event {
         members: members ?? this.members,
         amAdmin: amAdmin ?? this.amAdmin,
         shareId: shareId ?? this.shareId,
+        notificationId: notificationId ?? this.notificationId,
       );
 }

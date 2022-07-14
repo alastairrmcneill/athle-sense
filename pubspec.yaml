@@ -47,6 +47,8 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_launcher_icons: ^0.9.3
   font_awesome_flutter: ^10.1.0
+  flutter_local_notifications: ^9.7.0
+  awesome_notifications: ^0.6.21
 
 dev_dependencies:
   flutter_test:

@@ -59,7 +59,8 @@ class _MemberTileState extends State<ResponseTile> {
         // Set notifier
         if (widget.response != null) {
           List<Response> _allResponsesForMember = [];
-
+          print(responseNotifier.allResponses!);
+          print('');
           responseNotifier.allResponses!.forEach((response) {
             if (widget.member.uid == response.userUid) {
               _allResponsesForMember.add(response);

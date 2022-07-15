@@ -31,7 +31,7 @@ class WellnessGridView extends StatelessWidget {
         title: myQuestions[i].short,
         value: currentResponse.ratings[i].toString(),
         baselineCompare: currentResponse.ratings[i] - firstResponse.ratings[i],
-        previousCompare: currentResponse.ratings[i] - previousResponse.ratings[0],
+        previousCompare: currentResponse.ratings[i] - previousResponse.ratings[i],
       ));
     }
 

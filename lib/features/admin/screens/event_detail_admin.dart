@@ -39,7 +39,7 @@ class _EventDetailAdminState extends State<EventDetailAdmin> {
   Future _refresh(UserNotifier userNotifier, EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
     await EventDatabase.readEventMembers(eventNotifier);
     await ResponseDatabase.readEventResponses(responseNotifier, eventNotifier.currentEvent!.uid!);
-    await ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
+    // await ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
   }
 
   @override

@@ -36,9 +36,4 @@ Future<void> setScheduledNotifications(List<Event> eventList) async {
   for (var event in eventList) {
     await createScheduledNotification(id: event.notificationId, eventName: event.name);
   }
-
-  List<NotificationModel> list = await AwesomeNotifications().listScheduledNotifications();
-  list.forEach((element) {
-    print(element.content!.id);
-  });
 }

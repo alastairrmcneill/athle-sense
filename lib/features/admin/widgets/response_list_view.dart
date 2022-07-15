@@ -34,7 +34,6 @@ class _MemberListViewState extends State<ResponseListView> {
             child: ListView(
               children: eventNotifier.currentEventMembers!.map((member) {
                 Response? _response;
-
                 if (responseNotifier.responseEachDay != null) {
                   for (var response in responseNotifier.responseEachDay![widget.dayIndex]) {
                     if (member.uid == response.userUid) {
@@ -43,7 +42,6 @@ class _MemberListViewState extends State<ResponseListView> {
                     }
                   }
                 }
-
                 return ResponseTile(member: member, response: _response);
               }).toList(),
             ),

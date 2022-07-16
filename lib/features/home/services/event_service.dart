@@ -23,7 +23,6 @@ Future<String> addEventToUser(UserNotifier userNotifier, EventNotifier eventNoti
     event.members.add(userID);
     await EventDatabase.updateEvent(eventNotifier, event);
 
-    print(event.notificationId);
     // Create notifications
     createScheduledNotification(id: event.notificationId, eventName: event.name);
 
@@ -32,4 +31,18 @@ Future<String> addEventToUser(UserNotifier userNotifier, EventNotifier eventNoti
   }
 
   return '';
+}
+
+Future leaveEvent(UserNotifier userNotifier, EventNotifier eventNotifier, ResponseNotifier responseNotifier) async {
+// Remove user from event members list
+  await EventDatabase.removeUserFromSpecificEvent(userNotifier.currentUser!.uid, eventNotifier.currentEvent!.uid!);
+
+// Remove event from user list
+  await UserDatabase.removeEvent(userNotifier, eventNotifier.currentEvent!.uid!);
+// Delete responses
+  await ResponseDatabase.deleteEventResponses(eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
+
+// Update everything
+  await EventDatabase.readMyEvents(eventNotifier);
+  await UserDatabase.getCurrentUser(userNotifier);
 }

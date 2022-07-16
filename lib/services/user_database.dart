@@ -49,6 +49,17 @@ class UserDatabase {
     userNotifier.setCurrentUser = user;
   }
 
+  static Future removeEvent(UserNotifier userNotifier, String eventUid) async {
+    _db.collection('Users').doc(userNotifier.currentUser!.uid).get().then((snapshot) {
+      if (snapshot.exists) {
+        AppUser user = AppUser.fromJSON(snapshot.data());
+        user.events.remove(eventUid);
+
+        snapshot.reference.update(user.toJSON());
+      }
+    });
+  }
+
   // Delete
   static Future deleteUser(String uid) async {
     DocumentReference ref = _db.collection('Users').doc(uid);

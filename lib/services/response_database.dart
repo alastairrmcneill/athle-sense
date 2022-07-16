@@ -82,9 +82,8 @@ class ResponseDatabase {
   }
 
   // Update
-
-  static Future deleteUserResponses(String uid) async {
-    await _db.collection('Responses').where('userUid', isEqualTo: uid).get().then((snapshot) {
+  static Future deleteEventResponses(String eventUid, String userUid) async {
+    await _db.collection('Responses').where('userUid', isEqualTo: userUid).where('eventUid', isEqualTo: eventUid).get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {
         ds.reference.delete();
       }
@@ -93,4 +92,11 @@ class ResponseDatabase {
 
   // Delete
 
+  static Future deleteUserResponses(String uid) async {
+    await _db.collection('Responses').where('userUid', isEqualTo: uid).get().then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
+    });
+  }
 }

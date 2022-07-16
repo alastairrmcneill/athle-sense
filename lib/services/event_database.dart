@@ -138,6 +138,17 @@ class EventDatabase {
     }
   }
 
+  static Future removeUserFromSpecificEvent(String userUid, String eventUid) async {
+    _db.collection('Events').doc(eventUid).get().then((snapshot) {
+      if (snapshot.exists) {
+        Event event = Event.fromJSON(snapshot.data());
+        event.members.remove(userUid);
+
+        snapshot.reference.update(event.toJSON());
+      }
+    });
+  }
+
   static Future removeUserFromEvents(String uid) async {
     _db.collection('Events').where('admins', arrayContains: uid).get().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.docs) {

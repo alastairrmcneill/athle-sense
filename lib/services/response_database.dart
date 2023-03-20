@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
+import 'package:wellness_tracker/models/models.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
 
 class ResponseDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;

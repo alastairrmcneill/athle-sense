@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/services/auth_service.dart';
-import 'package:reading_wucc/features/authentication/widgets/error_text_widget.dart';
-import 'package:reading_wucc/models/models.dart';
+import 'package:wellness_tracker/services/auth_service.dart';
+import 'package:wellness_tracker/features/authentication/widgets/error_text_widget.dart';
+import 'package:wellness_tracker/models/models.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);

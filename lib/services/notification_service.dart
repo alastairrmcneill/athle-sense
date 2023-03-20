@@ -1,6 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/models/models.dart';
+import 'package:wellness_tracker/models/models.dart';
 
 Future<void> createScheduledNotification({required int id, required String eventName}) async {
   await AwesomeNotifications().createNotification(

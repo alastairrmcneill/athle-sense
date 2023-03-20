@@ -1,10 +1,6 @@
 class Questions {
   static List<String> long = ['Quality of sleep', 'General muscle soreness', 'Overall mood', 'Fatigue level', 'Stress level'];
   static List<String> short = ['Sleep', 'Muscles', 'Mood', 'Fatigue', 'Stress'];
-  static List<List<String>> options = [
-    ['Insomnia', 'More tired than normal', 'Normal', 'Fresh', 'Very Fresh'],
-    ['Very Sore']
-  ];
 }
 
 class Question {
@@ -17,27 +13,27 @@ class Question {
 
 List<Question> myQuestions = [
   Question(
-    long: 'Fatigue',
+    long: 'How fatigued are you feeling today?',
     short: 'Fatigue',
     responses: ['Always tired', 'More tired than normal', 'Normal', 'Fresh', 'Very fresh'],
   ),
   Question(
-    long: 'Quality of sleep',
+    long: 'How was your quality of sleep last night?',
     short: 'Sleep',
     responses: ['Insomnia', 'More tired than normal', 'Normal', 'Fresh', 'Very fresh'],
   ),
   Question(
-    long: 'General Muscle Soreness',
+    long: 'How is your general soreness of muscles?',
     short: 'Muscles',
     responses: ['Very sore', 'Increase in soreness/tightness', 'Normal', 'Feeling good', 'Feeling great'],
   ),
   Question(
-    long: 'Stress Levels',
+    long: 'How stressed are you feeling in general?',
     short: 'Stress',
     responses: ['Highly stressed', 'Feeling stressed', 'Normal', 'Relaxed', 'Very relaxed'],
   ),
   Question(
-    long: 'Overall mood',
+    long: 'What is your overall mood level?',
     short: 'Mood',
     responses: ['Highly annoyed/irritable/down', 'Snappiness at team members', 'Less interested in others/activities than normal', 'A generally good mood', 'Very positive mood'],
   ),

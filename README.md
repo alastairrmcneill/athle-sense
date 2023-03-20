@@ -1,4 +1,4 @@
-# reading_wucc
+# Wellness Tracker
 
 A new Flutter project.
 

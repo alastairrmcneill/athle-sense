@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/authentication/screens/screens.dart';
-import 'package:reading_wucc/features/authentication/widgets/error_text_widget.dart';
-import 'package:reading_wucc/models/custom_error.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/services.dart';
-import 'package:reading_wucc/support/wrapper.dart';
+import 'package:wellness_tracker/features/authentication/screens/screens.dart';
+import 'package:wellness_tracker/features/authentication/widgets/error_text_widget.dart';
+import 'package:wellness_tracker/models/custom_error.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/services.dart';
+import 'package:wellness_tracker/support/wrapper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

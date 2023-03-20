@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/authentication/widgets/error_text_widget.dart';
-import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/services.dart';
-import 'package:reading_wucc/support/wrapper.dart';
+import 'package:wellness_tracker/features/authentication/widgets/error_text_widget.dart';
+import 'package:wellness_tracker/models/models.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/services.dart';
+import 'package:wellness_tracker/support/wrapper.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

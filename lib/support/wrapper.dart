@@ -1,11 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/features/home/screens/screens.dart';
-import 'package:reading_wucc/models/models.dart';
+import 'package:wellness_tracker/features/home/screens/screens.dart';
+import 'package:wellness_tracker/models/models.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/authentication/screens/screens.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/auth_service.dart';
+import 'package:wellness_tracker/features/authentication/screens/screens.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);

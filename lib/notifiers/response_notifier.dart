@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/models/models.dart';
+import 'package:wellness_tracker/models/models.dart';
 
 class ResponseNotifier extends ChangeNotifier {
   List<Response>? _allResponses;

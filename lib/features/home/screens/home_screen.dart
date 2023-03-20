@@ -1,16 +1,11 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
-import 'package:reading_wucc/features/home/screens/screens.dart';
-import 'package:reading_wucc/features/home/widgets/custom_dialog_box.dart';
-import 'package:reading_wucc/features/home/widgets/event_list_view.dart';
-import 'package:reading_wucc/features/home/widgets/widgets.dart';
-import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/event_database.dart';
-import 'package:reading_wucc/services/notification_service.dart';
-import 'package:reading_wucc/services/services.dart';
+import 'package:wellness_tracker/features/events/screens/screens.dart';
+import 'package:wellness_tracker/features/history/screens/screens.dart';
+import 'package:wellness_tracker/features/settings/widgets/widgets.dart';
+import 'package:wellness_tracker/features/today/screens/screens.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
+  int tabIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -34,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
 
+    List<Widget> tabs = const [TodayScreen(), HisotryScreen(), EventsScreen()];
+
     return Scaffold(
       appBar: AppBar(
         title: userNotifier.currentUser == null ? const Text('Hi!') : Text('Hi ${userNotifier.currentUser!.name}'),
@@ -47,24 +45,20 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         ],
       ),
       endDrawer: CustomRightDrawer(),
-      floatingActionButton: SpeedDial(
-        icon: Icons.add,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.group_add),
-            label: 'Join event',
-            onTap: () {
-              showAddEventDialogBox(context, userNotifier, eventNotifier);
-            },
-          ),
-          SpeedDialChild(
-            child: const Icon(Icons.add_rounded),
-            label: 'Create event',
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AddEventScreen())),
-          ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: tabIndex,
+        onTap: (value) {
+          setState(() {
+            tabIndex = value;
+          });
+        },
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.today), label: 'Today'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.event_available), label: 'Events'),
         ],
       ),
-      body: EventListView(),
+      body: tabs[tabIndex],
     );
   }
 }

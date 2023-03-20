@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/notification_service.dart';
-import 'package:reading_wucc/services/services.dart';
+import 'package:wellness_tracker/models/models.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/notification_service.dart';
+import 'package:wellness_tracker/services/services.dart';
 
 class EventDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;

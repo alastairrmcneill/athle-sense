@@ -2,11 +2,11 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:reading_wucc/models/models.dart';
-import 'package:reading_wucc/notifiers/notifiers.dart';
-import 'package:reading_wucc/services/services.dart';
-import 'package:reading_wucc/support/theme.dart';
-import 'package:reading_wucc/support/wrapper.dart';
+import 'package:wellness_tracker/models/models.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/services.dart';
+import 'package:wellness_tracker/support/theme.dart';
+import 'package:wellness_tracker/support/wrapper.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

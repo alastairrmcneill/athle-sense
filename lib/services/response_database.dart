@@ -1,21 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/services.dart';
 
 class ResponseDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final CollectionReference _responseRef = _db.collection('responses');
 
   // Create
-  static Future<bool> createResponse(ResponseNotifier responseNotifier, Response response) async {
+  static Future<bool> createResponse(BuildContext context, {required Response response}) async {
     bool _success = false;
-    DocumentReference _ref = _db.collection('Responses').doc();
+    DocumentReference _ref = _responseRef.doc();
 
     Response newResponse = response.copy(uid: _ref.id);
-    try {
-      await _ref.set(newResponse.toJSON()).whenComplete(() async {
-        _success = true;
 
-        await readEventResponses(responseNotifier, newResponse.eventUid);
+    try {
+      await _ref.set(newResponse.toJSON()).whenComplete(() {
+        _success = true;
       });
     } on FirebaseException catch (error) {
       _success = false;
@@ -24,6 +26,28 @@ class ResponseDatabase {
   }
 
   // Read
+  static Future<List<Response>> readMyResponses(BuildContext context) async {
+    Query query = _responseRef
+        .where(
+          'userUid',
+          isEqualTo: AuthService.getCurrentUserUID(),
+        )
+        .orderBy(
+          'date',
+          descending: true,
+        );
+    QuerySnapshot querySnapshot = await query.get();
+
+    List<Response> responseList = [];
+
+    for (var doc in querySnapshot.docs) {
+      Response workout = Response.fromJSON(doc.data());
+      responseList.add(workout);
+    }
+
+    return responseList;
+  }
+
   static Future readEventResponses(ResponseNotifier responseNotifier, String eventUid) async {
     List<Response> _responseList = [];
     List<List<Response>> _responsePerDayList = [[]];

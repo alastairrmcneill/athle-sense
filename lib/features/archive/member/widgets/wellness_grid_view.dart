@@ -19,7 +19,7 @@ class WellnessGridView extends StatelessWidget {
     }
 
     List<Widget> _tiles = [];
-    _tiles.add(WellnessGridTile(
+    _tiles.add(ArchiveWellnessGridTile(
       title: 'Wellness',
       value: currentResponse.wellnessRating.toString(),
       baselineCompare: currentResponse.wellnessRating - firstResponse.wellnessRating,
@@ -27,7 +27,7 @@ class WellnessGridView extends StatelessWidget {
     ));
 
     for (var i = 0; i < currentResponse.ratings.length; i++) {
-      _tiles.add(WellnessGridTile(
+      _tiles.add(ArchiveWellnessGridTile(
         title: myQuestions[i].short,
         value: currentResponse.ratings[i].toString(),
         baselineCompare: currentResponse.ratings[i] - firstResponse.ratings[i],

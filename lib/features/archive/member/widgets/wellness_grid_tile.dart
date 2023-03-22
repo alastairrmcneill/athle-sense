@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wellness_tracker/support/theme.dart';
 
-class WellnessGridTile extends StatelessWidget {
+class ArchiveWellnessGridTile extends StatelessWidget {
   final String title;
   final String value;
   final int baselineCompare;
   final int previousCompare;
 
-  const WellnessGridTile({
+  const ArchiveWellnessGridTile({
     Key? key,
     required this.title,
     required this.value,

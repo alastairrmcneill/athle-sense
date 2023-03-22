@@ -6,7 +6,7 @@ import 'package:wellness_tracker/support/theme.dart';
 class Response {
   final String? uid;
   final String userUid;
-  final String eventUid;
+  final String? eventUid;
   final DateTime date;
   final List<int> ratings;
   final int wellnessRating;
@@ -15,7 +15,7 @@ class Response {
   Response({
     this.uid,
     required this.userUid,
-    required this.eventUid,
+    this.eventUid,
     required this.date,
     required this.ratings,
     required this.wellnessRating,
@@ -27,8 +27,8 @@ class Response {
     return Response(
       uid: json['uid'] as String?,
       userUid: json['userUid'] as String,
-      eventUid: json['eventUid'] as String,
-      date: DateUtils.dateOnly((json['date'] as Timestamp).toDate()),
+      eventUid: json['eventUid'] as String?,
+      date: (json['date'] as Timestamp).toDate(),
       ratings: List<int>.from(json['ratings']),
       wellnessRating: json['wellnessRating'] as int,
       availability: json['availability'] as int,

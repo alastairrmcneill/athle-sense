@@ -21,7 +21,7 @@ class CustomRightDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await AuthService.signOut();
+                    await AuthService.signOut(context);
                   },
                   child: const Text('Sign Out'),
                 ),

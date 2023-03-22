@@ -19,7 +19,7 @@ class ResponseNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  set setMyResponses(List<Response> myResponses) {
+  set setMyResponses(List<Response>? myResponses) {
     _myResponses = myResponses;
     notifyListeners();
   }

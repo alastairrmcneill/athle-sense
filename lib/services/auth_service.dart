@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/services.dart';
@@ -79,12 +81,13 @@ class AuthService {
   }
 
   // Sign out
-  static Future signOut() async {
+  static Future signOut(BuildContext context) async {
+    clearNotifiers(context);
     await _auth.signOut();
   }
 
   // Delete account
-  static Future delete() async {
+  static Future delete(BuildContext context) async {
     User user = _auth.currentUser!;
     String uid = user.uid;
 
@@ -93,6 +96,17 @@ class AuthService {
     await UserDatabase.deleteUser(uid);
     await EventDatabase.removeUserFromEvents(uid);
     await ResponseDatabase.deleteUserResponses(uid);
+
+    clearNotifiers(context);
+  }
+
+  static clearNotifiers(BuildContext context) {
+    // Clear the notifiers
+    UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+    ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
+
+    userNotifier.setCurrentUser = null;
+    responseNotifier.setMyResponses = null;
   }
 
   // AppUser from Firebase user

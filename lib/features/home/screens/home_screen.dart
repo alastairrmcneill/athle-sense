@@ -5,6 +5,7 @@ import 'package:wellness_tracker/features/history/screens/screens.dart';
 import 'package:wellness_tracker/features/settings/widgets/widgets.dart';
 import 'package:wellness_tracker/features/today/screens/screens.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/response_service.dart';
 import 'package:wellness_tracker/services/services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  int tabIndex = 0;
+  int tabIndex = 1;
   @override
   void initState() {
     super.initState();
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
 
     UserDatabase.getCurrentUser(userNotifier);
+    ResponseService.loadUserResponses(context);
   }
 
   @override

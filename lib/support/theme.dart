@@ -65,3 +65,27 @@ class MyColors {
   static Color? lightYellowColor = const Color(0xFFf8ecc4);
   static Color? darkYellowColor = const Color(0xFFe2c430);
 }
+
+List<Color> myCalendarColors = [
+  Color.fromRGBO(230, 0, 70, 1),
+  Color.fromRGBO(230, 5, 70, 1),
+  Color.fromRGBO(230, 30, 70, 1),
+  Color.fromRGBO(230, 55, 70, 1),
+  Color.fromRGBO(230, 80, 70, 1),
+  Color.fromRGBO(230, 105, 70, 1),
+  Color.fromRGBO(230, 130, 70, 1),
+  Color.fromRGBO(230, 155, 70, 1),
+  Color.fromRGBO(230, 180, 70, 1),
+  Color.fromRGBO(230, 205, 70, 1),
+  Color.fromRGBO(240, 240, 70, 1),
+  Color.fromRGBO(205, 230, 70, 1),
+  Color.fromRGBO(180, 230, 70, 1),
+  Color.fromRGBO(155, 230, 70, 1),
+  Color.fromRGBO(130, 230, 70, 1),
+  Color.fromRGBO(105, 230, 70, 1),
+  Color.fromRGBO(80, 230, 70, 1),
+  Color.fromRGBO(55, 230, 70, 1),
+  Color.fromRGBO(30, 230, 70, 1),
+  Color.fromRGBO(5, 230, 70, 1),
+  Color.fromRGBO(0, 230, 70, 1),
+];

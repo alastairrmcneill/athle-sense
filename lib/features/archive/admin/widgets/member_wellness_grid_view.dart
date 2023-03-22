@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wellness_tracker/features/archive/admin/widgets/widgets.dart';
 import 'package:wellness_tracker/features/archive/member/widgets/widgets.dart';
 import 'package:wellness_tracker/models/question.dart';
 import 'package:wellness_tracker/models/response.dart';
@@ -25,7 +24,7 @@ class MemberWellnessGridView extends StatelessWidget {
     }
 
     List<Widget> _tiles = [];
-    _tiles.add(WellnessGridTile(
+    _tiles.add(ArchiveWellnessGridTile(
       title: 'Wellness',
       value: currentResponse.wellnessRating.toString(),
       baselineCompare: currentResponse.wellnessRating - firstResponse.wellnessRating,
@@ -33,7 +32,7 @@ class MemberWellnessGridView extends StatelessWidget {
     ));
 
     for (var i = 0; i < currentResponse.ratings.length; i++) {
-      _tiles.add(WellnessGridTile(
+      _tiles.add(ArchiveWellnessGridTile(
         title: myQuestions[i].short,
         value: currentResponse.ratings[i].toString(),
         baselineCompare: currentResponse.ratings[i] - firstResponse.ratings[i],

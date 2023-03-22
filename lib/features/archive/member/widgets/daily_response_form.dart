@@ -162,9 +162,9 @@ class _DailyResponseFormState extends State<DailyResponseForm> {
       availability: _availabilitySelections.indexOf(true) + 1,
     );
 
-    bool result = await ResponseDatabase.createResponse(responseNotifier, response);
-    ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
-    return result;
+    // bool result = await ResponseDatabase.createResponse(responseNotifier, response);
+    // ResponseDatabase.readMemberResponses(responseNotifier, eventNotifier.currentEvent!.uid!, userNotifier.currentUser!.uid);
+    return true;
   }
 
   bool _buildForm(ResponseNotifier responseNotifier) {

@@ -4,24 +4,28 @@ class MyThemes {
   static ThemeData get lightTheme {
     return ThemeData(
       scaffoldBackgroundColor: MyColors.backgroundColor,
-      primarySwatch: Colors.teal,
+      primarySwatch: Colors.blue,
       appBarTheme: AppBarTheme(
         backgroundColor: MyColors.backgroundColor,
-        foregroundColor: MyColors.darkTextColor,
+        foregroundColor: MyColors.lightTextColor,
         elevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          color: MyColors.darkTextColor,
+          color: MyColors.lightTextColor,
           fontSize: 20,
           fontWeight: FontWeight.w400,
         ),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: MyColors.backgroundColor,
+        elevation: 0,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         foregroundColor: MyColors.backgroundColor,
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: MyColors.darkTextColor,
-        contentTextStyle: TextStyle(color: MyColors.backgroundColor),
+        backgroundColor: MyColors.backgroundColor,
+        contentTextStyle: TextStyle(color: MyColors.lightTextColor),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -36,12 +40,13 @@ class MyThemes {
       ),
       textTheme: TextTheme(
         headline1: const TextStyle(color: Colors.orange, fontSize: 62, fontWeight: FontWeight.w200),
-        headline2: TextStyle(color: MyColors.darkTextColor, fontSize: 60, fontWeight: FontWeight.w300),
-        headline4: TextStyle(color: MyColors.darkTextColor, fontWeight: FontWeight.w300),
-        headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 16, fontWeight: FontWeight.w300),
-        headline6: TextStyle(color: MyColors.darkTextColor, fontSize: 14, fontWeight: FontWeight.w300),
+        headline2: TextStyle(color: MyColors.lightTextColor, fontSize: 60, fontWeight: FontWeight.w300),
+        headline4: TextStyle(color: MyColors.lightTextColor, fontWeight: FontWeight.w300),
+        headline5: TextStyle(color: MyColors.lightTextColor, fontSize: 18, fontWeight: FontWeight.w300),
+        headline6: TextStyle(color: MyColors.lightTextColor, fontSize: 14, fontWeight: FontWeight.w300),
         caption: TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
       ),
+      unselectedWidgetColor: Colors.grey[350],
     );
   }
 
@@ -51,8 +56,9 @@ class MyThemes {
 }
 
 class MyColors {
-  static Color? backgroundColor = Colors.grey[50];
-  static Color? darkTextColor = Colors.grey[800];
+  static Color? lightTextColor = Colors.grey[50];
+  static Color? backgroundColor = const Color(0xFF323641);
+  static Color? cardColor = const Color(0xFF404552);
 
   static Color? lightBlueColor = const Color(0XFFe3effb);
   static Color? darkBlueColor = const Color(0XFF2b59e3);
@@ -88,4 +94,12 @@ List<Color> myCalendarColors = [
   Color.fromRGBO(30, 230, 70, 1),
   Color.fromRGBO(5, 230, 70, 1),
   Color.fromRGBO(0, 230, 70, 1),
+];
+
+List<Color> ratingColors = [
+  Colors.red,
+  Colors.orange,
+  Colors.yellow,
+  Color.fromARGB(255, 149, 195, 74),
+  Color.fromARGB(255, 29, 186, 34),
 ];

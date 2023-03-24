@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wellness_tracker/features/history/widgets/widgets.dart';
+import 'package:wellness_tracker/features/home/widgets/widgets.dart';
 import 'package:wellness_tracker/models/response.dart';
 import 'package:intl/intl.dart';
 
@@ -43,7 +44,7 @@ showResponseSummaryDialog(BuildContext context, {required Response response}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return alert;
+      return DaySummaryCard(date: response.date, response: response);
     },
   );
 }

@@ -48,11 +48,9 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Next day in:'),
-        Text(countdownString),
-      ],
+    return Text(
+      'Next day in: $countdownString',
+      style: Theme.of(context).textTheme.headline5,
     );
   }
 }

@@ -9,11 +9,14 @@ class HistoryOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
-    return Column(
-      children: const [
-        WellnessLineChart(),
-        ResponseCalendar(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          SummaryCard(),
+          WellnessLineChart(),
+          ResponseCalendar(),
+        ],
+      ),
     );
   }
 }

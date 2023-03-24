@@ -33,6 +33,7 @@ class WellnessRadarChart extends StatelessWidget {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
           height: 250,
@@ -41,14 +42,17 @@ class WellnessRadarChart extends StatelessWidget {
             features: Questions.short,
             ticks: const [1, 2, 3, 4, 5, 6],
             data: [
-              response.ratings,
               _findRunningAverage(responseNotifier),
+              response.ratings,
             ],
-            graphColors: const [Colors.teal, Colors.tealAccent],
-            axisColor: Colors.black38,
-            outlineColor: Colors.black45,
+            graphColors: [
+              Colors.black26.withOpacity(0.1),
+              Colors.blueAccent,
+            ],
+            axisColor: MyColors.lightTextColor!.withOpacity(0.1),
+            outlineColor: Colors.transparent,
             featuresTextStyle: Theme.of(context).textTheme.headline6!,
-            ticksTextStyle: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
+            ticksTextStyle: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.transparent),
           ),
         ),
         SizedBox(
@@ -58,13 +62,13 @@ class WellnessRadarChart extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(radius: 4, backgroundColor: Colors.teal),
+                  const CircleAvatar(radius: 4, backgroundColor: Colors.blueAccent),
                   Text('  Day', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
                 ],
               ),
               Row(
                 children: [
-                  const CircleAvatar(radius: 4, backgroundColor: Colors.tealAccent),
+                  CircleAvatar(radius: 4, backgroundColor: Colors.black26),
                   Text('  Baseline', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
                 ],
               ),

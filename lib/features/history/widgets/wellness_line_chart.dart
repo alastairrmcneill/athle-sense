@@ -4,6 +4,7 @@ import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart' as sf;
 import 'package:intl/intl.dart';
+import 'package:wellness_tracker/support/constants.dart';
 
 class WellnessLineChart extends StatefulWidget {
   const WellnessLineChart({super.key});

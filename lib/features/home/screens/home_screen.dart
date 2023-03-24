@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/features/history/screens/screens.dart';
@@ -7,6 +8,7 @@ import 'package:wellness_tracker/features/today/screens/screens.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/response_service.dart';
 import 'package:wellness_tracker/services/services.dart';
+import 'package:wellness_tracker/support/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  int tabIndex = 1;
+  int tabIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -36,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     return Scaffold(
       appBar: AppBar(
-        title: userNotifier.currentUser == null ? const Text('Hi!') : Text('Hi ${userNotifier.currentUser!.name}'),
+        title: userNotifier.currentUser == null ? const Text('Hi!') : Text('Hi ${userNotifier.currentUser!.name} 👋'),
         actions: [
           Builder(
             builder: (context) => IconButton(
               onPressed: Scaffold.of(context).openEndDrawer,
-              icon: Icon(Icons.settings_outlined),
+              icon: Icon(Icons.more_vert_rounded),
             ),
           ),
         ],
@@ -54,10 +56,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             tabIndex = value;
           });
         },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.today), label: 'Today'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
-          BottomNavigationBarItem(icon: Icon(Icons.event_available), label: 'Events'),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.today),
+            label: 'Today',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'History',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.event_available),
+            label: 'Events',
+          ),
         ],
       ),
       body: tabs[tabIndex],

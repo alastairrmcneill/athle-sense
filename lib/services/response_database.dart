@@ -34,7 +34,7 @@ class ResponseDatabase {
         )
         .orderBy(
           'date',
-          descending: true,
+          descending: false,
         );
     QuerySnapshot querySnapshot = await query.get();
 

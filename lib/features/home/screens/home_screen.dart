@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           Builder(
             builder: (context) => IconButton(
               onPressed: Scaffold.of(context).openEndDrawer,
-              icon: Icon(Icons.more_vert_rounded),
+              icon: const Icon(Icons.more_vert_rounded),
             ),
           ),
         ],

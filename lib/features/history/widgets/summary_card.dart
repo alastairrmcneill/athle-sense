@@ -20,7 +20,7 @@ class SummaryCard extends StatelessWidget {
     List<SummaryChartData> totalChartData = [];
 
     for (var i = 0; i < daysOfWeek.length; i++) {
-      List<Response> dayResponses = responseNotifier.myResponses!.where((response) => response.date.weekday == i + 1).toList();
+      List<Response> dayResponses = responseNotifier.myFilteredResponses!.where((response) => response.date.weekday == i + 1).toList();
       if (dayResponses.isNotEmpty) {
         averages[i] = dayResponses.map((Response response) => response.wellnessRating).reduce((a, b) => a + b) / dayResponses.length;
       }
@@ -35,7 +35,7 @@ class SummaryCard extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -73,11 +73,15 @@ class SummaryCard extends StatelessWidget {
                 legend: sf.Legend(isVisible: false),
                 primaryXAxis: sf.CategoryAxis(
                   isVisible: true,
-                  labelStyle: TextStyle(color: MyColors.lightTextColor!.withOpacity(0.8)),
-                  majorTickLines: sf.MajorTickLines(color: Colors.transparent),
-                  majorGridLines: sf.MajorGridLines(color: Colors.transparent),
+                  labelStyle: TextStyle(
+                    color: MyColors.lightTextColor,
+                    fontWeight: FontWeight.w200,
+                  ),
+                  majorTickLines: const sf.MajorTickLines(color: Colors.transparent),
+                  majorGridLines: const sf.MajorGridLines(color: Colors.transparent),
                   axisBorderType: sf.AxisBorderType.withoutTopAndBottom,
                   borderColor: Colors.transparent,
+                  axisLine: sf.AxisLine(color: MyColors.lightTextColor!.withOpacity(0), width: 0.5),
                 ),
                 borderColor: Colors.transparent,
                 plotAreaBorderColor: Colors.transparent,
@@ -97,10 +101,12 @@ class SummaryCard extends StatelessWidget {
                     pointColorMapper: (datum, index) {
                       return Colors.grey.withOpacity(0.3);
                     },
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      topRight: Radius.circular(100),
-                    ),
+                    // borderRadius: const BorderRadius.only(
+                    //   topLeft: Radius.circular(100),
+                    //   topRight: Radius.circular(100),
+                    // ),
+
+                    borderRadius: BorderRadius.circular(100),
                   ),
                   sf.ColumnSeries<SummaryChartData, String>(
                     width: 0.4,
@@ -113,10 +119,11 @@ class SummaryCard extends StatelessWidget {
                       if (datum.rating == 0) return Colors.transparent;
                       return myCalendarColors[(datum.rating).round() - 5].withOpacity(0.8);
                     },
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(100),
-                      topRight: Radius.circular(100),
-                    ),
+                    // borderRadius: const BorderRadius.only(
+                    //   topLeft: Radius.circular(100),
+                    //   topRight: Radius.circular(100),
+                    // ),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                 ],
               ),

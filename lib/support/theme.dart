@@ -24,8 +24,8 @@ class MyThemes {
         foregroundColor: MyColors.backgroundColor,
       ),
       snackBarTheme: SnackBarThemeData(
-        backgroundColor: MyColors.backgroundColor,
-        contentTextStyle: TextStyle(color: MyColors.lightTextColor),
+        backgroundColor: MyColors.lightTextColor,
+        contentTextStyle: TextStyle(color: MyColors.backgroundColor),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -42,8 +42,8 @@ class MyThemes {
         headline1: const TextStyle(color: Colors.orange, fontSize: 62, fontWeight: FontWeight.w200),
         headline2: TextStyle(color: MyColors.lightTextColor, fontSize: 60, fontWeight: FontWeight.w300),
         headline4: TextStyle(color: MyColors.lightTextColor, fontWeight: FontWeight.w300),
-        headline5: TextStyle(color: MyColors.lightTextColor, fontSize: 18, fontWeight: FontWeight.w300),
-        headline6: TextStyle(color: MyColors.lightTextColor, fontSize: 14, fontWeight: FontWeight.w300),
+        headline5: TextStyle(color: MyColors.lightTextColor, fontSize: 18, fontWeight: FontWeight.w200),
+        headline6: TextStyle(color: MyColors.lightTextColor, fontSize: 14, fontWeight: FontWeight.w200),
         caption: TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
       ),
       unselectedWidgetColor: Colors.grey[350],

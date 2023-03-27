@@ -38,13 +38,24 @@ class MyThemes {
           ),
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        prefixIconColor: MyColors.lightTextColor,
+        suffixIconColor: MyColors.lightTextColor,
+        labelStyle: TextStyle(
+          color: MyColors.lightTextColor,
+        ),
+        hintStyle: TextStyle(color: MyColors.lightTextColor!.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w200),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: MyColors.lightTextColor!),
+        ),
+      ),
       textTheme: TextTheme(
         headline1: const TextStyle(color: Colors.orange, fontSize: 62, fontWeight: FontWeight.w200),
         headline2: TextStyle(color: MyColors.lightTextColor, fontSize: 60, fontWeight: FontWeight.w300),
         headline4: TextStyle(color: MyColors.lightTextColor, fontWeight: FontWeight.w300),
         headline5: TextStyle(color: MyColors.lightTextColor, fontSize: 18, fontWeight: FontWeight.w200),
         headline6: TextStyle(color: MyColors.lightTextColor, fontSize: 14, fontWeight: FontWeight.w200),
-        caption: TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
+        caption: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
       ),
       unselectedWidgetColor: Colors.grey[350],
     );

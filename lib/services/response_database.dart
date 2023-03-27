@@ -30,7 +30,7 @@ class ResponseDatabase {
     Query query = _responseRef
         .where(
           'userUid',
-          isEqualTo: AuthService.getCurrentUserUID(),
+          isEqualTo: AuthService.currentUserId!,
         )
         .orderBy(
           'date',

@@ -1,179 +1,255 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:wellness_tracker/models/models.dart';
-import 'package:wellness_tracker/notifiers/notifiers.dart';
-import 'package:wellness_tracker/services/notification_service.dart';
 import 'package:wellness_tracker/services/services.dart';
 
 class EventDatabase {
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static final CollectionReference _eventsRef = _db.collection('events');
 
   // Create
-  static Future createEvent(UserNotifier userNotiifer, EventNotifier eventNotifier, Event event) async {
-    DocumentReference ref = _db.collection('Events').doc();
+  static Future<bool> createEvent(BuildContext context, {required Event event}) async {
+    bool _success = false;
+    DocumentReference _ref = _eventsRef.doc();
 
-    Event newEvent = event.copy(uid: ref.id);
+    Event newEvent = event.copy(uid: _ref.id);
 
-    await ref.set(newEvent.toJSON()).whenComplete(() async {
-      AppUser user = userNotiifer.currentUser!;
-      user.events.add(newEvent.uid!);
-
-      await UserDatabase.updateUser(userNotiifer, user);
-    });
-
-    await readMyEvents(eventNotifier);
+    try {
+      await _ref.set(newEvent.toJSON()).whenComplete(() {
+        _success = true;
+      });
+    } on FirebaseException catch (error) {
+      _success = false;
+    }
+    return _success;
   }
 
   // Read
-  static readMyEvents(EventNotifier eventNotifier) async {
-    List<Event> _eventList = [];
-    String uid = AuthService.getCurrentUserUID();
+  static Future<List<Event>> readMyEvents(BuildContext context) async {
+    List<Event> eventList = [];
+    // Check creator
+    Query query = _eventsRef.where(
+      'creator',
+      isEqualTo: AuthService.currentUserId!,
+    );
+    QuerySnapshot querySnapshot = await query.get();
+
+    for (var doc in querySnapshot.docs) {
+      Event event = Event.fromJSON(doc.data());
+      eventList.add(event);
+    }
 
     // Check admin
-    final CollectionReference ref = _db.collection('Events');
-    final Query adminEvents = ref.where(
+    query = _eventsRef.where(
       'admins',
-      arrayContains: uid,
+      arrayContains: AuthService.currentUserId!,
     );
-    await adminEvents.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        Event event = Event.fromJSON(doc);
-        Event newEvent = event.copy(amAdmin: true);
+    querySnapshot = await query.get();
 
-        _eventList.add(newEvent);
-      });
-    });
+    for (var doc in querySnapshot.docs) {
+      Event event = Event.fromJSON(doc.data());
+      eventList.add(event);
+    }
 
     // Check member
-    final Query memberEvents = ref.where(
+    query = _eventsRef.where(
       'members',
-      arrayContains: uid,
+      arrayContains: AuthService.currentUserId!,
     );
-    await memberEvents.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        _eventList.add(Event.fromJSON(doc));
-      });
-    });
+    querySnapshot = await query.get();
+
+    for (var doc in querySnapshot.docs) {
+      Event event = Event.fromJSON(doc.data());
+      eventList.add(event);
+    }
 
     // Sort
-
-    // Check notifications
-    await setScheduledNotifications(_eventList);
-
-    // Set to notifier
-    eventNotifier.setUserEvents = _eventList;
-  }
-
-  static Future readEventMembers(EventNotifier eventNotifier) async {
-    List<Member> _membersList = [];
-    List<String> allMembers = eventNotifier.currentEvent!.admins + eventNotifier.currentEvent!.members;
-
-    final Query membersQuery = _db.collection('Users').where('uid', whereIn: allMembers);
-
-    await membersQuery.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        _membersList.add(Member.fromJSON(doc));
-      });
+    eventList.sort((a, b) {
+      return b.endDate.compareTo(a.endDate);
     });
 
-    eventNotifier.setCurrentEventMembers = _membersList;
+    // return
+
+    return eventList;
   }
 
-  static Future<Event?> readEventFromCode(EventNotifier eventNotifier, String code) async {
+  // Read
+  static Future<Event?> readEventFromCode(BuildContext context, {required String code}) async {
     Event? event;
-    Query eventQuery = _db.collection('Events').where('shareId', isEqualTo: code);
-    await eventQuery.get().then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        event = Event.fromJSON(querySnapshot.docs[0].data());
-      }
-    });
+    Query eventQuery = _db.collection('events').where('shareId', isEqualTo: code);
+
+    QuerySnapshot querySnapshot = await eventQuery.get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      event = Event.fromJSON(querySnapshot.docs[0].data());
+    }
+
     return event;
   }
 
   // Update
-  static updateEvent(EventNotifier eventNotifier, Event event) async {
-    DocumentReference ref = _db.collection('Events').doc(event.uid!);
+  static Future<bool> update(BuildContext context, {required Event event}) async {
+    bool _success = false;
+    DocumentReference ref = _db.collection('events').doc(event.uid!);
 
-    ref.update(event.toJSON()).whenComplete(() {
-      readMyEvents(eventNotifier);
+    await ref.update(event.toJSON()).whenComplete(() {
+      _success = true;
+    }).onError((error, stackTrace) {
+      _success = false;
     });
+
+    return _success;
   }
 
-  static Future addAdmin(EventNotifier eventNotifier, String userUid) async {
-    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+  // // Read
+  // static readMyEvents(EventNotifier eventNotifier) async {
+  //   List<Event> _eventList = [];
+  //   String uid = AuthService.currentUserId!;
 
-    DocumentSnapshot result = await ref.get();
+  //   // Check admin
+  //   final CollectionReference ref = _db.collection('Events');
+  //   final Query adminEvents = ref.where(
+  //     'admins',
+  //     arrayContains: uid,
+  //   );
+  //   await adminEvents.get().then((QuerySnapshot querySnapshot) {
+  //     querySnapshot.docs.forEach((doc) {
+  //       Event event = Event.fromJSON(doc);
+  //       Event newEvent = event.copy(amAdmin: true);
 
-    if (result.exists) {
-      Event oldEvent = Event.fromJSON(result.data());
-      List<String> admins = oldEvent.admins;
-      List<String> members = oldEvent.members;
+  //       _eventList.add(newEvent);
+  //     });
+  //   });
 
-      admins.add(userUid);
-      members.remove(userUid);
+  //   // Check member
+  //   final Query memberEvents = ref.where(
+  //     'members',
+  //     arrayContains: uid,
+  //   );
+  //   await memberEvents.get().then((QuerySnapshot querySnapshot) {
+  //     querySnapshot.docs.forEach((doc) {
+  //       _eventList.add(Event.fromJSON(doc));
+  //     });
+  //   });
 
-      Event newEvent = oldEvent.copy(admins: admins, members: members);
+  //   // Sort
 
-      await ref.update(newEvent.toJSON());
-    }
-  }
+  //   // Check notifications
+  //   await setScheduledNotifications(_eventList);
 
-  static Future removeAdmin(EventNotifier eventNotifier, String userUid) async {
-    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+  //   // Set to notifier
+  //   eventNotifier.setUserEvents = _eventList;
+  // }
 
-    DocumentSnapshot result = await ref.get();
+  // static Future readEventMembers(EventNotifier eventNotifier) async {
+  //   List<Member> _membersList = [];
+  //   List<String> allMembers = eventNotifier.currentEvent!.admins + eventNotifier.currentEvent!.members;
 
-    if (result.exists) {
-      Event oldEvent = Event.fromJSON(result.data());
-      List<String> admins = oldEvent.admins;
-      List<String> members = oldEvent.members;
+  //   final Query membersQuery = _db.collection('Users').where('uid', whereIn: allMembers);
 
-      admins.remove(userUid);
-      members.add(userUid);
+  //   await membersQuery.get().then((QuerySnapshot querySnapshot) {
+  //     querySnapshot.docs.forEach((doc) {
+  //       _membersList.add(Member.fromJSON(doc));
+  //     });
+  //   });
 
-      Event newEvent = oldEvent.copy(admins: admins, members: members);
+  //   eventNotifier.setCurrentEventMembers = _membersList;
+  // }
 
-      await ref.update(newEvent.toJSON());
-    }
-  }
+  // static Future<Event?> readEventFromCode(EventNotifier eventNotifier, String code) async {
+  //   Event? event;
+  //   Query eventQuery = _db.collection('Events').where('shareId', isEqualTo: code);
+  //   await eventQuery.get().then((QuerySnapshot querySnapshot) {
+  //     if (querySnapshot.docs.isNotEmpty) {
+  //       event = Event.fromJSON(querySnapshot.docs[0].data());
+  //     }
+  //   });
+  //   return event;
+  // }
 
-  static Future removeUserFromSpecificEvent(String userUid, String eventUid) async {
-    _db.collection('Events').doc(eventUid).get().then((snapshot) {
-      if (snapshot.exists) {
-        Event event = Event.fromJSON(snapshot.data());
-        event.members.remove(userUid);
+  // // Update
+  // static updateEvent(EventNotifier eventNotifier, Event event) async {
+  //   DocumentReference ref = _db.collection('Events').doc(event.uid!);
 
-        snapshot.reference.update(event.toJSON());
-      }
-    });
-  }
+  //   ref.update(event.toJSON()).whenComplete(() {
+  //     readMyEvents(eventNotifier);
+  //   });
+  // }
 
-  static Future removeUserFromEvents(String uid) async {
-    _db.collection('Events').where('admins', arrayContains: uid).get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        Event event = Event.fromJSON(ds.data());
-        event.admins.remove(uid);
+  // static Future addAdmin(EventNotifier eventNotifier, String userUid) async {
+  //   DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
 
-        ds.reference.update(event.toJSON());
-      }
-    });
-    _db.collection('Events').where('members', arrayContains: uid).get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        Event event = Event.fromJSON(ds.data());
-        event.members.remove(uid);
+  //   DocumentSnapshot result = await ref.get();
 
-        ds.reference.update(event.toJSON());
-      }
-    });
-  }
+  //   if (result.exists) {
+  //     Event oldEvent = Event.fromJSON(result.data());
+  //     List<String> admins = oldEvent.admins;
+  //     List<String> members = oldEvent.members;
 
-  // Delete
-  static Future deleteEvent(EventNotifier eventNotifier) async {
-    DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+  //     admins.add(userUid);
+  //     members.remove(userUid);
 
-    await ref.delete();
+  //     Event newEvent = oldEvent.copy(admins: admins, members: members);
 
-    await readMyEvents(eventNotifier);
-  }
+  //     await ref.update(newEvent.toJSON());
+  //   }
+  // }
+
+  // static Future removeAdmin(EventNotifier eventNotifier, String userUid) async {
+  //   DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+
+  //   DocumentSnapshot result = await ref.get();
+
+  //   if (result.exists) {
+  //     Event oldEvent = Event.fromJSON(result.data());
+  //     List<String> admins = oldEvent.admins;
+  //     List<String> members = oldEvent.members;
+
+  //     admins.remove(userUid);
+  //     members.add(userUid);
+
+  //     Event newEvent = oldEvent.copy(admins: admins, members: members);
+
+  //     await ref.update(newEvent.toJSON());
+  //   }
+  // }
+
+  // static Future removeUserFromSpecificEvent(String userUid, String eventUid) async {
+  //   _db.collection('Events').doc(eventUid).get().then((snapshot) {
+  //     if (snapshot.exists) {
+  //       Event event = Event.fromJSON(snapshot.data());
+  //       event.members.remove(userUid);
+
+  //       snapshot.reference.update(event.toJSON());
+  //     }
+  //   });
+  // }
+
+  // static Future removeUserFromEvents(String uid) async {
+  //   _db.collection('Events').where('admins', arrayContains: uid).get().then((snapshot) {
+  //     for (DocumentSnapshot ds in snapshot.docs) {
+  //       Event event = Event.fromJSON(ds.data());
+  //       event.admins.remove(uid);
+
+  //       ds.reference.update(event.toJSON());
+  //     }
+  //   });
+  //   _db.collection('Events').where('members', arrayContains: uid).get().then((snapshot) {
+  //     for (DocumentSnapshot ds in snapshot.docs) {
+  //       Event event = Event.fromJSON(ds.data());
+  //       event.members.remove(uid);
+
+  //       ds.reference.update(event.toJSON());
+  //     }
+  //   });
+  // }
+
+  // // Delete
+  // static Future deleteEvent(EventNotifier eventNotifier) async {
+  //   DocumentReference ref = _db.collection('Events').doc(eventNotifier.currentEvent!.uid);
+
+  //   await ref.delete();
+
+  //   await readMyEvents(eventNotifier);
+  // }
 }

@@ -5,6 +5,7 @@ class Event {
   final String name;
   final DateTime startDate;
   final DateTime endDate;
+  final String creator;
   final List<String> admins;
   final List<String> members;
   final bool amAdmin;
@@ -16,6 +17,7 @@ class Event {
     required this.name,
     required this.startDate,
     required this.endDate,
+    required this.creator,
     required this.admins,
     required this.members,
     this.amAdmin = false,
@@ -30,6 +32,7 @@ class Event {
       name: json['name'] as String,
       startDate: (json['startDate'] as Timestamp).toDate(),
       endDate: (json['endDate'] as Timestamp).toDate(),
+      creator: json['creator'] as String,
       admins: List<String>.from(json['admins']),
       members: List<String>.from(json['members']),
       shareId: json['shareId'] as String,
@@ -44,6 +47,7 @@ class Event {
       'name': name,
       'startDate': Timestamp.fromDate(startDate),
       'endDate': Timestamp.fromDate(endDate),
+      'creator': creator,
       'admins': admins,
       'members': members,
       'shareId': shareId,
@@ -57,6 +61,7 @@ class Event {
     String? name,
     DateTime? startDate,
     DateTime? endDate,
+    String? creator,
     List<String>? admins,
     List<String>? members,
     bool? amAdmin,
@@ -68,6 +73,7 @@ class Event {
         name: name ?? this.name,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
+        creator: creator ?? this.creator,
         admins: admins ?? this.admins,
         members: members ?? this.members,
         amAdmin: amAdmin ?? this.amAdmin,

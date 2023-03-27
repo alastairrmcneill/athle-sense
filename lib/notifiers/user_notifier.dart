@@ -8,7 +8,7 @@ class UserNotifier extends ChangeNotifier {
 
   UserNotifier(User? user) {
     if (user != null) {
-      _currentUser = AppUser(uid: user.uid, events: []);
+      _currentUser = AppUser(uid: user.uid);
       return;
     }
     _currentUser = null;

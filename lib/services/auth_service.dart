@@ -21,8 +21,9 @@ class AuthService {
     userNotifier.setCurrentUser = appUser;
   }
 
-  static String getCurrentUserUID() {
-    return _auth.currentUser!.uid;
+  // Current user id
+  static String? get currentUserId {
+    return _auth.currentUser?.uid;
   }
 
   // Register with email
@@ -94,7 +95,7 @@ class AuthService {
     await user.delete();
 
     await UserDatabase.deleteUser(uid);
-    await EventDatabase.removeUserFromEvents(uid);
+    // await EventDatabase.removeUserFromEvents(uid);
     await ResponseDatabase.deleteUserResponses(uid);
 
     clearNotifiers(context);
@@ -104,14 +105,16 @@ class AuthService {
     // Clear the notifiers
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
 
     userNotifier.setCurrentUser = null;
     responseNotifier.setMyResponses = null;
+    eventNotifier.setMyEvents = null;
   }
 
   // AppUser from Firebase user
   static AppUser? _appUserFromFirebaseUser(User? user) {
-    return (user != null) ? AppUser(uid: user.uid, events: []) : null;
+    return (user != null) ? AppUser(uid: user.uid) : null;
   }
 
   // Decoupling firebase service and main app by setting custom errors for auth service

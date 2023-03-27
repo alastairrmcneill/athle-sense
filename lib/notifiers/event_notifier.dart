@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:wellness_tracker/models/models.dart';
 
 class EventNotifier extends ChangeNotifier {
-  List<Event>? _userEvents;
+  List<Event>? _myEvents;
   Event? _currentEvent;
   List<Member>? _currentEventMembers;
 
-  List<Event>? get userEvents => _userEvents;
+  List<Event>? get myEvents => _myEvents;
   Event? get currentEvent => _currentEvent;
   List<Member>? get currentEventMembers => _currentEventMembers;
 
-  set setUserEvents(List<Event> userEvents) {
-    _userEvents = userEvents;
+  set setMyEvents(List<Event>? myEvents) {
+    _myEvents = myEvents;
     notifyListeners();
   }
 

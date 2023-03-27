@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  int tabIndex = 0;
+  int tabIndex = 2;
   @override
   void initState() {
     super.initState();
@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
     UserDatabase.getCurrentUser(userNotifier);
     ResponseService.loadUserResponses(context);
+    EventService.loadUserEvents(context);
   }
 
   @override

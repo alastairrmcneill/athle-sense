@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wellness_tracker/features/authentication/widgets/email_input_field.dart';
 import 'package:wellness_tracker/services/auth_service.dart';
 import 'package:wellness_tracker/features/authentication/widgets/error_text_widget.dart';
 import 'package:wellness_tracker/models/models.dart';
@@ -12,12 +13,12 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _email = '';
+  TextEditingController _emailTextEditingController = TextEditingController();
   String _errorText = '';
 
   Future _forgotPassword() async {
     dynamic result = await AuthService.forgotPassword(
-      _email.trim(),
+      _emailTextEditingController.text.trim(),
     );
     if (result is CustomError) {
       setState(() {
@@ -29,31 +30,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     // Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Password retreival email sent.')),
-    );
-  }
-
-  Widget _buildEmailInput() {
-    return TextFormField(
-      style: Theme.of(context).textTheme.headline5,
-      decoration: const InputDecoration(
-        labelText: 'Email',
-        prefixIcon: Icon(Icons.email_outlined),
-      ),
-      maxLines: 1,
-      keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'Required';
-        }
-        int atIndex = value.indexOf('@');
-        int periodIndex = value.lastIndexOf('.');
-        if (!value.contains('@') || atIndex < 1 || periodIndex <= atIndex + 1 || value.length == periodIndex + 1) {
-          return 'Not a valid email';
-        }
-      },
-      onSaved: (value) {
-        _email = value!;
-      },
     );
   }
 
@@ -82,7 +58,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildEmailInput(),
+                    EmailInputField(textEditingController: _emailTextEditingController),
                   ],
                 ),
               ),

@@ -34,12 +34,4 @@ class ResponseService {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context, listen: false);
     responseNotifier.setMyResponses = responseList;
   }
-
-  // static Appointment responseToAppointment(Response response) {
-  //   return Appointment(
-  //     startTime: response.date,
-  //     endTime: response.date.add(Duration(minutes: 1)),
-  //     subject: response.uid!,
-  //   );
-  // }
 }

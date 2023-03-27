@@ -24,7 +24,11 @@ class EventListTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           eventNotifier.setCurrentEvent = event;
-          Navigator.push(context, MaterialPageRoute(builder: (_) => const EventDetailScreen()));
+          if (event.creator == AuthService.currentUserId! || event.admins.contains(AuthService.currentUserId!)) {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const AdminEventDetailScreen()));
+          } else {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => const MemberEventDetailScreen()));
+          }
         },
         child: Container(
           decoration: BoxDecoration(

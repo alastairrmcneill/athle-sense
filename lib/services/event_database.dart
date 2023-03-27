@@ -74,6 +74,19 @@ class EventDatabase {
   }
 
   // Read
+  static Future<Event?> readEventFromUID(BuildContext context, {required String uid}) async {
+    Event? event;
+    DocumentReference _ref = _eventsRef.doc(uid);
+    DocumentSnapshot documentSnapshot = await _ref.get();
+
+    if (documentSnapshot.exists) {
+      event = Event.fromJSON(documentSnapshot.data());
+    }
+
+    return event;
+  }
+
+  // Read
   static Future<Event?> readEventFromCode(BuildContext context, {required String code}) async {
     Event? event;
     Query eventQuery = _db.collection('events').where('shareId', isEqualTo: code);

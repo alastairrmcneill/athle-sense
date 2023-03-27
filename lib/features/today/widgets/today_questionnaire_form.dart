@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wellness_tracker/features/today/widgets/widgets.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/models/question.dart';
+import 'package:wellness_tracker/services/event_service.dart';
 import 'package:wellness_tracker/services/response_service.dart';
 
 class TodayQuestionnaireForm extends StatefulWidget {
@@ -13,7 +14,6 @@ class TodayQuestionnaireForm extends StatefulWidget {
 
 class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool inEvent = false;
 
   List<int> answerValues = [0, 0, 0, 0, 0];
   int availabilityValue = 0;
@@ -50,7 +50,7 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
                 onchanged: (value) => setState(() => answerValues[index] = value),
               );
             }).toList(),
-            inEvent
+            EventService.inActiveEvent(context)
                 ? QuestionCard(
                     questionText: 'What is your availabiltiy for competing today?',
                     groupValue: availabilityValue,

@@ -14,6 +14,7 @@ class UserDatabase {
   }
 
   // Read
+
   static Future<AppUser?> getUser(String userID) async {
     DocumentReference ref = _db.collection('Users').doc(userID);
 
@@ -23,6 +24,19 @@ class UserDatabase {
 
       AppUser user = AppUser.fromJSON(data);
       return user;
+    }
+    return null;
+  }
+
+  static Future<Member?> getMemberFromUID(String userID) async {
+    DocumentReference ref = _db.collection('Users').doc(userID);
+
+    DocumentSnapshot snapshot = await ref.get();
+    if (snapshot.exists) {
+      Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>;
+
+      Member member = Member.fromJSON(data);
+      return member;
     }
     return null;
   }

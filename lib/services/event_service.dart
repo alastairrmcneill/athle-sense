@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
-import 'package:wellness_tracker/services/notification_service.dart';
 import 'package:wellness_tracker/services/services.dart';
 
 class EventService {
@@ -59,6 +58,76 @@ class EventService {
     // Update notifier
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     eventNotifier.setMyEvents = eventList;
+  }
+
+  static Future loadEvent(BuildContext context, {required String uid}) async {
+    // Read from Database
+    Event? event = await EventDatabase.readEventFromUID(context, uid: uid);
+
+    if (event == null) return;
+
+    // Update notifier
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    eventNotifier.setCurrentEvent = event;
+  }
+
+  static bool inActiveEvent(BuildContext context) {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    DateTime now = DateTime.now();
+    for (Event event in eventNotifier.myEvents ?? []) {
+      if (now.isAfter(event.startDate) && now.isBefore(event.endDate)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static Future readMembersInEvent(BuildContext context, {required Event event}) async {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+
+    List<Member> _membersList = [];
+    List<String> _memberIDs = [event.creator] + eventNotifier.currentEvent!.admins + eventNotifier.currentEvent!.members;
+
+    for (String memberID in _memberIDs) {
+      Member? member = await UserDatabase.getMemberFromUID(memberID);
+      if (member != null) {
+        _membersList.add(member);
+      }
+    }
+
+    eventNotifier.setCurrentEventMembers = _membersList;
+  }
+
+  static Future setMemberAsAdmin(BuildContext context, {required Event event, required Member member}) async {
+    event.admins.add(member.uid);
+    event.members.remove(member.uid);
+    await EventDatabase.update(context, event: event);
+
+    // Reload notifiers
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    eventNotifier.setCurrentEvent = event;
+  }
+
+  static Future setMemberAsMember(BuildContext context, {required Event event, required Member member}) async {
+    // Update event
+    event.members.add(member.uid);
+    event.admins.remove(member.uid);
+    await EventDatabase.update(context, event: event);
+
+    // Reload notifiers
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    eventNotifier.setCurrentEvent = event;
+  }
+
+  static Future removeUserFromEvent(BuildContext context, {required Event event, required Member member}) async {
+    event.members.remove(member.uid);
+    event.admins.remove(member.uid);
+    await EventDatabase.update(context, event: event);
+
+    // Reload notifiers
+    await readMembersInEvent(context, event: event);
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+    eventNotifier.setCurrentEvent = event;
   }
 
   static String _randomString(int length) {

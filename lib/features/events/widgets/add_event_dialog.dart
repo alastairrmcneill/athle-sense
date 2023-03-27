@@ -97,13 +97,13 @@ showAddEventDialog(BuildContext context) {
             width: double.infinity,
             child: ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: Text(
                 'Cancel',
                 style: Theme.of(context).textTheme.headline5,
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
             ),
           )
         ],

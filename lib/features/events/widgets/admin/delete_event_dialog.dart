@@ -3,7 +3,7 @@ import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/services/event_service.dart';
 import 'package:wellness_tracker/support/theme.dart';
 
-showRemoveUserDialog(BuildContext context, {required Event event, required Member member}) {
+showDeleteEventDialog(BuildContext context, {required Event event}) {
   Dialog alert = Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     backgroundColor: MyColors.cardColor,
@@ -17,7 +17,7 @@ showRemoveUserDialog(BuildContext context, {required Event event, required Membe
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Are you sure you want to remove this user?',
+            'Are you sure you want to delete this event?',
             style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
             textAlign: TextAlign.center,
           ),
@@ -27,12 +27,12 @@ showRemoveUserDialog(BuildContext context, {required Event event, required Membe
             child: ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(Colors.red)),
               onPressed: () async {
-                await EventService.removeUserFromEvent(context, event: event, member: member);
+                await EventService.deleteEvent(context, event: event);
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
               child: Text(
-                'Remove',
+                'Delete',
                 style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
               ),
             ),

@@ -7,3 +7,5 @@ export 'admin/member_tile.dart';
 export 'admin/members_tab.dart';
 export 'admin/overview_tab.dart';
 export 'admin/remove_user_dialog.dart';
+export 'leave_event_dialog.dart';
+export 'admin/delete_event_dialog.dart';

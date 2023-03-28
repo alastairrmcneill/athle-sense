@@ -114,6 +114,13 @@ class EventDatabase {
     return _success;
   }
 
+  // Delete
+  static Future deleteEvent(BuildContext context, {required String uid}) async {
+    DocumentReference ref = _db.collection('events').doc(uid);
+
+    await ref.delete();
+  }
+
   // // Read
   // static readMyEvents(EventNotifier eventNotifier) async {
   //   List<Event> _eventList = [];

@@ -130,6 +130,19 @@ class EventService {
     eventNotifier.setCurrentEvent = event;
   }
 
+  static Future leaveEvent(BuildContext context, {required Event event}) async {
+    event.members.remove(AuthService.currentUserId);
+    event.admins.remove(AuthService.currentUserId);
+    await EventDatabase.update(context, event: event);
+
+    await loadUserEvents(context);
+  }
+
+  static Future deleteEvent(BuildContext context, {required Event event}) async {
+    await EventDatabase.deleteEvent(context, uid: event.uid!);
+    await loadUserEvents(context);
+  }
+
   static String _randomString(int length) {
     const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
     Random r = Random();

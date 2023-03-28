@@ -39,7 +39,7 @@ class WellnessRadarChart extends StatelessWidget {
           height: 250,
           width: double.infinity,
           child: RadarChart(
-            features: Questions.short,
+            features: myQuestions.map((question) => question.short).toList(),
             ticks: const [1, 2, 3, 4, 5, 6],
             data: [
               _findRunningAverage(responseNotifier),

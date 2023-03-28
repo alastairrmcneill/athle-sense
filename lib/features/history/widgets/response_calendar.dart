@@ -12,6 +12,7 @@ class ResponseCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Container(
@@ -26,6 +27,7 @@ class ResponseCalendar extends StatelessWidget {
           lastDay: DateTime(2099, 12, 31),
           focusedDay: DateTime.now(),
           startingDayOfWeek: StartingDayOfWeek.monday,
+          availableGestures: AvailableGestures.horizontalSwipe,
           headerStyle: HeaderStyle(
             formatButtonVisible: false,
             titleCentered: true,
@@ -55,7 +57,8 @@ class ResponseCalendar extends StatelessWidget {
             todayBuilder: (context, day, focusedDay) {
               DateTime recent = responseNotifier.myResponses!.last.date;
               DateTime now = DateTime.now();
-              if (day.isAtSameMomentAs(DateUtils.dateOnly(recent))) {
+
+              if (DateUtils.isSameDay(now, recent)) {
                 return GestureDetector(
                   onTap: () {
                     Response response = responseNotifier.myResponses!.last;
@@ -121,7 +124,7 @@ class ResponseCalendar extends StatelessWidget {
             defaultBuilder: (context, day, focusedDay) {
               bool exists = false;
               for (var response in responseNotifier.myResponses!) {
-                if (day.isAtSameMomentAs(DateUtils.dateOnly(response.date))) {
+                if (DateUtils.isSameDay(day, response.date)) {
                   return GestureDetector(
                     onTap: () {
                       showResponseSummaryDialog(context, response: response);

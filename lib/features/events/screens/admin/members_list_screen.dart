@@ -8,7 +8,7 @@ class MembersListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Member'),
+        title: const Text('Members'),
         centerTitle: false,
       ),
       body: const MembersTab(),

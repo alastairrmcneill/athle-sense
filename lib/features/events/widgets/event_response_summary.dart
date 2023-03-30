@@ -1,17 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:wellness_tracker/features/home/widgets/widgets.dart';
-import 'package:wellness_tracker/models/models.dart';
-import 'package:wellness_tracker/support/theme.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/events/widgets/widgets.dart';
+import 'package:wellness_tracker/models/models.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/support/theme.dart';
 
-class DaySummaryCard extends StatelessWidget {
-  final DateTime? date;
+class EventResponseSummary extends StatelessWidget {
   final Response response;
-  const DaySummaryCard({
+  const EventResponseSummary({
     Key? key,
-    this.date,
     required this.response,
   }) : super(key: key);
 
@@ -33,10 +33,8 @@ class DaySummaryCard extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.08,
               child: Center(
                 child: AutoSizeText(
-                  date == null ? 'You have compeleted today\'s survey!' : DateFormat.yMMMMd().format(date!),
+                  DateFormat.yMMMMd().format(response.date),
                   minFontSize: 22,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline4!.copyWith(
                         fontSize: 26,
                         fontWeight: FontWeight.w200,
@@ -56,8 +54,9 @@ class DaySummaryCard extends StatelessWidget {
               flex: 1,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: WellnessRadarChart(
-                  response: response,
+                child: EventWellnessRadarChart(
+                  baseline: [1, 2, 3, 4, 5],
+                  ratings: response.ratings,
                 ),
               ),
             ),
@@ -117,6 +116,27 @@ class DaySummaryCard extends StatelessWidget {
                       ),
                     );
                   }).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Divider(
+              color: MyColors.lightTextColor!.withOpacity(0.3),
+              indent: 20,
+              endIndent: 20,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
+              child: Center(
+                child: AutoSizeText(
+                  'Availability: ${response.availability}',
+                  minFontSize: 22,
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w200,
+                      ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),

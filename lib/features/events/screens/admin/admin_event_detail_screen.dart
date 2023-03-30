@@ -28,14 +28,19 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
 
   Future loadData() async {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
-    await EventService.readMembersInEvent(context, event: eventNotifier.currentEvent!);
+    await EventService.loadEventData(context, event: eventNotifier.currentEvent!);
   }
 
   @override
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
     Event event = eventNotifier.currentEvent!;
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        eventNotifier.setCurrentEventData(null, null);
+        return true;
+      },
+      child: Scaffold(
         appBar: AppBar(
           title: Text(
             event.name,
@@ -68,7 +73,7 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
                 ),
                 const PopupMenuItem(
                   value: AdminEventMenuItems.item2,
-                  child: Text('Members'),
+                  child: Text('Edit Members'),
                 ),
                 PopupMenuItem(
                   value: AdminEventMenuItems.item3,
@@ -78,7 +83,17 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
             )
           ],
         ),
-        body: const OverviewTab());
+        body: event.startDate.isAfter(DateTime.now())
+            ? const EventNotStarted()
+            : event.endDate.isBefore(DateTime.now())
+                ? const EventFinished()
+                : eventNotifier.currentEventData == null || eventNotifier.currentEventMembers == null
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : OverviewTab(),
+      ),
+    );
   }
 }
 

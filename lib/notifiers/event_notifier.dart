@@ -5,10 +5,12 @@ class EventNotifier extends ChangeNotifier {
   List<Event>? _myEvents;
   Event? _currentEvent;
   List<Member>? _currentEventMembers;
+  EventData? _currentEventData;
 
   List<Event>? get myEvents => _myEvents;
   Event? get currentEvent => _currentEvent;
   List<Member>? get currentEventMembers => _currentEventMembers;
+  EventData? get currentEventData => _currentEventData;
 
   set setMyEvents(List<Event>? myEvents) {
     _myEvents = myEvents;
@@ -21,6 +23,12 @@ class EventNotifier extends ChangeNotifier {
   }
 
   set setCurrentEventMembers(List<Member> currentEventMembers) {
+    _currentEventMembers = currentEventMembers;
+    notifyListeners();
+  }
+
+  setCurrentEventData(EventData? currentEventData, List<Member>? currentEventMembers) {
+    _currentEventData = currentEventData;
     _currentEventMembers = currentEventMembers;
     notifyListeners();
   }

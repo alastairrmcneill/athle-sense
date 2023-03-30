@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/events/screens/screens.dart';
@@ -45,9 +46,12 @@ class EventListTile extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Text(
+                    child: AutoSizeText(
                       event.name,
-                      style: Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 28),
+                      minFontSize: 16,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
@@ -63,7 +67,7 @@ class EventListTile extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 '${DateFormat('dd/MM/yy').format(event.startDate)} - ${DateFormat('dd/MM/yy').format(event.endDate)}',
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
               ),
             ],
           ),

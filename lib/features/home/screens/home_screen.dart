@@ -18,10 +18,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
-  int tabIndex = 2;
+  late PageController pageController;
+  int tabIndex = 0;
   @override
   void initState() {
     super.initState();
+
+    pageController = PageController(initialPage: tabIndex);
 
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
 
@@ -53,9 +56,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: tabIndex,
         onTap: (value) {
-          setState(() {
-            tabIndex = value;
-          });
+          pageController.animateToPage(
+            value,
+            duration: Duration(milliseconds: 200),
+            curve: Curves.bounceOut,
+          );
         },
         items: const [
           BottomNavigationBarItem(
@@ -72,7 +77,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
           ),
         ],
       ),
-      body: tabs[tabIndex],
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (value) => setState(() => tabIndex = value),
+        children: tabs,
+      ),
     );
   }
 }

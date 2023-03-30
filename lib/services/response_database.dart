@@ -41,8 +41,8 @@ class ResponseDatabase {
     List<Response> responseList = [];
 
     for (var doc in querySnapshot.docs) {
-      Response workout = Response.fromJSON(doc.data());
-      responseList.add(workout);
+      Response response = Response.fromJSON(doc.data());
+      responseList.add(response);
     }
 
     return responseList;
@@ -83,26 +83,30 @@ class ResponseDatabase {
     responseNotifier.setResponseEachDay = _responsePerDayList;
   }
 
-  static Future readMemberResponses(ResponseNotifier responseNotifier, String eventUid, String userUid) async {
+  static Future<List<Response>> readMemberResponses(BuildContext context, {required String userUid}) async {
     List<Response> _responseList = [];
 
-    Query eventResponseQuery = _db.collection('Responses').where('eventUid', isEqualTo: eventUid).where('userUid', isEqualTo: userUid);
+    Query query = _responseRef
+        .where(
+          'userUid',
+          isEqualTo: userUid,
+        )
+        .orderBy(
+          'date',
+          descending: false,
+        )
+        .limit(
+          28,
+        );
 
-    await eventResponseQuery.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        Response newResponse = Response.fromJSON(doc);
-        _responseList.add(newResponse);
-      });
-    });
+    QuerySnapshot querySnapshot = await query.get();
 
-    // Sort list
-    _responseList.sort((a, b) => a.date.compareTo(b.date));
+    for (var doc in querySnapshot.docs) {
+      Response response = Response.fromJSON(doc.data());
+      _responseList.add(response);
+    }
 
-    // Write to notifiers
-    responseNotifier.setAllResponsesForMember = _responseList;
-    responseNotifier.setAllResponses = _responseList;
-
-    responseNotifier.setMyResponses = _responseList;
+    return _responseList;
   }
 
   // Update

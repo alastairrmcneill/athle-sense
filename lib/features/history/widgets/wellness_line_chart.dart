@@ -20,10 +20,10 @@ class _WellnessLineChartState extends State<WellnessLineChart> {
     double runningAverage = 0.0;
     List<Response> sublist = [];
 
-    if (index < 14) {
+    if (index < 28) {
       sublist = responseNotifier.myFilteredResponses!.sublist(0, index + 1);
     } else {
-      sublist = responseNotifier.myFilteredResponses!.sublist(index - 14, index + 1);
+      sublist = responseNotifier.myFilteredResponses!.sublist(index - 28, index + 1);
     }
 
     runningAverage = sublist.map((Response response) => response.wellnessRating).reduce((a, b) => a + b) / sublist.length;

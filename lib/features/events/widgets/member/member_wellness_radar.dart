@@ -6,9 +6,9 @@ import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/support/theme.dart';
 
-class WellnessRadarChart extends StatelessWidget {
+class MemberWellnessRadar extends StatelessWidget {
   final Response response;
-  const WellnessRadarChart({
+  const MemberWellnessRadar({
     Key? key,
     required this.response,
   }) : super(key: key);
@@ -36,7 +36,7 @@ class WellnessRadarChart extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 250,
+          height: 190,
           width: double.infinity,
           child: RadarChart(
             features: myQuestions.map((question) => question.short).toList(),

@@ -10,7 +10,7 @@ class CountdownTimer extends StatefulWidget {
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
-  String countdownString = '--h --m --s';
+  String countdownString = '';
   late Timer _timer;
 
   @override
@@ -49,8 +49,8 @@ class _CountdownTimerState extends State<CountdownTimer> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Next day in: $countdownString',
-      style: Theme.of(context).textTheme.headline5,
+      countdownString,
+      style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 32),
     );
   }
 }

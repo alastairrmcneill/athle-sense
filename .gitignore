@@ -2,6 +2,9 @@
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 
+# Constants
+lib/support/constants.dart
+
 # Miscellaneous
 *.class
 *.log

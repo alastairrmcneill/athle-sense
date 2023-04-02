@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.reading_wucc">
+    <uses-permission android:name="com.android.vending.BILLING" />
    <application
         android:label="Wellness Tracker"
         android:name="${applicationName}"

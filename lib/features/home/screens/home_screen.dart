@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/features/history/screens/screens.dart';
 import 'package:wellness_tracker/features/settings/widgets/widgets.dart';
 import 'package:wellness_tracker/features/today/screens/screens.dart';
+import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/response_service.dart';
 import 'package:wellness_tracker/services/services.dart';
-import 'package:wellness_tracker/support/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late PageController pageController;
   int tabIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -27,10 +27,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     pageController = PageController(initialPage: tabIndex);
 
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+    final user = Provider.of<AppUser?>(context, listen: false);
 
     UserDatabase.getCurrentUser(userNotifier);
     ResponseService.loadUserResponses(context);
     EventService.loadUserEvents(context);
+    PurchasesService.login(context, userID: user!.uid);
+    PurchasesService.fetchOffer(context);
   }
 
   @override

@@ -84,6 +84,7 @@ class AuthService {
   // Sign out
   static Future signOut(BuildContext context) async {
     clearNotifiers(context);
+    await PurchasesService.logout(context);
     await _auth.signOut();
   }
 

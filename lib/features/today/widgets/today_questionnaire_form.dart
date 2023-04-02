@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/today/widgets/widgets.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/models/question.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/event_service.dart';
 import 'package:wellness_tracker/services/response_service.dart';
 
@@ -36,6 +38,8 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
 
   @override
   Widget build(BuildContext context) {
+    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
+    List<Event>? myEvents = eventNotifier.myEvents;
     return Form(
       key: _formKey,
       child: SingleChildScrollView(

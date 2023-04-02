@@ -223,7 +223,7 @@ class EventService {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
     DateTime now = DateTime.now();
     for (Event event in eventNotifier.myEvents ?? []) {
-      if (now.isAfter(event.startDate) && now.isBefore(event.endDate)) {
+      if (!DateUtils.dateOnly(now).isBefore(DateUtils.dateOnly(event.startDate)) && !DateUtils.dateOnly(now).isAfter(DateUtils.dateOnly(event.endDate))) {
         return true;
       }
     }

@@ -3,33 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/features/events/widgets/widgets.dart';
-
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/auth_service.dart';
-import 'package:wellness_tracker/services/event_service.dart';
-import 'package:wellness_tracker/support/wrapper.dart';
 
-class AdminEventDetailScreen extends StatefulWidget {
+class AdminEventDetailScreen extends StatelessWidget {
   const AdminEventDetailScreen({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<AdminEventDetailScreen> createState() => _AdminEventDetailScreenState();
-}
-
-class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  Future loadData() async {
-    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
-    await EventService.loadEventData(context, event: eventNotifier.currentEvent!);
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await PurchasesService.init();
 
   AwesomeNotifications().initialize(
     'resource://drawable/app_icon',
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ResponseNotifier>(
           create: (_) => ResponseNotifier(),
+        ),
+        ChangeNotifierProvider<RevenueCatNotifier>(
+          create: (_) => RevenueCatNotifier(),
         ),
       ],
       child: MaterialApp(

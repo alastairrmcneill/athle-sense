@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wellness_tracker/models/response.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
-import 'package:wellness_tracker/support/constants.dart';
 import 'package:wellness_tracker/support/theme.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart' as sf;

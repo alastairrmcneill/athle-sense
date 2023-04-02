@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/paywall/screens/screens.dart';
 import 'package:wellness_tracker/features/settings/widgets/widgets.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/services.dart';
 
 class CustomRightDrawer extends StatelessWidget {
@@ -7,6 +10,7 @@ class CustomRightDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    RevenueCatNotifier revenueCatNotifier = Provider.of<RevenueCatNotifier>(context);
     return Drawer(
       child: SafeArea(
         child: Padding(
@@ -16,6 +20,25 @@ class CustomRightDrawer extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(),
+              ),
+              Text(revenueCatNotifier.proAccess ? 'Pro Access' : 'Basic Access'),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    revenueCatNotifier.updatePurchaserInfo();
+                  },
+                  child: const Text('Check level'),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => PaywallScreen()));
+                  },
+                  child: const Text('See Paywall'),
+                ),
               ),
               SizedBox(
                 width: double.infinity,

@@ -1,39 +1,31 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:wellness_tracker/models/models.dart';
+import 'package:provider/provider.dart';
+import 'package:wellness_tracker/notifiers/notifiers.dart';
 
-Future<void> createScheduledNotification({required int id, required String eventName}) async {
-  await AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: id,
-      channelKey: 'scheduled_channel',
-      title: '$eventName: Submit wellness.',
-      body: 'Answer the wellness and availability questions.',
-      notificationLayout: NotificationLayout.Default,
-    ),
-    schedule: NotificationCalendar(
-      repeats: true,
-      hour: 7,
-      minute: 30,
-      second: 0,
-      millisecond: 0,
-    ),
-  );
-}
+class NotificationService {
+  static Future createScheduledNotification(BuildContext context) async {
+    SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
 
-Future<void> cancelAllScheduledNotifications() async {
-  await AwesomeNotifications().cancelAllSchedules();
-}
-
-Future<void> cancelScheduledNotification(int id) async {
-  await AwesomeNotifications().cancelSchedule(id);
-}
-
-Future<void> setScheduledNotifications(List<Event> eventList) async {
-  await cancelAllScheduledNotifications();
-
-  await cancelAllScheduledNotifications();
-  for (var event in eventList) {
-    await createScheduledNotification(id: event.notificationId, eventName: event.name);
+    await AwesomeNotifications().cancelAllSchedules();
+    if (settingsNotifier.notificationsAllowed) {
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 1,
+          channelKey: 'scheduled_channel',
+          title: 'Don\'t forget to review your day!',
+          body: 'Respond to the daily survey and so you can get valuable wellness insights!',
+          notificationLayout: NotificationLayout.Default,
+        ),
+        schedule: NotificationCalendar(
+          repeats: true,
+          hour: 15,
+          minute: 21,
+          second: 0,
+          millisecond: 0,
+          timeZone: 'UTC',
+        ),
+      );
+    }
   }
 }

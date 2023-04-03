@@ -17,19 +17,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   String _errorText = '';
 
   Future _forgotPassword() async {
-    dynamic result = await AuthService.forgotPassword(
-      _emailTextEditingController.text.trim(),
-    );
-    if (result is CustomError) {
-      setState(() {
-        _errorText = result.message;
-      });
-      return result.message;
-    }
-
-    // Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password retreival email sent.')),
+    await AuthService.forgotPassword(
+      context,
+      email: _emailTextEditingController.text.trim(),
     );
   }
 

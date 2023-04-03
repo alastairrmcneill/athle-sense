@@ -23,14 +23,13 @@ class RevenueCatNotifier extends ChangeNotifier {
     try {
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
-      print(customerInfo.entitlements.all['Pro']);
-
       if (customerInfo.entitlements.all['Pro'] == null) {
         _proAccess = false;
-      }
-      if (customerInfo.entitlements.all['Pro']!.isActive) {
-        // Grant user "pro" access
-        _proAccess = true;
+      } else {
+        if (customerInfo.entitlements.all['Pro']!.isActive) {
+          // Grant user "pro" access
+          _proAccess = true;
+        }
       }
     } on PlatformException catch (e) {
       // Error fetching purchaser info

@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/events/screens/screens.dart';
@@ -23,13 +24,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    NotificationService.createScheduledNotification(context);
 
     pageController = PageController(initialPage: tabIndex);
 
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     final user = Provider.of<AppUser?>(context, listen: false);
 
-    UserDatabase.getCurrentUser(userNotifier);
+    UserDatabase.getCurrentUser(context);
     ResponseService.loadUserResponses(context);
     EventService.loadUserEvents(context);
     PurchasesService.login(context, userID: user!.uid);

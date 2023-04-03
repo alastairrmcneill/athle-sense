@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyThemes {
-  static ThemeData get lightTheme {
+  static ThemeData get darkTheme {
     return ThemeData(
       scaffoldBackgroundColor: MyColors.backgroundColor,
       primarySwatch: Colors.blue,
@@ -58,10 +59,13 @@ class MyThemes {
         caption: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
       ),
       unselectedWidgetColor: Colors.grey[350],
+      drawerTheme: DrawerThemeData(
+        backgroundColor: MyColors.backgroundColor,
+      ),
     );
   }
 
-  static getDarkTheme() {
+  static ThemeData get lightTheme {
     return ThemeData();
   }
 }

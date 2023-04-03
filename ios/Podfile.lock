@@ -800,6 +800,9 @@ PODS:
   - PurchasesHybridCommon (4.14.1):
     - RevenueCat (= 4.17.8)
   - RevenueCat (4.17.8)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
 
 DEPENDENCIES:
   - awesome_notifications (from `.symlinks/plugins/awesome_notifications/ios`)
@@ -809,6 +812,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
 
 SPEC REPOS:
   trunk:
@@ -850,6 +854,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/ios"
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -881,6 +887,7 @@ SPEC CHECKSUMS:
   purchases_flutter: 941e65870ed6f7439122cb4999fb61636dd86ccf
   PurchasesHybridCommon: fb1a3319024c1aa9f98d40cc5820476b824409fc
   RevenueCat: f2f96c2cbde5ddab3a86381923c6f023383342e0
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 

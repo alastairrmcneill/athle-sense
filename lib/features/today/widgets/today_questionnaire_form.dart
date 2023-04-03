@@ -20,20 +20,19 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
   List<int> answerValues = [0, 0, 0, 0, 0];
   int availabilityValue = 0;
 
-  Future<bool> _saveResponse(BuildContext context) async {
+  Future _saveResponse(BuildContext context) async {
     List<int> _ratings = answerValues;
     int _wellnessRating = 0;
     for (var value in answerValues) {
       _wellnessRating += value;
     }
 
-    bool result = await ResponseService.saveResponse(
+    ResponseService.saveResponse(
       context,
       answerValues: answerValues,
       availabilityValue: availabilityValue,
       wellnessRating: _wellnessRating,
     );
-    return result;
   }
 
   @override
@@ -66,23 +65,8 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
                 if (!_formKey.currentState!.validate()) {
                   return;
                 }
-                String _snackbarText = '';
                 // Save response
-                bool result = await _saveResponse(context);
-
-                if (result) {
-                  _snackbarText = 'Saved response';
-                } else {
-                  _snackbarText = 'Unsuccessful';
-                }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      _snackbarText,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
+                await _saveResponse(context);
               },
               child: Text('Save'),
             ),

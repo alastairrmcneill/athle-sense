@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/home/widgets/widgets.dart';
 import 'package:wellness_tracker/models/response.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/services/auth_service.dart';
 import 'package:wellness_tracker/services/response_database.dart';
 
 class ResponseService {
   static Future saveResponse(BuildContext context, {required List<int> answerValues, required int availabilityValue, required int wellnessRating}) async {
-    // Create response
+    showCircularProgressOverlay(context);
 
-    UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
+    String? userUid = AuthService.currentUserId;
+    if (userUid == null) {
+      stopCircularProgressOverlay(context);
+      showErrorDialog(context, "Error: Logout and log back in to reset");
+      return; // Return if not
+    }
+
+    // Create response
     Response response = Response(
-      userUid: userNotifier.currentUser!.uid,
+      userUid: userUid,
       date: DateTime.now(),
       ratings: answerValues,
       wellnessRating: wellnessRating,
@@ -18,16 +27,16 @@ class ResponseService {
     );
 
     // Write to database
-    bool success = await ResponseDatabase.createResponse(context, response: response);
+    await ResponseDatabase.create(context, response: response);
+    stopCircularProgressOverlay(context);
 
-    // Update notifiers
+    // Load Responses
     await loadUserResponses(context);
-
-    return success;
   }
 
   static Future loadUserResponses(BuildContext context) async {
     // Read from Database
+
     List<Response> responseList = await ResponseDatabase.readMyResponses(context);
 
     // Update notifier

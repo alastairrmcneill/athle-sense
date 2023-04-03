@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/authentication/screens/screens.dart';
 import 'package:wellness_tracker/features/authentication/widgets/widgets.dart';
-import 'package:wellness_tracker/models/custom_error.dart';
-import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/services.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,25 +17,16 @@ class _ForgotPasswordState extends State<LoginScreen> {
 
   String _errorText = '';
 
-  Future _login(UserNotifier userNotifier) async {
-    dynamic result = await AuthService.signInWithEmailPassword(
-      userNotifier,
-      _emailTextEditingController.text.trim(),
-      _passwordTextEditingController.text.trim(),
+  Future _login() async {
+    await AuthService.signInWithEmailPassword(
+      context,
+      email: _emailTextEditingController.text.trim(),
+      password: _passwordTextEditingController.text.trim(),
     );
-
-    // Check result, if error exit, if good push back to wrapper
-    if (result is CustomError) {
-      setState(() {
-        _errorText = result.message;
-      });
-      return;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -61,7 +49,10 @@ class _ForgotPasswordState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     EmailInputField(textEditingController: _emailTextEditingController),
-                    PasswordInputField(textEditingController: _passwordTextEditingController, confirmPassword: false),
+                    PasswordInputField(
+                      textEditingController: _passwordTextEditingController,
+                      labelText: 'Password',
+                    ),
                   ],
                 ),
               ),
@@ -74,7 +65,7 @@ class _ForgotPasswordState extends State<LoginScreen> {
                       return;
                     }
                     _formKey.currentState!.save();
-                    await _login(userNotifier);
+                    await _login();
                   },
                   child: Text('Login'),
                 ),

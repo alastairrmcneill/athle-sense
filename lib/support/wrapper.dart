@@ -5,25 +5,8 @@ import 'package:wellness_tracker/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/authentication/screens/screens.dart';
 
-class Wrapper extends StatefulWidget {
+class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
-
-  @override
-  State<Wrapper> createState() => _WrapperState();
-}
-
-class _WrapperState extends State<Wrapper> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

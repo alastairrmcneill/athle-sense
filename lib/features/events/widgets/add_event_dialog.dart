@@ -46,23 +46,8 @@ showAddEventDialog(BuildContext context) {
     }
     formKey.currentState!.save();
 
-    String snackBarText = '';
-    bool result = await EventService.joinEvent(context, code: code);
+    await EventService.joinEvent(context, code: code);
 
-    if (result) {
-      snackBarText = 'Joined event successfully';
-    } else {
-      snackBarText = 'Unsuccessful, please try again';
-    }
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          snackBarText,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
     Navigator.of(context).pop();
   }
 

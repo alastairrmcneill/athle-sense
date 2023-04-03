@@ -5,6 +5,7 @@ import 'package:wellness_tracker/support/theme.dart';
 showDeleteAccountDialog({required BuildContext context}) {
   Dialog alert = Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+    backgroundColor: MyColors.cardColor,
     child: Container(
       width: 200.0,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -15,7 +16,7 @@ showDeleteAccountDialog({required BuildContext context}) {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Are you sure you want to delete your account?',
+            'Are you sure you want to delete your account?\nAll your data will be lost.',
             style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
             textAlign: TextAlign.center,
           ),
@@ -37,7 +38,7 @@ showDeleteAccountDialog({required BuildContext context}) {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(Colors.grey[300])),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor)),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -46,7 +47,7 @@ showDeleteAccountDialog({required BuildContext context}) {
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
-          )
+          ),
         ],
       ),
     ),

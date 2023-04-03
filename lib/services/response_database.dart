@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness_tracker/features/home/widgets/widgets.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/services.dart';
@@ -9,20 +10,16 @@ class ResponseDatabase {
   static final CollectionReference _responseRef = _db.collection('responses');
 
   // Create
-  static Future<bool> createResponse(BuildContext context, {required Response response}) async {
-    bool _success = false;
-    DocumentReference _ref = _responseRef.doc();
-
-    Response newResponse = response.copy(uid: _ref.id);
-
+  static Future create(BuildContext context, {required Response response}) async {
     try {
-      await _ref.set(newResponse.toJSON()).whenComplete(() {
-        _success = true;
-      });
+      DocumentReference _ref = _responseRef.doc();
+
+      Response newResponse = response.copy(uid: _ref.id);
+
+      await _ref.set(newResponse.toJSON());
     } on FirebaseException catch (error) {
-      _success = false;
+      showErrorDialog(context, error.message ?? 'There was an error storing your response.');
     }
-    return _success;
   }
 
   // Read
@@ -109,22 +106,16 @@ class ResponseDatabase {
     return _responseList;
   }
 
-  // Update
-  static Future deleteEventResponses(String eventUid, String userUid) async {
-    await _db.collection('Responses').where('userUid', isEqualTo: userUid).where('eventUid', isEqualTo: eventUid).get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-      }
-    });
-  }
-
   // Delete
-
-  static Future deleteUserResponses(String uid) async {
-    await _db.collection('Responses').where('userUid', isEqualTo: uid).get().then((snapshot) {
-      for (DocumentSnapshot ds in snapshot.docs) {
-        ds.reference.delete();
-      }
-    });
+  static Future deleteUserResponses(BuildContext context, {required String uid}) async {
+    try {
+      await _db.collection('responses').where('userUid', isEqualTo: uid).get().then((snapshot) {
+        for (DocumentSnapshot ds in snapshot.docs) {
+          ds.reference.delete();
+        }
+      });
+    } on FirebaseException catch (error) {
+      showErrorDialog(context, error.message ?? 'There was an issue removing your previous responses.');
+    }
   }
 }

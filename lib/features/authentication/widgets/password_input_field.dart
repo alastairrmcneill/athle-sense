@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class PasswordInputField extends StatefulWidget {
   final TextEditingController textEditingController;
-  final bool confirmPassword;
+  final String labelText;
   const PasswordInputField({
     Key? key,
     required this.textEditingController,
-    required this.confirmPassword,
+    required this.labelText,
   }) : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
     return TextFormField(
       style: Theme.of(context).textTheme.headline5,
       decoration: InputDecoration(
-        labelText: !widget.confirmPassword ? 'Password' : 'Confirm Password',
+        labelText: widget.labelText,
         prefixIcon: const Icon(Icons.lock_outline),
         suffixIcon: IconButton(
           onPressed: () {

@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_datepicker: "20.4.44"
   custom_date_range_picker: ^1.0.6
   purchases_flutter: ^4.11.1
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:

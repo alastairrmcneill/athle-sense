@@ -8,10 +8,10 @@ class NotificationService {
 
   static Future init() async {
     await AwesomeNotifications().initialize(
-      // 'resource://drawable/plant',
+      'resource://drawable/ic_stat_directions_run',
 
       // 'resource://drawable-hdpi/ic_stat_directions_run',
-      null,
+      // null,
       [
         NotificationChannel(
           channelKey: channelKey,
@@ -23,7 +23,6 @@ class NotificationService {
           onlyAlertOnce: true,
           playSound: true,
           criticalAlerts: true,
-          defaultColor: Colors.red,
         ),
       ],
       debug: true,
@@ -72,15 +71,16 @@ class NotificationService {
             title: 'Don\'t forget to review your day!',
             body: 'Respond to the daily survey and so you can get valuable wellness insights!',
             notificationLayout: NotificationLayout.Default,
+            color: Colors.green,
           ),
-          // schedule: NotificationCalendar(
-          //   repeats: true,
-          //   hour: 11,
-          //   minute: 2,
-          //   second: 0,
-          //   millisecond: 0,
-          //   timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
-          // ),
+          schedule: NotificationCalendar(
+            repeats: true,
+            hour: 14,
+            minute: 54,
+            second: 0,
+            millisecond: 0,
+            timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+          ),
         );
       }
     });

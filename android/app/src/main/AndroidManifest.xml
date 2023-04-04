@@ -1,18 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.reading_wucc">
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
    <application
         android:label="Wellness Tracker"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-<!-- 
+
         <meta-data 
           android:name="com.google.firebase.messaging.default_notification_icon"   
           android:resource="@drawable/ic_stat_directions_run" 
           />
         <meta-data
           android:name="com.google.firebase.messaging.default_notification_color"
-          android:resource="@color/teal" /> -->
+          android:resource="@color/teal" />
 
 
         <activity

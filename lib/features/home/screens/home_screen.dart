@@ -24,14 +24,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-    NotificationService.createScheduledNotification(context);
 
     pageController = PageController(initialPage: tabIndex);
+    setupNotifications();
 
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     final user = Provider.of<AppUser?>(context, listen: false);
@@ -41,6 +36,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     EventService.loadUserEvents(context);
     PurchasesService.login(context, userID: user!.uid);
     PurchasesService.fetchOffer(context);
+  }
+
+  Future setupNotifications() async {
+    await NotificationService.askForNotifications(context);
+    await NotificationService.createScheduledNotification(context);
   }
 
   @override

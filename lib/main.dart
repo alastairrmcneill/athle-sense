@@ -17,18 +17,7 @@ void main() async {
   await PurchasesService.init();
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  AwesomeNotifications().initialize(
-    'resource://drawable/app_icon',
-    [
-      NotificationChannel(
-        channelKey: 'scheduled_channel',
-        channelName: 'Scheduled Notifications',
-        channelDescription: 'Scheduled notifications for daily reminders to complete the survey.',
-        locked: false,
-        importance: NotificationImportance.Default,
-      ),
-    ],
-  );
+  await NotificationService.init();
 
   runApp(MyApp(
     prefs: prefs,
@@ -52,6 +41,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider<SettingsNotifier>(
         create: (_) => SettingsNotifier(
           darkMode: prefs.getBool('darkMode') ?? true,
+          askedNotifications: prefs.getBool('askedNotifications') ?? false,
           notificationsAllowed: prefs.getBool('notificationsAllowed') ?? true,
           notificationHours: prefs.getInt('notificationHours') ?? 7,
           notificationMins: prefs.getInt('notificationMins') ?? 0,

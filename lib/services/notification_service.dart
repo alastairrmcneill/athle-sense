@@ -4,28 +4,85 @@ import 'package:provider/provider.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 
 class NotificationService {
+  static String channelKey = 'scheduled_channel';
+
+  static Future init() async {
+    await AwesomeNotifications().initialize(
+      // 'resource://drawable/plant',
+
+      // 'resource://drawable-hdpi/ic_stat_directions_run',
+      null,
+      [
+        NotificationChannel(
+          channelKey: channelKey,
+          channelName: 'Scheduled Notifications',
+          channelDescription: 'Scheduled notifications for daily reminders to complete the survey.',
+          locked: false,
+          importance: NotificationImportance.Max,
+          channelShowBadge: true,
+          onlyAlertOnce: true,
+          playSound: true,
+          criticalAlerts: true,
+          defaultColor: Colors.red,
+        ),
+      ],
+      debug: true,
+    );
+
+    await AwesomeNotifications().setListeners(
+      onActionReceivedMethod: (receivedAction) async {
+        print('onActionReceivedMethod');
+      },
+      onDismissActionReceivedMethod: (receivedAction) async {
+        print('onDismissActionReceivedMethod');
+      },
+      onNotificationCreatedMethod: (receivedNotification) async {
+        print('onNotificationCreatedMethod');
+      },
+      onNotificationDisplayedMethod: (receivedNotification) async {
+        print('onNotificationDisplayedMethod');
+      },
+    );
+  }
+
+  static Future askForNotifications(BuildContext context) async {
+    SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
+    if (!settingsNotifier.askedNotifications) {
+      await AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
+        if (!isAllowed) {
+          await AwesomeNotifications().requestPermissionToSendNotifications();
+          settingsNotifier.setAskedNotifications(true);
+        }
+      });
+    }
+  }
+
   static Future createScheduledNotification(BuildContext context) async {
     SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
-
     await AwesomeNotifications().cancelAllSchedules();
-    if (settingsNotifier.notificationsAllowed) {
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: 'scheduled_channel',
-          title: 'Don\'t forget to review your day!',
-          body: 'Respond to the daily survey and so you can get valuable wellness insights!',
-          notificationLayout: NotificationLayout.Default,
-        ),
-        schedule: NotificationCalendar(
-          repeats: true,
-          hour: 15,
-          minute: 21,
-          second: 0,
-          millisecond: 0,
-          timeZone: 'UTC',
-        ),
-      );
-    }
+
+    await AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
+      print('Notifications allowed: $isAllowed');
+      print('Notifications allowed in app: ${settingsNotifier.notificationsAllowed}');
+      if (isAllowed && settingsNotifier.notificationsAllowed) {
+        await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: channelKey,
+            title: 'Don\'t forget to review your day!',
+            body: 'Respond to the daily survey and so you can get valuable wellness insights!',
+            notificationLayout: NotificationLayout.Default,
+          ),
+          // schedule: NotificationCalendar(
+          //   repeats: true,
+          //   hour: 11,
+          //   minute: 2,
+          //   second: 0,
+          //   millisecond: 0,
+          //   timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),
+          // ),
+        );
+      }
+    });
   }
 }

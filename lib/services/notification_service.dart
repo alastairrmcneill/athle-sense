@@ -61,8 +61,6 @@ class NotificationService {
     await AwesomeNotifications().cancelAllSchedules();
 
     await AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
-      print('Notifications allowed: $isAllowed');
-      print('Notifications allowed in app: ${settingsNotifier.notificationsAllowed}');
       if (isAllowed && settingsNotifier.notificationsAllowed) {
         await AwesomeNotifications().createNotification(
           content: NotificationContent(
@@ -75,8 +73,8 @@ class NotificationService {
           ),
           schedule: NotificationCalendar(
             repeats: true,
-            hour: 14,
-            minute: 54,
+            hour: settingsNotifier.notificationHours,
+            minute: settingsNotifier.notificationMins,
             second: 0,
             millisecond: 0,
             timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),

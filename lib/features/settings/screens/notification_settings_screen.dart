@@ -50,10 +50,26 @@ class NotificationSettingsScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline5,
               ),
               trailing: Text(
-                DateFormat('hh:mm').format(time),
+                DateFormat('HH:mm').format(time),
                 style: Theme.of(context).textTheme.headline6,
               ),
-              onTap: () {},
+              onTap: () async {
+                TimeOfDay? newTime = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay(
+                    hour: settingsNotifier.notificationHours,
+                    minute: settingsNotifier.notificationMins,
+                  ),
+                );
+
+                if (newTime == null) return;
+
+                settingsNotifier.setNotificationsTime(
+                  notificationHours: newTime.hour,
+                  notificationMins: newTime.minute,
+                );
+                NotificationService.createScheduledNotification(context);
+              },
             ),
             Divider(
               indent: 15,
@@ -63,29 +79,6 @@ class NotificationSettingsScreen extends StatelessWidget {
           ],
         ),
       ),
-
-      // showTimePicker(
-      //   context: context,
-      //   initialTime: DateTime.now(),
-      // ),
-      // body: SizedBox(
-      //   height: 200,
-      //   width: 200,
-      //   child: CupertinoTheme(
-      //     child: CupertinoDatePicker(
-      //       mode: CupertinoDatePickerMode.time,
-      //       use24hFormat: false,
-      //       onDateTimeChanged: (value) {},
-      //     ),
-      //     data: CupertinoThemeData(
-      //       textTheme: CupertinoTextThemeData(
-      //         dateTimePickerTextStyle: TextStyle(
-      //           color: MyColors.lightTextColor,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

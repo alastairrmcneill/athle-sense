@@ -10,14 +10,14 @@ class LineChartLegend extends StatelessWidget {
       children: [
         Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 2.5,
-              backgroundColor: Color.fromRGBO(75, 135, 185, 1),
+              backgroundColor: Theme.of(context).canvasColor,
             ),
             const SizedBox(width: 5),
             Text(
               'Wellness',
-              style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12, fontWeight: FontWeight.w100),
+              style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12, fontWeight: FontWeight.w200),
             ),
           ],
         ),
@@ -30,7 +30,7 @@ class LineChartLegend extends StatelessWidget {
             const SizedBox(width: 5),
             Text(
               'Baseline',
-              style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12, fontWeight: FontWeight.w100),
+              style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12, fontWeight: FontWeight.w200),
             ),
           ],
         ),

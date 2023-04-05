@@ -17,7 +17,7 @@ class MemberTile extends StatelessWidget {
     return ListTile(
       title: Text(
         member.name,
-        style: TextStyle(color: MyColors.lightTextColor),
+        style: TextStyle(color: Theme.of(context).textTheme.headline6!.color!),
       ),
       trailing: Text(
         event.creator == member.uid
@@ -26,7 +26,7 @@ class MemberTile extends StatelessWidget {
                 ? 'Admin'
                 : '',
         style: TextStyle(
-          color: MyColors.lightTextColor!.withOpacity(0.8),
+          color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.8),
           fontWeight: FontWeight.w300,
         ),
       ),

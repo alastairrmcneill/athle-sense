@@ -31,45 +31,45 @@ class EventListTile extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (_) => const MemberEventDetailScreen()));
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            color: MyColors.cardColor,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
           ),
-          padding: const EdgeInsets.all(10),
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: AutoSizeText(
-                      event.name,
-                      style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 28),
-                      minFontSize: 16,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: AutoSizeText(
+                        event.name,
+                        style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 28),
+                        minFontSize: 16,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  Text(
-                    event.creator == AuthService.currentUserId!
-                        ? 'Creator'
-                        : event.admins.contains(AuthService.currentUserId!)
-                            ? 'Admin'
-                            : '',
-                    style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                '${DateFormat('dd/MM/yy').format(event.startDate)} - ${DateFormat('dd/MM/yy').format(event.endDate)}',
-                style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
-              ),
-            ],
+                    Text(
+                      event.creator == AuthService.currentUserId!
+                          ? 'Creator'
+                          : event.admins.contains(AuthService.currentUserId!)
+                              ? 'Admin'
+                              : '',
+                      style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '${DateFormat('dd/MM/yy').format(event.startDate)} - ${DateFormat('dd/MM/yy').format(event.endDate)}',
+                  style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -33,14 +33,14 @@ class MemberEditScreen extends StatelessWidget {
               title: Text(
                 'Admin',
                 style: TextStyle(
-                  color: MyColors.lightTextColor!.withOpacity(0.8),
+                  color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.8),
                   fontWeight: FontWeight.w300,
                 ),
               ),
               trailing: event.admins.contains(member.uid)
                   ? Icon(
                       Icons.check,
-                      color: MyColors.lightTextColor,
+                      color: Theme.of(context).textTheme.headline6!.color!,
                     )
                   : const SizedBox(),
               onTap: () async {
@@ -49,19 +49,19 @@ class MemberEditScreen extends StatelessWidget {
                 }
               },
             ),
-            Divider(color: MyColors.lightTextColor),
+            const Divider(),
             ListTile(
               title: Text(
                 'Member',
                 style: TextStyle(
-                  color: MyColors.lightTextColor!.withOpacity(0.8),
+                  color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.8),
                   fontWeight: FontWeight.w300,
                 ),
               ),
               trailing: event.members.contains(member.uid)
                   ? Icon(
                       Icons.check,
-                      color: MyColors.lightTextColor,
+                      color: Theme.of(context).textTheme.headline6!.color!,
                     )
                   : const SizedBox(),
               onTap: () async {
@@ -70,7 +70,7 @@ class MemberEditScreen extends StatelessWidget {
                 }
               },
             ),
-            Divider(color: MyColors.lightTextColor),
+            const Divider(),
             TextButton(
               onPressed: () {
                 showRemoveUserDialog(context, event: event, member: member);

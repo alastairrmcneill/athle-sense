@@ -23,52 +23,58 @@ class QuestionCard extends StatelessWidget {
           return 'Required';
         }
       }, builder: (field) {
-        return Container(
-          decoration: BoxDecoration(
+        return Card(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            color: MyColors.cardColor,
-            border: Border.all(color: field.hasError ? Colors.red : Colors.transparent),
+            side: BorderSide(color: field.hasError ? Colors.red : Colors.transparent),
           ),
-          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                questionText,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Radio<int>(value: 1, groupValue: groupValue, onChanged: (value) => onchanged(1), activeColor: ratingColors[0]),
-                  Radio<int>(
-                    value: 2,
-                    groupValue: groupValue,
-                    onChanged: (value) => onchanged(2),
-                    activeColor: ratingColors[1],
-                  ),
-                  Radio<int>(
-                    value: 3,
-                    groupValue: groupValue,
-                    onChanged: (value) => onchanged(3),
-                    activeColor: ratingColors[2],
-                  ),
-                  Radio<int>(
-                    value: 4,
-                    groupValue: groupValue,
-                    onChanged: (value) => onchanged(4),
-                    activeColor: ratingColors[3],
-                  ),
-                  Radio<int>(
-                    value: 5,
-                    groupValue: groupValue,
-                    onChanged: (value) => onchanged(5),
-                    activeColor: ratingColors[4],
-                  ),
-                ],
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  questionText,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Radio<int>(
+                      value: 1,
+                      groupValue: groupValue,
+                      onChanged: (value) => onchanged(1),
+                      activeColor: ratingColors[0],
+                    ),
+                    Radio<int>(
+                      value: 2,
+                      groupValue: groupValue,
+                      onChanged: (value) => onchanged(2),
+                      activeColor: ratingColors[1],
+                    ),
+                    Radio<int>(
+                      value: 3,
+                      groupValue: groupValue,
+                      onChanged: (value) => onchanged(3),
+                      activeColor: ratingColors[2],
+                    ),
+                    Radio<int>(
+                      value: 4,
+                      groupValue: groupValue,
+                      onChanged: (value) => onchanged(4),
+                      activeColor: ratingColors[3],
+                    ),
+                    Radio<int>(
+                      value: 5,
+                      groupValue: groupValue,
+                      onChanged: (value) => onchanged(5),
+                      activeColor: ratingColors[4],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       }),

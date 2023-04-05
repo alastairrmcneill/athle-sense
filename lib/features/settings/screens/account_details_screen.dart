@@ -30,14 +30,13 @@ class AccountDetailsScreen extends StatelessWidget {
               ),
               trailing: Icon(
                 Icons.chevron_right_rounded,
-                color: MyColors.lightTextColor!.withOpacity(0.8),
+                color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.8),
               ),
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const EditNameScreen())),
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
             ListTile(
               title: Text(
@@ -46,14 +45,13 @@ class AccountDetailsScreen extends StatelessWidget {
               ),
               trailing: Icon(
                 Icons.chevron_right_rounded,
-                color: MyColors.lightTextColor!.withOpacity(0.8),
+                color: Theme.of(context).textTheme.headline6!.color!..withOpacity(0.8),
               ),
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChangePasswordScreen())),
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
             ListTile(
               title: Text(
@@ -69,7 +67,7 @@ class AccountDetailsScreen extends StatelessWidget {
               ),
               trailing: Icon(
                 Icons.chevron_right_rounded,
-                color: MyColors.lightTextColor!.withOpacity(0.8),
+                color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.8),
               ),
               onTap: () {
                 if (!revenueCatNotifier.proAccess) {
@@ -77,10 +75,9 @@ class AccountDetailsScreen extends StatelessWidget {
                 }
               },
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
             !revenueCatNotifier.proAccess
                 ? Padding(

@@ -47,9 +47,9 @@ class MemberWellnessRadar extends StatelessWidget {
             ],
             graphColors: [
               Colors.black26.withOpacity(0.1),
-              Colors.blueAccent,
+              Theme.of(context).canvasColor,
             ],
-            axisColor: MyColors.lightTextColor!.withOpacity(0.1),
+            axisColor: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.1),
             outlineColor: Colors.transparent,
             featuresTextStyle: Theme.of(context).textTheme.headline6!,
             ticksTextStyle: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.transparent),
@@ -62,7 +62,7 @@ class MemberWellnessRadar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(radius: 4, backgroundColor: Colors.blueAccent),
+                  CircleAvatar(radius: 4, backgroundColor: Theme.of(context).canvasColor),
                   Text('  Day', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
                 ],
               ),

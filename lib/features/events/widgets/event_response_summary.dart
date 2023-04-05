@@ -24,7 +24,7 @@ class EventResponseSummary extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 25),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: MyColors.cardColor,
+          color: MyColors.darkCardColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -15,58 +15,60 @@ class TeamRadarChart extends StatelessWidget {
     EventData eventData = eventNotifier.currentEventData!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
-          color: MyColors.cardColor,
-        ),
-        padding: const EdgeInsets.all(10),
-        width: double.infinity,
+      child: SizedBox(
         height: 300,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 250,
-              width: double.infinity,
-              child: RadarChart(
-                features: myQuestions.map((question) => question.short).toList(),
-                ticks: const [1, 2, 3, 4, 5, 6],
-                data: [
-                  eventData.baselineRatings,
-                  eventData.averageRatingsToday,
-                ],
-                graphColors: [
-                  Colors.black26.withOpacity(0.1),
-                  const Color.fromRGBO(75, 135, 185, 1),
-                ],
-                axisColor: MyColors.lightTextColor!.withOpacity(0.1),
-                outlineColor: Colors.transparent,
-                featuresTextStyle: Theme.of(context).textTheme.headline6!,
-                ticksTextStyle: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.transparent),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 250,
+                  width: double.infinity,
+                  child: RadarChart(
+                    features: myQuestions.map((question) => question.short).toList(),
+                    ticks: const [1, 2, 3, 4, 5, 6],
+                    data: [
+                      eventData.baselineRatings,
+                      eventData.averageRatingsToday,
+                    ],
+                    graphColors: [
+                      Colors.black26.withOpacity(0.1),
+                      Theme.of(context).canvasColor,
+                    ],
+                    axisColor: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.1),
+                    outlineColor: Colors.transparent,
+                    featuresTextStyle: Theme.of(context).textTheme.headline6!,
+                    ticksTextStyle: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.transparent),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const CircleAvatar(radius: 4, backgroundColor: Color.fromRGBO(75, 135, 185, 1)),
-                      Text('  Team Average Today', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
+                      Row(
+                        children: [
+                          CircleAvatar(radius: 4, backgroundColor: Theme.of(context).canvasColor),
+                          Text('  Team Average Today', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          CircleAvatar(radius: 4, backgroundColor: Colors.black26),
+                          Text('  Team Baseline', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
+                        ],
+                      ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      CircleAvatar(radius: 4, backgroundColor: Colors.black26),
-                      Text('  Team Baseline', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

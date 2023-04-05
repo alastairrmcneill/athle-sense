@@ -11,6 +11,7 @@ import 'package:wellness_tracker/support/theme.dart';
 showNewEventDialog(BuildContext context, {Event? event}) {
   UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
   EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+  SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -137,7 +138,6 @@ showNewEventDialog(BuildContext context, {Event? event}) {
         builder: (context, setState) {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            backgroundColor: MyColors.cardColor,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               width: MediaQuery.of(context).size.width * 0.5,
@@ -183,7 +183,6 @@ showNewEventDialog(BuildContext context, {Event? event}) {
                       child: ElevatedButton(
                         child: Text(
                           event == null ? 'Create' : 'Update',
-                          style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.lightTextColor),
                         ),
                         onPressed: () async {
                           await submit(context);
@@ -193,10 +192,14 @@ showNewEventDialog(BuildContext context, {Event? event}) {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor)),
-                        child: Text(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color?>(
+                            settingsNotifier.darkMode ? MyColors.darkCardColor : Colors.grey,
+                          ),
+                        ),
+                        child: const Text(
                           'Cancel',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();

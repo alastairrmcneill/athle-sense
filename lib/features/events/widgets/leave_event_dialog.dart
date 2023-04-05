@@ -6,7 +6,7 @@ import 'package:wellness_tracker/support/theme.dart';
 showLeaveEventDialog(BuildContext context, {required Event event}) {
   Dialog alert = Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-    backgroundColor: MyColors.cardColor,
+    backgroundColor: MyColors.darkCardColor,
     child: Container(
       width: 200.0,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -33,14 +33,14 @@ showLeaveEventDialog(BuildContext context, {required Event event}) {
               },
               child: Text(
                 'Leave',
-                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.darkBackgroundColor),
               ),
             ),
           ),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor)),
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.darkBackgroundColor)),
               onPressed: () {
                 Navigator.pop(context);
               },

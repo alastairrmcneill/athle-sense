@@ -26,22 +26,16 @@ class ChangeThemeScreen extends StatelessWidget {
                 'Light Theme',
                 style: Theme.of(context).textTheme.headline5,
               ),
-              trailing: settingsNotifier.darkMode
-                  ? const SizedBox()
-                  : Icon(
-                      Icons.check,
-                      color: MyColors.lightTextColor,
-                    ),
+              trailing: settingsNotifier.darkMode ? const SizedBox() : Icon(Icons.check, color: Theme.of(context).textTheme.headline6!.color!),
               onTap: () {
                 if (settingsNotifier.darkMode) {
                   settingsNotifier.setDarkMode(false);
                 }
               },
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
             ListTile(
               title: Text(
@@ -51,7 +45,7 @@ class ChangeThemeScreen extends StatelessWidget {
               trailing: settingsNotifier.darkMode
                   ? Icon(
                       Icons.check,
-                      color: MyColors.lightTextColor,
+                      color: Theme.of(context).textTheme.headline6!.color!,
                     )
                   : const SizedBox(),
               onTap: () {

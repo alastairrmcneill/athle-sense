@@ -18,7 +18,7 @@ showPurchasePackageDialog(BuildContext context, {required Package package}) {
         children: [
           Text(
             'Are you sure you want to purchase ${package.storeProduct.title}?',
-            style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+            style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.darkBackgroundColor),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
@@ -32,7 +32,7 @@ showPurchasePackageDialog(BuildContext context, {required Package package}) {
               },
               child: Text(
                 'Purchase',
-                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.backgroundColor),
+                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.darkBackgroundColor),
               ),
             ),
           ),

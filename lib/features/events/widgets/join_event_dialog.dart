@@ -7,6 +7,7 @@ import 'package:wellness_tracker/support/theme.dart';
 showAddEventDialog(BuildContext context) {
   UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
   EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+  SettingsNotifier settingsNotifier = Provider.of<SettingsNotifier>(context, listen: false);
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String code = '';
 
@@ -53,7 +54,6 @@ showAddEventDialog(BuildContext context) {
 
   Dialog alert = Dialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-    backgroundColor: MyColors.cardColor,
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       width: MediaQuery.of(context).size.width * 0.5,
@@ -69,9 +69,8 @@ showAddEventDialog(BuildContext context) {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              child: Text(
+              child: const Text(
                 'Join',
-                style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.lightTextColor),
               ),
               onPressed: () async {
                 await submit(context);
@@ -81,14 +80,18 @@ showAddEventDialog(BuildContext context) {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color?>(MyColors.backgroundColor)),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color?>(
+                  settingsNotifier.darkMode ? MyColors.darkCardColor : Colors.grey,
+                ),
+              ),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
-                'Cancel',
-                style: Theme.of(context).textTheme.headline5,
-              ),
             ),
           )
         ],

@@ -34,9 +34,7 @@ class CustomRightDrawer extends StatelessWidget {
                       ),
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AccountDetailsScreen())),
                     ),
-                    Divider(
-                      color: MyColors.lightTextColor!.withOpacity(0.8),
-                    ),
+                    const Divider(),
                     ListTile(
                       title: Text(
                         'Theme',
@@ -48,9 +46,7 @@ class CustomRightDrawer extends StatelessWidget {
                       ),
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ChangeThemeScreen())),
                     ),
-                    Divider(
-                      color: MyColors.lightTextColor!.withOpacity(0.8),
-                    ),
+                    const Divider(),
                     ListTile(
                       title: Text(
                         'Notifications',
@@ -62,11 +58,7 @@ class CustomRightDrawer extends StatelessWidget {
                       ),
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationSettingsScreen())),
                     ),
-                    Divider(
-                      indent: 15,
-                      endIndent: 15,
-                      color: MyColors.lightTextColor!.withOpacity(0.8),
-                    ),
+                    const Divider(),
                     !revenueCatNotifier.proAccess
                         ? Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15.0),

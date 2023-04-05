@@ -14,7 +14,7 @@ class CustomToggleButton extends StatelessWidget {
         width: 60,
         height: 30,
         decoration: BoxDecoration(
-          color: selected ? MyColors.backgroundColor : MyColors.cardColor,
+          color: selected ? MyColors.darkBackgroundColor : MyColors.darkCardColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Center(

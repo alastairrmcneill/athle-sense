@@ -19,7 +19,7 @@ class TimeframeButtons extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.7,
         height: 30,
         decoration: BoxDecoration(
-          color: MyColors.cardColor,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
@@ -31,7 +31,7 @@ class TimeframeButtons extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: responseNotifier.myResponseFilter == 0 ? MyColors.backgroundColor : MyColors.cardColor,
+                    color: responseNotifier.myResponseFilter == 0 ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Center(
@@ -50,7 +50,7 @@ class TimeframeButtons extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: responseNotifier.myResponseFilter == 1 ? MyColors.backgroundColor : MyColors.cardColor,
+                    color: responseNotifier.myResponseFilter == 1 ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Center(
@@ -69,7 +69,7 @@ class TimeframeButtons extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: responseNotifier.myResponseFilter == 2 ? MyColors.backgroundColor : MyColors.cardColor,
+                    color: responseNotifier.myResponseFilter == 2 ? Theme.of(context).scaffoldBackgroundColor : Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Center(

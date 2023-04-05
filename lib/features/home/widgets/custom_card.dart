@@ -23,7 +23,7 @@ class MyWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius ?? 15)),
-            color: MyColors.cardColor,
+            color: MyColors.darkCardColor,
           ),
           padding: internalPadding ?? const EdgeInsets.all(10),
           width: double.infinity,

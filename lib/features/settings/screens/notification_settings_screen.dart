@@ -39,10 +39,9 @@ class NotificationSettingsScreen extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
             ListTile(
               title: Text(
@@ -74,10 +73,9 @@ class NotificationSettingsScreen extends StatelessWidget {
                 await NotificationService.createScheduledNotification(context);
               },
             ),
-            Divider(
+            const Divider(
               indent: 15,
               endIndent: 15,
-              color: MyColors.lightTextColor!.withOpacity(0.8),
             ),
           ],
         ),

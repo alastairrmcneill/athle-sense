@@ -17,7 +17,7 @@ showErrorDialog(BuildContext context, String errorMessage) {
           Text(
             errorMessage,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6!.copyWith(color: MyColors.backgroundColor),
+            style: Theme.of(context).textTheme.headline6!.copyWith(color: MyColors.darkBackgroundColor),
           ),
           const SizedBox(height: 10),
           SizedBox(

@@ -19,53 +19,56 @@ class NumberSummaryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap(),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.21,
-        height: MediaQuery.of(context).size.width * 0.21,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: MyColors.cardColor,
-        ),
-        padding: EdgeInsets.all(5),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    number == 0
-                        ? const SizedBox()
-                        : number > 0
-                            ? Icon(
-                                Icons.keyboard_double_arrow_up_rounded,
-                                color: myCalendarColors[15],
-                                size: MediaQuery.of(context).size.width * 0.08,
-                              )
-                            : Icon(
-                                Icons.keyboard_double_arrow_down_rounded,
-                                color: myCalendarColors[5],
-                                size: MediaQuery.of(context).size.width * 0.08,
-                              ),
-                    AutoSizeText(
-                      number == 0 ? '-' : number.abs().toStringAsFixed(1),
-                      style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 24),
-                      maxLines: 1,
-                      maxFontSize: 24,
-                      minFontSize: 12,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.23,
+        height: MediaQuery.of(context).size.width * 0.23,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        number == 0
+                            ? const SizedBox()
+                            : number > 0
+                                ? Icon(
+                                    Icons.keyboard_double_arrow_up_rounded,
+                                    color: myCalendarColors[15],
+                                    size: MediaQuery.of(context).size.width * 0.08,
+                                  )
+                                : Icon(
+                                    Icons.keyboard_double_arrow_down_rounded,
+                                    color: myCalendarColors[5],
+                                    size: MediaQuery.of(context).size.width * 0.08,
+                                  ),
+                        AutoSizeText(
+                          number == 0 ? '-' : number.abs().toStringAsFixed(1),
+                          style: Theme.of(context).textTheme.headline6!,
+                          maxLines: 1,
+                          maxFontSize: 40,
+                          minFontSize: 18,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 11),
+                ),
+              ],
             ),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 11),
-            ),
-          ],
+          ),
         ),
       ),
     );

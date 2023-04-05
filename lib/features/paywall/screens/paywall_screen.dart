@@ -17,7 +17,7 @@ class PaywallScreen extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
-                color: MyColors.cardColor,
+                color: MyColors.darkCardColor,
               ),
               padding: const EdgeInsets.all(10),
               width: double.infinity,

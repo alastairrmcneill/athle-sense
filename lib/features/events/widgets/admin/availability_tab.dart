@@ -29,7 +29,7 @@ class AvailabilityTab extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  color: MyColors.lightTextColor!.withOpacity(0.5),
+                  color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.5),
                 ),
               ),
             ),

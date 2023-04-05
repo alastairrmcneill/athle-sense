@@ -63,7 +63,8 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
               child: SizedBox(
-                width: double.infinity,
+                height: 40,
+                width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
                   onPressed: () async {
                     if (!_formKey.currentState!.validate()) {

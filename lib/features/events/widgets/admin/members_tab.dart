@@ -20,9 +20,7 @@ class MembersTab extends StatelessWidget {
         Member member = eventNotifier.currentEventMembers![index];
         return MemberTile(member: member);
       },
-      separatorBuilder: (context, index) => Divider(
-        color: MyColors.lightTextColor,
-      ),
+      separatorBuilder: (context, index) => const Divider(),
       itemCount: eventNotifier.currentEventMembers!.length,
     );
   }

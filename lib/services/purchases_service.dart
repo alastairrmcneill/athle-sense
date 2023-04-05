@@ -10,7 +10,7 @@ import 'package:wellness_tracker/notifiers/notifiers.dart';
 
 class PurchasesService {
   static Future init() async {
-    await Purchases.setLogLevel(LogLevel.debug);
+    // await Purchases.setLogLevel(LogLevel.debug);
 
     if (Platform.isAndroid) {
       await Purchases.configure(PurchasesConfiguration(revenueCatGoogleAPI));

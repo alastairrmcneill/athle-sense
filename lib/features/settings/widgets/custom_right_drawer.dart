@@ -62,6 +62,27 @@ class CustomRightDrawer extends StatelessWidget {
                       ),
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationSettingsScreen())),
                     ),
+                    Divider(
+                      indent: 15,
+                      endIndent: 15,
+                      color: MyColors.lightTextColor!.withOpacity(0.8),
+                    ),
+                    !revenueCatNotifier.proAccess
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15.0),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (!revenueCatNotifier.proAccess) {
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => const PaywallScreen()));
+                                  }
+                                },
+                                child: Text('Get Pro'),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -74,6 +95,7 @@ class CustomRightDrawer extends StatelessWidget {
                   child: Text('Sign out'),
                 ),
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

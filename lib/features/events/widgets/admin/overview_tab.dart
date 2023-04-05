@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/features/events/widgets/widgets.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/services/services.dart';
@@ -49,7 +50,9 @@ class _OverviewTabState extends State<OverviewTab> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => AllTeamResponses()));
+                  },
                   child: Text('See All Responses'),
                 ),
               ),

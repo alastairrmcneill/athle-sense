@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/services/services.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/support/theme.dart';
 
-showNewEventDialog(BuildContext context) {
+showNewEventDialog(BuildContext context, {Event? event}) {
   UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
   EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
 
@@ -19,6 +20,16 @@ showNewEventDialog(BuildContext context) {
   DateTime? _pickedStartDate;
   DateTime? _endDate;
   DateTime? _pickedEndDate;
+
+  if (event != null) {
+    _nameController.text = event.name;
+    _startDateController.text = DateFormat('dd/MM/yyyy').format(event.startDate);
+    _endDateController.text = DateFormat('dd/MM/yyyy').format(event.endDate);
+    _startDate = event.startDate;
+    _pickedStartDate = event.startDate;
+    _endDate = event.endDate;
+    _pickedEndDate = event.endDate;
+  }
 
   Widget _buildStartDatePicker(BuildContext context, Function setState) {
     return Padding(
@@ -110,7 +121,11 @@ showNewEventDialog(BuildContext context) {
     }
     _formKey.currentState!.save();
 
-    await EventService.create(context, name: _nameController.text.trim(), startDate: _startDate!, endDate: _endDate!);
+    if (event == null) {
+      await EventService.create(context, name: _nameController.text.trim(), startDate: _startDate!, endDate: _endDate!);
+    } else {
+      await EventService.update(context, event: event, name: _nameController.text.trim(), startDate: _startDate!, endDate: _endDate!);
+    }
     Navigator.of(context).pop();
   }
 
@@ -134,7 +149,7 @@ showNewEventDialog(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Create a new event.',
+                      event == null ? 'Create a new event.' : 'Edit event.',
                       style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 24, fontWeight: FontWeight.w300),
                       textAlign: TextAlign.center,
                     ),
@@ -167,7 +182,7 @@ showNewEventDialog(BuildContext context) {
                       width: double.infinity,
                       child: ElevatedButton(
                         child: Text(
-                          'Create',
+                          event == null ? 'Create' : 'Update',
                           style: Theme.of(context).textTheme.headline5!.copyWith(color: MyColors.lightTextColor),
                         ),
                         onPressed: () async {

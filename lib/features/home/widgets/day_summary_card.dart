@@ -90,8 +90,8 @@ class DaySummaryCard extends StatelessWidget {
                             0.11,
                           ],
                           colors: [
-                            ratingColors[rating - 1].withOpacity(0.7),
-                            ratingColors[rating - 1].withOpacity(0.7),
+                            ratingColors[rating - 1].withOpacity(0.8),
+                            ratingColors[rating - 1].withOpacity(0.9),
                             Colors.transparent,
                           ],
                         ),

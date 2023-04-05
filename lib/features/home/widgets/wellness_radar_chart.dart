@@ -47,7 +47,7 @@ class WellnessRadarChart extends StatelessWidget {
             ],
             graphColors: [
               Colors.black26.withOpacity(0.1),
-              Colors.blueAccent,
+              Color.fromRGBO(75, 135, 185, 1),
             ],
             axisColor: MyColors.lightTextColor!.withOpacity(0.1),
             outlineColor: Colors.transparent,
@@ -62,7 +62,7 @@ class WellnessRadarChart extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(radius: 4, backgroundColor: Colors.blueAccent),
+                  const CircleAvatar(radius: 4, backgroundColor: Color.fromRGBO(75, 135, 185, 1)),
                   Text('  Day', style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 12)),
                 ],
               ),

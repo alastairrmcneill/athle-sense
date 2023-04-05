@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/support/theme.dart';
@@ -36,7 +37,7 @@ class YesterdayTab extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: Text(
-                'Biggest drops from yesterday',
+                'Decreases from yesterday',
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
@@ -65,7 +66,9 @@ class YesterdayTab extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => AllTeamResponses()));
+            },
             child: const Text('See more...'),
           ),
         ),

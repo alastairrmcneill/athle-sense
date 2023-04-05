@@ -17,11 +17,14 @@ class MemberEventView extends StatelessWidget {
     Response response = responseNotifier.myResponses!.last;
 
     if (response.date.isBefore(DateUtils.dateOnly(DateTime.now()))) {
-      return Center(
-        child: Text(
-          'You haven\'t submitted a response yet today',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline5,
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Text(
+            'You haven\'t submitted a response yet today.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline5,
+          ),
         ),
       );
     }

@@ -38,6 +38,32 @@ class EventService {
     }
   }
 
+  static Future update(BuildContext context, {required Event event, required String name, required DateTime startDate, required DateTime endDate}) async {
+    showCircularProgressOverlay(context);
+    try {
+      // Complete event
+      Event newEvent = event.copy(
+        name: name,
+        startDate: startDate,
+        endDate: endDate,
+      );
+
+      // Write to database
+      await EventDatabase.update(context, event: newEvent);
+
+      // Update notifiers
+      EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
+      eventNotifier.setCurrentEvent = newEvent;
+      await loadUserEvents(context);
+
+      stopCircularProgressOverlay(context);
+      showSnackBar(context, 'Successfully updated event');
+    } on FirebaseException catch (error) {
+      stopCircularProgressOverlay(context);
+      showErrorDialog(context, error.message ?? 'There has been an issue updating your event.');
+    }
+  }
+
   static Future joinEvent(BuildContext context, {required String code}) async {
     // Check there is a logged in user
     String? userId = AuthService.currentUserId;
@@ -133,17 +159,23 @@ class EventService {
 
     // Incomplete
     List<String> incompleteMemberIDs = [];
+    List<String> completeMemberIDs = [];
     for (String memberUID in allMemberUIDs) {
       if (todaysResponses.where((Response response) => response.userUid == memberUID).toList().isEmpty) {
         incompleteMemberIDs.add(memberUID);
+      } else {
+        completeMemberIDs.add(memberUID);
       }
     }
 
-    // Health players
+    // Available players
+    List<String> availableMemberIDs = [];
     List<String> reducedAvailabilityMemberIDs = [];
     for (Response response in todaysResponses) {
       if (response.availability < 4) {
         reducedAvailabilityMemberIDs.add(response.userUid);
+      } else {
+        availableMemberIDs.add(response.userUid);
       }
     }
 
@@ -219,7 +251,9 @@ class EventService {
         teamWellnessToday: teamWellnessToday,
         teamWellnessYesterday: teamWellnessYesterday,
         incompleteMemberIDs: incompleteMemberIDs,
+        completeMemberIDs: completeMemberIDs,
         reducedAvailabilityMemberIDs: reducedAvailabilityMemberIDs,
+        availableMemberIDs: availableMemberIDs,
         allResponses: allResponses,
         todaysResponses: todaysResponses,
         yesterdayResponses: yesterdaysResponses,

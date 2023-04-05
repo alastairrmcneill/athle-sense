@@ -60,15 +60,21 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
                     onchanged: (value) => setState(() => availabilityValue = value),
                   )
                 : const SizedBox(),
-            ElevatedButton(
-              onPressed: () async {
-                if (!_formKey.currentState!.validate()) {
-                  return;
-                }
-                // Save response
-                await _saveResponse(context);
-              },
-              child: Text('Save'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
+                    // Save response
+                    await _saveResponse(context);
+                  },
+                  child: Text('Submit'),
+                ),
+              ),
             ),
           ],
         ),

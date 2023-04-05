@@ -116,7 +116,7 @@ class SummaryCard extends StatelessWidget {
                     animationDuration: 400,
                     pointColorMapper: (datum, index) {
                       if (datum.rating == 0) return Colors.transparent;
-                      return myCalendarColors[(datum.rating).round() - 5].withOpacity(0.8);
+                      return myCalendarColors[(datum.rating).round() - 5].withOpacity(0.9);
                     },
                     // borderRadius: const BorderRadius.only(
                     //   topLeft: Radius.circular(100),

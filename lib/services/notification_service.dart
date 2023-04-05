@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,9 +64,11 @@ class NotificationService {
 
     await AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
       if (isAllowed && settingsNotifier.notificationsAllowed) {
+        print(settingsNotifier.notificationHours);
+        print(settingsNotifier.notificationMins);
         await AwesomeNotifications().createNotification(
           content: NotificationContent(
-            id: 1,
+            id: Random().nextInt(20000000),
             channelKey: channelKey,
             title: 'Don\'t forget to review your day!',
             body: 'Respond to the daily survey and so you can get valuable wellness insights!',
@@ -74,7 +78,9 @@ class NotificationService {
           schedule: NotificationCalendar(
             repeats: true,
             hour: settingsNotifier.notificationHours,
+            // hour: 8,
             minute: settingsNotifier.notificationMins,
+            // minute: 38,
             second: 0,
             millisecond: 0,
             timeZone: await AwesomeNotifications().getLocalTimeZoneIdentifier(),

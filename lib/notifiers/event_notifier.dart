@@ -24,12 +24,20 @@ class EventNotifier extends ChangeNotifier {
 
   set setCurrentEventMembers(List<Member> currentEventMembers) {
     _currentEventMembers = currentEventMembers;
+    _currentEventMembers!.sort((a, b) {
+      return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+    });
     notifyListeners();
   }
 
   setCurrentEventData(EventData? currentEventData, List<Member>? currentEventMembers) {
     _currentEventData = currentEventData;
     _currentEventMembers = currentEventMembers;
+    if (_currentEventMembers != null) {
+      _currentEventMembers!.sort((a, b) {
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
+    }
     notifyListeners();
   }
 }

@@ -32,6 +32,7 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
     Event event = eventNotifier.currentEvent!;
     return WillPopScope(
       onWillPop: () async {
+        if (eventNotifier.currentEventData == null) return false;
         eventNotifier.setCurrentEventData(null, null);
         return true;
       },
@@ -52,6 +53,8 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
                   // Navigator to members list
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const MembersListScreen()));
                 } else if (value == AdminEventMenuItems.item3) {
+                  showNewEventDialog(context, event: event);
+                } else if (value == AdminEventMenuItems.item4) {
                   if (event.creator == AuthService.currentUserId!) {
                     // Delete
                     showDeleteEventDialog(context, event: event);
@@ -70,8 +73,12 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
                   value: AdminEventMenuItems.item2,
                   child: Text('Edit Members'),
                 ),
-                PopupMenuItem(
+                const PopupMenuItem(
                   value: AdminEventMenuItems.item3,
+                  child: Text('Edit Event'),
+                ),
+                PopupMenuItem(
+                  value: AdminEventMenuItems.item4,
                   child: Text(event.creator == AuthService.currentUserId! ? 'Delete' : 'Leave'),
                 ),
               ],
@@ -95,5 +102,6 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
 enum AdminEventMenuItems {
   item1,
   item2,
-  item3;
+  item3,
+  item4;
 }

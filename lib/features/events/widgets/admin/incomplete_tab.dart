@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/events/screens/screens.dart';
 import 'package:wellness_tracker/models/member.dart';
 import 'package:wellness_tracker/models/models.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
@@ -35,7 +36,7 @@ class IncompleteTab extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: Text(
-                'Incomplete',
+                'Incomplete survey',
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),
@@ -46,7 +47,10 @@ class IncompleteTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: incompleteMemberIDs.map((id) {
-              Member member = eventNotifier.currentEventMembers!.firstWhere((member) => member.uid == id);
+              List<Member> members = eventNotifier.currentEventMembers!.where((member) => member.uid == id).toList();
+              if (members.isEmpty) return const SizedBox();
+
+              Member member = members.first;
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
                 child: Text(
@@ -62,7 +66,9 @@ class IncompleteTab extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => AllTeamResponses()));
+            },
             child: const Text('See more...'),
           ),
         ),

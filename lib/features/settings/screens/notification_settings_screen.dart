@@ -49,9 +49,12 @@ class NotificationSettingsScreen extends StatelessWidget {
                 'Notification time',
                 style: Theme.of(context).textTheme.headline5,
               ),
-              trailing: Text(
-                DateFormat('HH:mm').format(time),
-                style: Theme.of(context).textTheme.headline6,
+              trailing: Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(
+                  DateFormat('HH:mm').format(time),
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
               onTap: () async {
                 TimeOfDay? newTime = await showTimePicker(
@@ -64,11 +67,11 @@ class NotificationSettingsScreen extends StatelessWidget {
 
                 if (newTime == null) return;
 
-                settingsNotifier.setNotificationsTime(
+                await settingsNotifier.setNotificationsTime(
                   notificationHours: newTime.hour,
                   notificationMins: newTime.minute,
                 );
-                NotificationService.createScheduledNotification(context);
+                await NotificationService.createScheduledNotification(context);
               },
             ),
             Divider(

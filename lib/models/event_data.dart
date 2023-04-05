@@ -8,7 +8,9 @@ class EventData {
   final double teamWellnessToday;
   final double teamWellnessYesterday;
   final List<String> incompleteMemberIDs;
+  final List<String> completeMemberIDs;
   final List<String> reducedAvailabilityMemberIDs;
+  final List<String> availableMemberIDs;
   final List<Response> allResponses;
   final List<Response> todaysResponses;
   final List<Response> yesterdayResponses;
@@ -22,7 +24,9 @@ class EventData {
     required this.teamWellnessToday,
     required this.teamWellnessYesterday,
     required this.incompleteMemberIDs,
+    required this.completeMemberIDs,
     required this.reducedAvailabilityMemberIDs,
+    required this.availableMemberIDs,
     required this.allResponses,
     required this.todaysResponses,
     required this.yesterdayResponses,

@@ -9,7 +9,7 @@ class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
-    return Container(
+    return SingleChildScrollView(
       child: Column(children: eventNotifier.myEvents!.map((event) => EventListTile(event: event)).toList()),
     );
   }

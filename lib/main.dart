@@ -18,47 +18,55 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   await NotificationService.init();
+  final bool showHome = prefs.getBool('showHome') ?? false;
 
   runApp(MyApp(
     prefs: prefs,
+    showHome: showHome,
   ));
 }
 
 class MyApp extends StatelessWidget {
   final SharedPreferences prefs;
+  final bool showHome;
   const MyApp({
     Key? key,
     required this.prefs,
+    required this.showHome,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      StreamProvider<AppUser?>.value(
-        value: AuthService().appUserStream,
-        initialData: null,
-      ),
-      ChangeNotifierProvider<SettingsNotifier>(
-        create: (_) => SettingsNotifier(
-          darkMode: prefs.getBool('darkMode') ?? true,
-          askedNotifications: prefs.getBool('askedNotifications') ?? false,
-          notificationsAllowed: prefs.getBool('notificationsAllowed') ?? true,
-          notificationHours: prefs.getInt('notificationHours') ?? 7,
-          notificationMins: prefs.getInt('notificationMins') ?? 0,
-        ),
-      ),
-      ChangeNotifierProvider<UserNotifier>(
-        create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
-      ),
-      ChangeNotifierProvider<EventNotifier>(
-        create: (_) => EventNotifier(),
-      ),
-      ChangeNotifierProvider<ResponseNotifier>(
-        create: (_) => ResponseNotifier(),
-      ),
-      ChangeNotifierProvider<RevenueCatNotifier>(
-        create: (_) => RevenueCatNotifier(),
-      ),
-    ], child: const App());
+    return MultiProvider(
+        providers: [
+          StreamProvider<AppUser?>.value(
+            value: AuthService().appUserStream,
+            initialData: null,
+          ),
+          ChangeNotifierProvider<SettingsNotifier>(
+            create: (_) => SettingsNotifier(
+              darkMode: prefs.getBool('darkMode') ?? false,
+              askedNotifications: prefs.getBool('askedNotifications') ?? false,
+              notificationsAllowed: prefs.getBool('notificationsAllowed') ?? true,
+              notificationHours: prefs.getInt('notificationHours') ?? 7,
+              notificationMins: prefs.getInt('notificationMins') ?? 0,
+            ),
+          ),
+          ChangeNotifierProvider<UserNotifier>(
+            create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
+          ),
+          ChangeNotifierProvider<EventNotifier>(
+            create: (_) => EventNotifier(),
+          ),
+          ChangeNotifierProvider<ResponseNotifier>(
+            create: (_) => ResponseNotifier(),
+          ),
+          ChangeNotifierProvider<RevenueCatNotifier>(
+            create: (_) => RevenueCatNotifier(),
+          ),
+        ],
+        child: App(
+          showHome: showHome,
+        ));
   }
 }

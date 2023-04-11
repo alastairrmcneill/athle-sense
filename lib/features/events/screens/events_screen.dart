@@ -16,9 +16,9 @@ class EventsScreen extends StatelessWidget {
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         children: [
-          SpeedDialChild(child: const Icon(Icons.join_left), label: 'Join', onTap: () => showAddEventDialog(context)),
+          SpeedDialChild(child: const Icon(Icons.group_add_rounded), label: 'Join', onTap: () => showAddEventDialog(context)),
           SpeedDialChild(
-              child: const Icon(Icons.create),
+              child: const Icon(Icons.create_rounded),
               label: 'Create',
               onTap: () {
                 // Check access level

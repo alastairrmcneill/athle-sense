@@ -17,7 +17,7 @@ showLeaveEventDialog(BuildContext context, {required Event event}) {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Are you sure you want to leave this event?',
+            'Are you sure you want to leave this group?',
             style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.normal),
             textAlign: TextAlign.center,
           ),

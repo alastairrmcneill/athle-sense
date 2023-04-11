@@ -75,7 +75,7 @@ class _AdminEventDetailScreenState extends State<AdminEventDetailScreen> {
                 ),
                 const PopupMenuItem(
                   value: AdminEventMenuItems.item3,
-                  child: Text('Edit Event'),
+                  child: Text('Edit Group'),
                 ),
                 PopupMenuItem(
                   value: AdminEventMenuItems.item4,

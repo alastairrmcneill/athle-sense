@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/notifiers/notifiers.dart';
+import 'package:wellness_tracker/support/theme.dart';
 
 class NotificationService {
   static String channelKey = 'scheduled_channel';
@@ -73,7 +74,7 @@ class NotificationService {
             title: 'Don\'t forget to review your day!',
             body: 'Respond to the daily survey and so you can get valuable wellness insights!',
             notificationLayout: NotificationLayout.Default,
-            color: Colors.green,
+            color: MyColors.lightAccentColor,
           ),
           schedule: NotificationCalendar(
             repeats: true,

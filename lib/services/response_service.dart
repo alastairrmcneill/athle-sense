@@ -28,6 +28,7 @@ class ResponseService {
 
     // Write to database
     await ResponseDatabase.create(context, response: response);
+
     stopCircularProgressOverlay(context);
 
     // Load Responses

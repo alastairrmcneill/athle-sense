@@ -3,7 +3,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
    <application
-        android:label="Wellness Tracker"
+        android:label="Athle-Sense"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

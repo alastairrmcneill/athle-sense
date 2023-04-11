@@ -39,7 +39,7 @@ showNewEventDialog(BuildContext context, {Event? event}) {
         controller: _startDateController,
         style: Theme.of(context).textTheme.headline5,
         decoration: const InputDecoration(
-          hintText: 'Event Start Date',
+          hintText: 'Group Start Date',
         ),
         readOnly: true,
         onTap: () async {
@@ -48,6 +48,18 @@ showNewEventDialog(BuildContext context, {Event? event}) {
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
             lastDate: DateTime(2100),
+            builder: (context, child) {
+              return Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.light(
+                    primary: Theme.of(context).textTheme.headline6!.color!, // header background color
+                    onPrimary: Theme.of(context).scaffoldBackgroundColor, // header text color
+                    onSurface: Theme.of(context).textTheme.headline6!.color!, // body text color
+                  ),
+                ),
+                child: child!,
+              );
+            },
           );
 
           if (_pickedStartDate != null) {
@@ -81,7 +93,7 @@ showNewEventDialog(BuildContext context, {Event? event}) {
         controller: _endDateController,
         style: Theme.of(context).textTheme.headline5,
         decoration: const InputDecoration(
-          hintText: 'Event End Date',
+          hintText: 'Group End Date',
         ),
         readOnly: true,
         onTap: () async {
@@ -149,7 +161,7 @@ showNewEventDialog(BuildContext context, {Event? event}) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      event == null ? 'Create a new event.' : 'Edit event.',
+                      event == null ? 'Create a new group.' : 'Edit group.',
                       style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 24, fontWeight: FontWeight.w300),
                       textAlign: TextAlign.center,
                     ),

@@ -58,7 +58,7 @@ class SummaryCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: Text(
-                      'Daily Wellness',
+                      'Daily Averages',
                       style: Theme.of(context).textTheme.headline5,
                     ),
                   ),

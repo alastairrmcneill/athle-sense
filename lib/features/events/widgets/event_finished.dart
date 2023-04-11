@@ -16,7 +16,7 @@ class EventFinished extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'This event finished on',
+            'This group closed on',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5,
           ),

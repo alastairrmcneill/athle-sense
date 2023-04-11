@@ -26,19 +26,18 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     super.initState();
 
     pageController = PageController(initialPage: tabIndex);
-    setupNotifications();
+    setup();
+  }
 
+  Future setup() async {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context, listen: false);
     final user = Provider.of<AppUser?>(context, listen: false);
 
-    UserDatabase.getCurrentUser(context);
-    ResponseService.loadUserResponses(context);
-    EventService.loadUserEvents(context);
-    PurchasesService.login(context, userID: user!.uid);
-    PurchasesService.fetchOffer(context);
-  }
-
-  Future setupNotifications() async {
+    await UserDatabase.getCurrentUser(context);
+    await ResponseService.loadUserResponses(context);
+    await EventService.loadUserEvents(context);
+    await PurchasesService.login(context, userID: user!.uid);
+    await PurchasesService.fetchOffer(context);
     await NotificationService.askForNotifications(context);
     await NotificationService.createScheduledNotification(context);
   }
@@ -82,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             label: 'History',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.event_available),
-            label: 'Events',
+            icon: Icon(Icons.group),
+            label: 'Groups',
           ),
         ],
       ),

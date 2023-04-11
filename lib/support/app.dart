@@ -1,11 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wellness_tracker/features/onboarding/screens/screens.dart';
+
 import 'package:wellness_tracker/notifiers/notifiers.dart';
 import 'package:wellness_tracker/support/theme.dart';
 import 'package:wellness_tracker/support/wrapper.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final bool showHome;
+  const App({
+    Key? key,
+    required this.showHome,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: settingsNotifier.darkMode ? MyThemes.darkTheme : MyThemes.lightTheme,
-      home: const Wrapper(),
+      home: showHome ? const Wrapper() : const OnboardingScreen(),
     );
   }
 }

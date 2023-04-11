@@ -80,6 +80,41 @@ class ResponseDatabase {
     responseNotifier.setResponseEachDay = _responsePerDayList;
   }
 
+  static Future<List<Response>> readEventMemberResponses(BuildContext context, {required List<String> allMemberUIDs}) async {
+    List<Response> _responseList = [];
+    var chunks = [];
+    int chunkSize = 5;
+    for (var i = 0; i < allMemberUIDs.length; i += chunkSize) {
+      chunks.add(allMemberUIDs.sublist(i, i + chunkSize > allMemberUIDs.length ? allMemberUIDs.length : i + chunkSize));
+    }
+
+    Timestamp startDate = Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 28)));
+    for (var chunk in chunks) {
+      Query query = _responseRef
+          .where(
+            'date',
+            isGreaterThan: startDate,
+          )
+          .orderBy(
+            'date',
+            descending: false,
+          )
+          .where(
+            'userUid',
+            whereIn: chunk,
+          );
+
+      QuerySnapshot querySnapshot = await query.get();
+
+      for (var doc in querySnapshot.docs) {
+        Response response = Response.fromJSON(doc.data());
+        _responseList.add(response);
+      }
+    }
+
+    return _responseList;
+  }
+
   static Future<List<Response>> readMemberResponses(BuildContext context, {required String userUid}) async {
     List<Response> _responseList = [];
 

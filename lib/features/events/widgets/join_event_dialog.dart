@@ -13,7 +13,7 @@ showAddEventDialog(BuildContext context) {
 
   Widget buildTitle() {
     return Text(
-      'Join an existing event.',
+      'Join an existing group.',
       style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 24, fontWeight: FontWeight.w300),
       textAlign: TextAlign.center,
     );
@@ -24,7 +24,7 @@ showAddEventDialog(BuildContext context) {
       key: formKey,
       child: TextFormField(
         decoration: const InputDecoration(
-          hintText: 'Enter event code',
+          hintText: 'Enter group code',
         ),
         style: Theme.of(context).textTheme.headline5,
         maxLines: 1,

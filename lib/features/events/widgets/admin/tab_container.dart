@@ -54,7 +54,7 @@ class _TabContainerState extends State<TabContainer> {
                   effect: WormEffect(
                     dotHeight: 6,
                     dotWidth: 6,
-                    activeDotColor: Theme.of(context).primaryColor,
+                    activeDotColor: Theme.of(context).textSelectionTheme.cursorColor!,
                   ),
                 ),
               ],

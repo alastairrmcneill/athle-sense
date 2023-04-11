@@ -64,7 +64,7 @@ class NumberSummaryTile extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 11),
+                  style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 10),
                 ),
               ],
             ),

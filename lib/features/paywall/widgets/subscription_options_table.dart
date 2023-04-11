@@ -7,7 +7,7 @@ class SubscriptionOptionsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Table(
-      border: TableBorder.symmetric(inside: BorderSide(color: MyColors.lightTextColor!.withOpacity(0.5))),
+      border: TableBorder.symmetric(inside: BorderSide(color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.5))),
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
@@ -46,7 +46,7 @@ class SubscriptionOptionsTable extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Join events', style: Theme.of(context).textTheme.headline6),
+              child: Text('Join groups', style: Theme.of(context).textTheme.headline6),
             ),
             Center(child: Text('✅')),
             Center(child: Text('✅')),
@@ -56,7 +56,7 @@ class SubscriptionOptionsTable extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Create events', style: Theme.of(context).textTheme.headline6),
+              child: Text('Create groups', style: Theme.of(context).textTheme.headline6),
             ),
             Center(child: Text('❌')),
             Center(child: Text('✅')),

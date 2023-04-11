@@ -11,7 +11,7 @@ class EventNotStarted extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'This event will start in',
+            'This group will open in',
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline5,
           ),

@@ -12,6 +12,7 @@ class EventService {
   static Future create(BuildContext context, {required String name, required DateTime startDate, required DateTime endDate}) async {
     showCircularProgressOverlay(context);
     try {
+      String shareID = await _randomString(context, length: 6);
       // Complete event
       Event event = Event(
         name: name,
@@ -20,8 +21,7 @@ class EventService {
         creator: AuthService.currentUserId!,
         admins: [],
         members: [],
-        shareId: _randomString(6),
-        notificationId: _randomInt(),
+        shareId: shareID,
       );
 
       // Write to database
@@ -113,10 +113,8 @@ class EventService {
     List<Response> allResponses = [];
     List<String> allMemberUIDs = [event.creator] + event.admins + event.members;
 
-    for (String memberUID in allMemberUIDs) {
-      List<Response> memberResponses = await ResponseDatabase.readMemberResponses(context, userUid: memberUID);
-      allResponses.addAll(memberResponses);
-    }
+    allResponses = await ResponseDatabase.readEventMemberResponses(context, allMemberUIDs: allMemberUIDs);
+
     // Process data
     // Today's responses
     List<Response> todaysResponses = allResponses.where((Response response) => DateUtils.isSameDay(response.date, DateTime.now())).toList();
@@ -384,17 +382,18 @@ class EventService {
     }
   }
 
-  static String _randomString(int length) {
+  static Future<String> _randomString(BuildContext context, {required int length}) async {
     const ch = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
     Random r = Random();
+    while (true) {
+      String code = String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
 
-    // check doesn't exist already
-    return String.fromCharCodes(Iterable.generate(length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
-  }
+      // check doesn't exist already
+      Event? event = await EventDatabase.readEventFromCode(context, code: code);
 
-  static int _randomInt() {
-    const ch = '1234567890';
-    Random r = Random();
-    return int.parse(String.fromCharCodes(Iterable.generate(9, (_) => ch.codeUnitAt(r.nextInt(ch.length)))));
+      if (event == null) {
+        return code;
+      }
+    }
   }
 }

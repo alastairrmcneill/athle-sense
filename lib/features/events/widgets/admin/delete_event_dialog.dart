@@ -19,7 +19,7 @@ showDeleteEventDialog(BuildContext context, {required Event event}) {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'Are you sure you want to delete this event?',
+            'Are you sure you want to delete this group?',
             style: Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20, fontWeight: FontWeight.w300),
             textAlign: TextAlign.center,
           ),

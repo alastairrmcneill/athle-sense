@@ -22,12 +22,6 @@ class _OverviewTabState extends State<OverviewTab> {
   @override
   void initState() {
     super.initState();
-    loadData();
-  }
-
-  Future loadData() async {
-    EventNotifier eventNotifier = Provider.of<EventNotifier>(context, listen: false);
-    await EventService.loadEventData(context, event: eventNotifier.currentEvent!);
   }
 
   @override

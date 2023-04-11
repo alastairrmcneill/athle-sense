@@ -7,7 +7,7 @@ class MyThemes {
       scaffoldBackgroundColor: MyColors.darkBackgroundColor,
       dialogBackgroundColor: MyColors.darkBackgroundColor,
       primarySwatch: Colors.blue,
-      canvasColor: Color.fromRGBO(75, 135, 185, 1), // line color for charts - possible Color(0xFFFF8A65),
+      canvasColor: Color.fromRGBO(75, 135, 185, 1), // line color for charts - possible MyColors.accentColor,
       appBarTheme: AppBarTheme(
         backgroundColor: MyColors.darkBackgroundColor,
         foregroundColor: MyColors.lightTextColor,
@@ -21,12 +21,17 @@ class MyThemes {
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: MyColors.darkBackgroundColor,
-        selectedItemColor: Color(0xFFFF8A65),
+        selectedItemColor: MyColors.darkAccentColor,
         elevation: 0,
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        // backgroundColor: Color(0xFFFF8A65),
+        backgroundColor: MyColors.darkAccentColor,
         foregroundColor: MyColors.darkBackgroundColor,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color?>(MyColors.darkAccentColor),
+        ),
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: MyColors.lightTextColor,
@@ -34,6 +39,7 @@ class MyThemes {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color?>(MyColors.darkAccentColor),
           foregroundColor: MaterialStateProperty.all<Color?>(MyColors.darkBackgroundColor),
           elevation: MaterialStateProperty.all<double?>(0),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -43,6 +49,7 @@ class MyThemes {
           ),
         ),
       ),
+      textSelectionTheme: TextSelectionThemeData(cursorColor: MyColors.darkAccentColor),
       inputDecorationTheme: InputDecorationTheme(
         prefixIconColor: MyColors.lightTextColor,
         suffixIconColor: MyColors.lightTextColor,
@@ -53,9 +60,12 @@ class MyThemes {
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: MyColors.lightTextColor!),
         ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: MyColors.lightTextColor!),
+        ),
       ),
       textTheme: TextTheme(
-        headline1: const TextStyle(color: Colors.orange, fontSize: 62, fontWeight: FontWeight.w200),
+        headline1: TextStyle(color: MyColors.darkAccentColor, fontSize: 62, fontWeight: FontWeight.w200),
         headline2: TextStyle(color: MyColors.lightTextColor, fontSize: 60, fontWeight: FontWeight.w300),
         headline4: TextStyle(color: MyColors.lightTextColor, fontWeight: FontWeight.w300),
         headline5: TextStyle(color: MyColors.lightTextColor, fontSize: 18, fontWeight: FontWeight.w200),
@@ -78,102 +88,103 @@ class MyThemes {
           color: MyColors.darkBackgroundColor,
         ),
       ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: MyColors.darkCardColor,
+      ),
     );
   }
 
   static ThemeData get lightTheme {
     return ThemeData(
-      scaffoldBackgroundColor: MyColors.lightBackgroundColor,
-      dialogBackgroundColor: MyColors.lightBackgroundColor,
-      primarySwatch: Colors.orange,
-
-      canvasColor: Color.fromRGBO(75, 135, 185, 1), // line color for charts - possible Color(0xFFFF8A65),
-      appBarTheme: AppBarTheme(
-        backgroundColor: MyColors.lightBackgroundColor,
-        foregroundColor: MyColors.darkTextColor,
-        elevation: 0,
-        centerTitle: false,
-        titleTextStyle: TextStyle(
-          color: MyColors.darkTextColor,
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
+        scaffoldBackgroundColor: MyColors.lightBackgroundColor,
+        dialogBackgroundColor: MyColors.lightBackgroundColor,
+        primarySwatch: Colors.orange,
+        canvasColor: Color.fromRGBO(75, 135, 185, 1), // line color for charts - possible MyColors.accentColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: MyColors.lightBackgroundColor,
+          foregroundColor: MyColors.darkTextColor,
+          elevation: 0,
+          centerTitle: false,
+          titleTextStyle: TextStyle(
+            color: MyColors.darkTextColor,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+          ),
         ),
-      ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: MyColors.lightBackgroundColor,
-        elevation: 0,
-        unselectedItemColor: Color.fromARGB(255, 167, 167, 184),
-        selectedItemColor: Color(0xFFFF8A65),
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: Color(0xFFFF8A65),
-        foregroundColor: MyColors.lightBackgroundColor,
-      ),
-      snackBarTheme: SnackBarThemeData(
-        backgroundColor: MyColors.darkBackgroundColor,
-        contentTextStyle: TextStyle(color: MyColors.lightTextColor),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color?>(Color(0xFFFF8A65)),
-          foregroundColor: MaterialStateProperty.all<Color?>(MyColors.darkTextColor),
-          elevation: MaterialStateProperty.all<double?>(3),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: MyColors.lightBackgroundColor,
+          elevation: 0,
+          unselectedItemColor: Color.fromARGB(255, 167, 167, 184),
+          selectedItemColor: MyColors.lightAccentColor,
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: MyColors.lightAccentColor,
+          foregroundColor: MyColors.lightBackgroundColor,
+        ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: MyColors.darkBackgroundColor,
+          contentTextStyle: TextStyle(color: MyColors.lightTextColor),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color?>(MyColors.lightAccentColor),
+            foregroundColor: MaterialStateProperty.all<Color?>(MyColors.darkTextColor),
+            elevation: MaterialStateProperty.all<double?>(3),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
           ),
         ),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color?>(Color(0xFFFF8A65)),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color?>(MyColors.lightAccentColor),
+          ),
         ),
-      ),
-
-      inputDecorationTheme: InputDecorationTheme(
-        prefixIconColor: MyColors.darkTextColor,
-        suffixIconColor: MyColors.darkTextColor,
-        labelStyle: TextStyle(
-          color: MyColors.darkTextColor,
+        inputDecorationTheme: InputDecorationTheme(
+          prefixIconColor: MyColors.darkTextColor,
+          suffixIconColor: MyColors.darkTextColor,
+          labelStyle: TextStyle(
+            color: MyColors.darkTextColor,
+          ),
+          hintStyle: TextStyle(color: MyColors.darkTextColor!.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w200),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: MyColors.darkTextColor!),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: MyColors.darkTextColor!),
+          ),
         ),
-        hintStyle: TextStyle(color: MyColors.darkTextColor!.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w200),
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: MyColors.darkTextColor!),
+        textSelectionTheme: TextSelectionThemeData(cursorColor: MyColors.lightAccentColor),
+        textTheme: TextTheme(
+          headline1: TextStyle(color: MyColors.lightAccentColor!, fontSize: 62, fontWeight: FontWeight.w200),
+          headline2: TextStyle(color: MyColors.darkTextColor, fontSize: 60, fontWeight: FontWeight.w300),
+          headline4: TextStyle(color: MyColors.darkTextColor, fontWeight: FontWeight.w300),
+          headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 18, fontWeight: FontWeight.w200),
+          headline6: TextStyle(color: MyColors.darkTextColor, fontSize: 14, fontWeight: FontWeight.w200),
+          caption: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
         ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: MyColors.darkTextColor!),
+        unselectedWidgetColor: Colors.grey[350],
+        drawerTheme: DrawerThemeData(
+          backgroundColor: MyColors.lightBackgroundColor,
         ),
-      ),
-      textSelectionTheme: TextSelectionThemeData(cursorColor: Color(0xFFFF8A65)),
-      textTheme: TextTheme(
-        headline1: const TextStyle(color: Color(0xFFFF8A65), fontSize: 62, fontWeight: FontWeight.w200),
-        headline2: TextStyle(color: MyColors.darkTextColor, fontSize: 60, fontWeight: FontWeight.w300),
-        headline4: TextStyle(color: MyColors.darkTextColor, fontWeight: FontWeight.w300),
-        headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 18, fontWeight: FontWeight.w200),
-        headline6: TextStyle(color: MyColors.darkTextColor, fontSize: 14, fontWeight: FontWeight.w200),
-        caption: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
-      ),
-      unselectedWidgetColor: Colors.grey[350],
-      drawerTheme: DrawerThemeData(
-        backgroundColor: MyColors.lightBackgroundColor,
-      ),
-      dividerColor: MyColors.darkTextColor!.withOpacity(0.8),
-      cardColor: Color(0xFFFFFFFF),
-      cardTheme: CardTheme(
-        elevation: 3,
-        shadowColor: Colors.black.withOpacity(0.3),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+        dividerColor: MyColors.darkTextColor!.withOpacity(0.8),
+        cardColor: Color(0xFFFFFFFF),
+        cardTheme: CardTheme(
+          elevation: 3,
+          shadowColor: Colors.black.withOpacity(0.3),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
-      ),
-      popupMenuTheme: PopupMenuThemeData(
-        color: MyColors.lightBackgroundColor,
-        textStyle: TextStyle(
-          color: MyColors.darkTextColor,
+        popupMenuTheme: PopupMenuThemeData(
+          color: MyColors.lightBackgroundColor,
+          textStyle: TextStyle(
+            color: MyColors.darkTextColor,
+          ),
         ),
-      ),
-    );
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Color(0xFFFFFFFF)));
   }
 }
 
@@ -184,6 +195,9 @@ class MyColors {
   static Color? lightBackgroundColor = const Color(0xFFF4F5FA);
 
   static Color? darkCardColor = const Color(0xFF404552);
+
+  static Color? lightAccentColor = const Color(0xFFFF8A65);
+  static Color? darkAccentColor = Color.fromARGB(255, 101, 255, 181);
 
   static Color? lightBlueColor = const Color(0XFFe3effb);
   static Color? darkBlueColor = const Color(0XFF2b59e3);

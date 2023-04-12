@@ -29,14 +29,16 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
-      if (userCredential.user == null) return;
+      if (userCredential.user == null) {
+        stopCircularProgressOverlay(context);
+        return;
+      }
+      ;
 
       AppUser appUser = AppUser(
         uid: userCredential.user!.uid,
         name: name,
       );
-
-      // Write to database
 
       // Create user record in database
       await UserDatabase.create(context, appUser: appUser);
@@ -44,7 +46,8 @@ class AuthService {
       stopCircularProgressOverlay(context);
 
       // Push back to the wrapper
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Wrapper()), (_) => false);
+      // await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Wrapper()), (_) => false);
+      Navigator.pop(context);
     } on FirebaseAuthException catch (error) {
       stopCircularProgressOverlay(context);
       showErrorDialog(context, error.message ?? 'There was an error registering your account.');

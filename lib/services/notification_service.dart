@@ -28,22 +28,14 @@ class NotificationService {
           criticalAlerts: true,
         ),
       ],
-      debug: true,
+      debug: false,
     );
 
     await AwesomeNotifications().setListeners(
-      onActionReceivedMethod: (receivedAction) async {
-        print('onActionReceivedMethod');
-      },
-      onDismissActionReceivedMethod: (receivedAction) async {
-        print('onDismissActionReceivedMethod');
-      },
-      onNotificationCreatedMethod: (receivedNotification) async {
-        print('onNotificationCreatedMethod');
-      },
-      onNotificationDisplayedMethod: (receivedNotification) async {
-        print('onNotificationDisplayedMethod');
-      },
+      onActionReceivedMethod: (receivedAction) async {},
+      onDismissActionReceivedMethod: (receivedAction) async {},
+      onNotificationCreatedMethod: (receivedNotification) async {},
+      onNotificationDisplayedMethod: (receivedNotification) async {},
     );
   }
 
@@ -65,8 +57,6 @@ class NotificationService {
 
     await AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
       if (isAllowed && settingsNotifier.notificationsAllowed) {
-        print(settingsNotifier.notificationHours);
-        print(settingsNotifier.notificationMins);
         await AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: Random().nextInt(20000000),

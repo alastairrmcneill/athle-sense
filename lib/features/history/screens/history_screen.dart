@@ -13,7 +13,7 @@ class HisotryScreen extends StatelessWidget {
     if (responseNotifier.myResponses == null) {
       return const Center(child: CircularProgressIndicator());
     } else if (responseNotifier.myResponses!.isEmpty) {
-      return const Center(child: Text('No responses yet'));
+      return Center(child: Text('No responses yet', style: Theme.of(context).textTheme.headline6!));
     }
     return const HistoryOverview();
   }

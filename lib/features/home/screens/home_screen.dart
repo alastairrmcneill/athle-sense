@@ -34,20 +34,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     final user = Provider.of<AppUser?>(context, listen: false);
 
     await UserDatabase.getCurrentUser(context);
-    await ResponseService.loadUserResponses(context);
     await EventService.loadUserEvents(context);
+    await ResponseService.loadUserResponses(context);
     await PurchasesService.login(context, userID: user!.uid);
     await PurchasesService.fetchOffer(context);
     await NotificationService.askForNotifications(context);
     await NotificationService.createScheduledNotification(context);
+
+    // setState(() => isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     UserNotifier userNotifier = Provider.of<UserNotifier>(context);
-    EventNotifier eventNotifier = Provider.of<EventNotifier>(context);
-
-    List<Widget> tabs = const [TodayScreen(), HisotryScreen(), EventsScreen()];
 
     return Scaffold(
       appBar: AppBar(
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       body: PageView(
         controller: pageController,
         onPageChanged: (value) => setState(() => tabIndex = value),
-        children: tabs,
+        children: const [TodayScreen(), HisotryScreen(), EventsScreen()],
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wellness_tracker/features/authentication/widgets/widgets.dart';
@@ -83,7 +84,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       await _register();
                     },
                     child: Text('Register')),
-              )
+              ),
+              const SizedBox(height: 5),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: "By creating an account, you are agreeing to our\n",
+                  style: Theme.of(context).textTheme.headline6,
+                  children: [
+                    TextSpan(
+                      text: "Terms & Conditions ",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          showDocumentDialog(context, mdFileName: 'assets/terms_and_conditions.md');
+                        },
+                    ),
+                    TextSpan(
+                      text: "and ",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    TextSpan(
+                      text: "Privacy Policy",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          showDocumentDialog(context, mdFileName: 'assets/privacy_policy.md');
+                        },
+                    ),
+                    TextSpan(
+                      text: ".",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -38,35 +38,36 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          StreamProvider<AppUser?>.value(
-            value: AuthService().appUserStream,
-            initialData: null,
+      providers: [
+        StreamProvider<AppUser?>.value(
+          value: AuthService().appUserStream,
+          initialData: null,
+        ),
+        ChangeNotifierProvider<SettingsNotifier>(
+          create: (_) => SettingsNotifier(
+            darkMode: prefs.getBool('darkMode') ?? false,
+            askedNotifications: prefs.getBool('askedNotifications') ?? false,
+            notificationsAllowed: prefs.getBool('notificationsAllowed') ?? true,
+            notificationHours: prefs.getInt('notificationHours') ?? 7,
+            notificationMins: prefs.getInt('notificationMins') ?? 0,
           ),
-          ChangeNotifierProvider<SettingsNotifier>(
-            create: (_) => SettingsNotifier(
-              darkMode: prefs.getBool('darkMode') ?? false,
-              askedNotifications: prefs.getBool('askedNotifications') ?? false,
-              notificationsAllowed: prefs.getBool('notificationsAllowed') ?? true,
-              notificationHours: prefs.getInt('notificationHours') ?? 7,
-              notificationMins: prefs.getInt('notificationMins') ?? 0,
-            ),
-          ),
-          ChangeNotifierProvider<UserNotifier>(
-            create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
-          ),
-          ChangeNotifierProvider<EventNotifier>(
-            create: (_) => EventNotifier(),
-          ),
-          ChangeNotifierProvider<ResponseNotifier>(
-            create: (_) => ResponseNotifier(),
-          ),
-          ChangeNotifierProvider<RevenueCatNotifier>(
-            create: (_) => RevenueCatNotifier(),
-          ),
-        ],
-        child: App(
-          showHome: showHome,
-        ));
+        ),
+        ChangeNotifierProvider<UserNotifier>(
+          create: (_) => UserNotifier(FirebaseAuth.instance.currentUser),
+        ),
+        ChangeNotifierProvider<EventNotifier>(
+          create: (_) => EventNotifier(),
+        ),
+        ChangeNotifierProvider<ResponseNotifier>(
+          create: (_) => ResponseNotifier(),
+        ),
+        ChangeNotifierProvider<RevenueCatNotifier>(
+          create: (_) => RevenueCatNotifier(),
+        ),
+      ],
+      child: App(
+        showHome: showHome,
+      ),
+    );
   }
 }

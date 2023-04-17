@@ -20,7 +20,7 @@ class Page1 extends StatelessWidget {
               fit: BoxFit.fitWidth,
             ),
           ),
-          const SizedBox(height: 80),
+          // const SizedBox(height: 80),
         ],
       ),
     );

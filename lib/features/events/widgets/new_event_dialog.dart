@@ -102,6 +102,18 @@ showNewEventDialog(BuildContext context, {Event? event}) {
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
             lastDate: DateTime(2100),
+            builder: (context, child) {
+              return Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ColorScheme.light(
+                    primary: Theme.of(context).textTheme.headline6!.color!, // header background color
+                    onPrimary: Theme.of(context).scaffoldBackgroundColor, // header text color
+                    onSurface: Theme.of(context).textTheme.headline6!.color!, // body text color
+                  ),
+                ),
+                child: child!,
+              );
+            },
           );
 
           if (_pickedEndDate != null) {

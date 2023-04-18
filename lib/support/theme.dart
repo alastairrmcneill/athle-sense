@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyThemes {
@@ -6,7 +5,7 @@ class MyThemes {
     return ThemeData(
       scaffoldBackgroundColor: MyColors.darkBackgroundColor,
       dialogBackgroundColor: MyColors.darkBackgroundColor,
-      primarySwatch: Colors.blue,
+      primarySwatch: Colors.green,
       canvasColor: Color.fromRGBO(75, 135, 185, 1), // line color for charts - possible MyColors.accentColor,
       appBarTheme: AppBarTheme(
         backgroundColor: MyColors.darkBackgroundColor,

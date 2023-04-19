@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:wellness_tracker/features/authentication/screens/screens.dart';
 import 'package:wellness_tracker/features/authentication/widgets/widgets.dart';
@@ -35,9 +36,10 @@ class _ForgotPasswordState extends State<LoginScreen> {
             children: [
               Expanded(
                 child: Center(
-                  child: Text(
-                    'Wellness\nTracker',
+                  child: AutoSizeText(
+                    'Athle-Sense',
                     style: Theme.of(context).textTheme.headline1,
+                    maxLines: 1,
                     textAlign: TextAlign.center,
                   ),
                 ),

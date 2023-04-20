@@ -14,6 +14,20 @@ class MemberEventView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ResponseNotifier responseNotifier = Provider.of<ResponseNotifier>(context);
+
+    if (responseNotifier.myResponses!.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Text(
+            'You haven\'t submitted a response yet.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+        ),
+      );
+    }
+
     Response response = responseNotifier.myResponses!.last;
 
     if (response.date.isBefore(DateUtils.dateOnly(DateTime.now()))) {

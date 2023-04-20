@@ -1,17 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:wellness_tracker/features/today/widgets/widgets.dart';
 
 import 'package:wellness_tracker/support/theme.dart';
 
 class QuestionCard extends StatelessWidget {
   final String questionText;
   final int groupValue;
+  final List<String> responses;
   final Function(int) onchanged;
   const QuestionCard({
     Key? key,
     required this.questionText,
     required this.groupValue,
     required this.onchanged,
+    required this.responses,
   }) : super(key: key);
 
   @override
@@ -33,9 +36,27 @@ class QuestionCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  questionText,
-                  style: Theme.of(context).textTheme.headline5,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Text(
+                        questionText,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () => showInfoDialog(context, infoLines: responses),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5, left: 5),
+                        child: Icon(
+                          Icons.info_outline_rounded,
+                          color: Theme.of(context).textTheme.headline6!.color!.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 5),
                 Row(

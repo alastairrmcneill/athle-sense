@@ -160,11 +160,11 @@ class MyThemes {
           headline1: TextStyle(color: MyColors.lightAccentColor!, fontSize: 62, fontWeight: FontWeight.w200),
           headline2: TextStyle(color: MyColors.darkTextColor, fontSize: 60, fontWeight: FontWeight.w300),
           headline4: TextStyle(color: MyColors.darkTextColor, fontWeight: FontWeight.w300),
-          headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 18, fontWeight: FontWeight.w200),
+          headline5: TextStyle(color: MyColors.darkTextColor, fontSize: 18, fontWeight: FontWeight.w300),
           headline6: TextStyle(color: MyColors.darkTextColor, fontSize: 14, fontWeight: FontWeight.w200),
           caption: const TextStyle(color: Colors.redAccent, fontSize: 12, fontWeight: FontWeight.w500),
         ),
-        unselectedWidgetColor: Colors.grey[350],
+        unselectedWidgetColor: MyColors.darkTextColor!.withOpacity(0.7), // Colors.grey[350],
         drawerTheme: DrawerThemeData(
           backgroundColor: MyColors.lightBackgroundColor,
         ),

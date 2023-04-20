@@ -50,6 +50,7 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
               return QuestionCard(
                 questionText: question.long,
                 groupValue: answerValues[index],
+                responses: question.responses,
                 onchanged: (value) => setState(() => answerValues[index] = value),
               );
             }).toList(),
@@ -57,6 +58,13 @@ class _TodayQuestionnaireFormState extends State<TodayQuestionnaireForm> {
                 ? QuestionCard(
                     questionText: 'What is your availabiltiy for competing today?',
                     groupValue: availabilityValue,
+                    responses: [
+                      '1 - Long term injury',
+                      '2 - Injured today, maybe ready tomorrow',
+                      '3 - Unsure if able to play today',
+                      '4 - Able to play but with niggle',
+                      '5 - Completely ready',
+                    ],
                     onchanged: (value) => setState(() => availabilityValue = value),
                   )
                 : const SizedBox(),
